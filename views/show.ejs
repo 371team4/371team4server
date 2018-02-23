@@ -1,0 +1,12 @@
+<div>
+    <% events.forEach(function(event){ %>
+        <p>Name: <%= event.name %></p>
+        <p>Image: <%= event.image %></p>
+        <p>Description: <%= event.description %></p>
+        <a href="/events/<%= event._id%>">Edit this event</a>
+        <br>
+        <a href="/events/delete/<%= event._id%>">Remove this event</a>
+        <br>
+    <% }) %>
+    <a href="/"></a>
+</div>

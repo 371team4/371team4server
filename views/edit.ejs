@@ -1,0 +1,18 @@
+
+    <form action="/events/<%= event._id%>" method="POST">
+        <p>Name: <%= event.name %></p>
+        <div>
+            <input type="text" name="name" placeholder="new name">
+        </div>
+        <p>Image: <%= event.image %></p>
+        <div>
+            <input type="text" name="image" placeholder="new image">
+        </div>
+        <p>Description: <%= event.description %></p>
+        <div>
+            <input type="text" name="description" placeholder="new description">
+        </div>
+        <div>
+            <button>Submit!</button>
+        </div>
+    </form>
