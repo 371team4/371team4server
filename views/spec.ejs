@@ -1,0 +1,8 @@
+<div>
+    <p>Name: <%= event.name %></p>
+    <p>Description: <%= event.description %></p>
+    <% event.images.forEach(function(d){%>
+        <img src=<%= d.data %>/>
+    <%})%>
+    <a href="/"></a>
+</di

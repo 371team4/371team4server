@@ -2,7 +2,11 @@ var express = require('express');
 var mongoose = require('mongoose');
 var body_parser = require("body-parser");
 var event = require("./models/event");
+var image = require("./models/image");
 var seedDB = require("./seed")
+var fileUpload = require('express-fileupload');
+var btoa = require("btoa");
+
 
 mongoose.connect("mongodb://localhost/events");
 
@@ -10,6 +14,7 @@ var app = express();
 seedDB();
 app.set("view engine","ejs");
 app.use(body_parser.urlencoded({extended:true}));
+app.use(fileUpload());
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("yale camp server start");
@@ -36,19 +41,30 @@ app.get("/events/new", function(req,res){
 
 app.post("/events/new", function(req,res){
     var aname = req.body.name;
-    var aimage = req.body.image;
+    var aimage = req.files.image;
     var adescription = req.body.description;
-    var new_event = {
-        name: aname,
-        image: aimage,
-        description: adescription
-    }
-    event.create(new_event, function(err, event){
+    image.create({
+        data: btoa(aimage.data)
+    }, function(err, aimage){
         if(err){
             console.log(err)
         }
         else{
-            res.render("main")
+            var new_event = {
+                name: aname,
+                images: [],
+                description: adescription
+            }
+            event.create(new_event, function(err, event){
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    event.images.push(aimage);
+                    event.save();
+                    res.render("main")
+                }
+            })
         }
     })
 })
@@ -61,6 +77,18 @@ app.get("/events/:id", function(req,res){
         else{
             console.log(findEvent);
             res.render("edit", {event:findEvent});
+        }
+    })
+})
+
+app.get("/show/:id", function(req,res){
+    event.findById(req.params.id).populate("images").exec(function(err, findEvent){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(findEvent);
+            res.render("spec", {event:findEvent});
         }
     })
 })

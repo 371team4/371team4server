@@ -10,9 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "btoa": "^1.1.2",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "mongodb": "^3.0.2",
+    "express-fileupload": "^0.4.0",
+    "fs": "0.0.1-security",
     "mongoose": "^5.0.6"
   }
 }

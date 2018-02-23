@@ -1,14 +1,12 @@
-<form action="/events/new" method="POST">
+<form action="/events/new" method="POST" enctype="multipart/form-data" >
     <div>
         <input type="text" name="name" placeholder="name">
     </div>
     <div>
-        <input type="text" name="image" placeholder="image_url">
+        <input type="file" name="image" accept="image/*" multiple>
     </div>
     <div>
         <input type="text" name="description" placeholder="description">
     </div>
-    <div>
-        <button>Submit!</button>
-    </div>
+    <input type="submit"/>
 </form>
