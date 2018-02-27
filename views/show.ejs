@@ -1,12 +1,12 @@
 <div>
-    <% events.forEach(function(event){ %>
-        <p>Name: <%= event.title.title %></p>
-        <p>Description: <%= event.description.description %></p>
-        <a href="/show/<%= event._id%>">show this event</a>
-        <a href="/events/<%= event._id%>">Edit this event</a>
+    <% slides.forEach(function(slide){ %>
+        <p>Name: <%= slide.title.title %></p>
+        <p>Description: <%= slide.description.description %></p>
+        <a href="/show/<%= slide._id%>">show this slide</a>
+        <a href="/slides/<%= slide._id%>">Edit this slide</a>
         <br>
-        <a href="/events/delete/<%= event._id%>">Remove this event</a>
+        <a href="/slides/delete/<%= slide._id%>">Remove this slide</a>
         <br>
     <% }) %>
-    <a href="/"></a>
+    <a href="/">go back</a>
 </div>

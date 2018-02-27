@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var event_schema = new mongoose.Schema({
+var slide_schema = new mongoose.Schema({
     title: {
         title: String,
         color: String,
@@ -33,4 +33,4 @@ var event_schema = new mongoose.Schema({
     slide_settings: Number
 });
 
-module.exports = mongoose.model("Event",event_schema);
+module.exports = mongoose.model("slide",slide_schema);

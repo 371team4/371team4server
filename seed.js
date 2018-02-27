@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 var fs = require('fs');
 var base64Img = require('base64-img');
-var event = require('./models/event');
+var slide = require('./models/slide');
 
 // connvert image to base 64
 var imagedata = base64Img.base64Sync('./show/google.jpg')
 
-// demo event array
-var default_event = [
+// demo slide array
+var default_slide = [
     {
         title: {
             title: "first",
@@ -17,7 +17,7 @@ var default_event = [
             font_style:"Italic"
         },
         description: {
-            description: "first event",
+            description: "first slide",
             color: "Red",
             font_size: "Large",
             font_weight:"Bold",
@@ -49,7 +49,7 @@ var default_event = [
             font_style:"Italic"
         },
         description: {
-            description: "second event",
+            description: "second slide",
             color: "Red",
             font_size: "Medium",
             font_weight:"Bold",
@@ -81,7 +81,7 @@ var default_event = [
             font_style:"Italic"
         },
         description: {
-            description: "third event",
+            description: "third slide",
             color: "Red",
             font_size: "Large",
             font_weight:"Bold",
@@ -110,21 +110,21 @@ var default_event = [
 // initialize database
 function seedDB(){
     // clear database
-    event.remove({},function(err){
+    slide.remove({},function(err){
         if(err){
             console.log(err);
         }
         else{
             // re-insert all data
-            default_event.forEach(function(seed){
-                event.create(seed,function(err,aevent){
+            default_slide.forEach(function(seed){
+                slide.create(seed,function(err,aslide){
                     if(err){
                         console.log(err);
                     }
                     else{
                         // update image array 
-                        aevent.images.push(imagedata);
-                        aevent.save();
+                        aslide.images.push(imagedata);
+                        aslide.save();
                     }
                 });
             });
