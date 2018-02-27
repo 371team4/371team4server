@@ -1,67 +1,130 @@
 var mongoose = require('mongoose');
 var event = require('./models/event');
-var image = require('./models/image');
-var fs = require('fs')
-var btoa = require("btoa")
+// var image = require('./models/image');
 
+
+var fs = require('fs');
+var base64Img = require('base64-img');
+
+var imagedata = base64Img.base64Sync('./show/google.jpg')
 
 var default_event = [
     {
-        name: "first",
-        description: "first event"
+        title: {
+            title: "first",
+            color: "Blue",
+            font_size: "Small",
+            font_weight:"Normal",
+            font_style:"Italic"
+        },
+        description: {
+            description: "first event",
+            color: "Red",
+            font_size: "Large",
+            font_weight:"Bold",
+            font_style:"Oblique"
+        },
+        date: {
+            date: new Date,
+            color: "Green",
+            font_size: "X-Small",
+            font_weight:"Lighter",
+            font_style:"Normal"
+        },
+        time: {
+            time: "02:05 AM",
+            color: "Yellow",
+            font_size: "XX-Small",
+            font_weight:"Bolder",
+            font_style:"Normal"
+        },
+        image: [],
+        slide_settings: 20
     },
     {
-        name: "second",
-        description: "second event"
+        title: {
+            title: "Second",
+            color: "Blue",
+            font_size: "Smaller",
+            font_weight:"Normal",
+            font_style:"Italic"
+        },
+        description: {
+            description: "second event",
+            color: "Red",
+            font_size: "Medium",
+            font_weight:"Bold",
+            font_style:"Oblique"
+        },
+        date: {
+            date: new Date,
+            color: "Green",
+            font_size: "Larger",
+            font_weight:"Lighter",
+            font_style:"Normal"
+        },
+        time: {
+            time: "01:00 AM",
+            color: "Yellow",
+            font_size: "XX-Large",
+            font_weight:"Bolder",
+            font_style:"Normal"
+        },
+        image: [],
+        slide_settings: 40
     },
     {
-        name: "third",
-        description: "third event"
+        title: {
+            title: "Third",
+            color: "Blue",
+            font_size: "X-Large",
+            font_weight:"Normal",
+            font_style:"Italic"
+        },
+        description: {
+            description: "third event",
+            color: "Red",
+            font_size: "Large",
+            font_weight:"Bold",
+            font_style:"Oblique"
+        },
+        date: {
+            date: new Date,
+            color: "Green",
+            font_size: "X-Small",
+            font_weight:"Lighter",
+            font_style:"Normal"
+        },
+        time: {
+            time: "23:05 AM",
+            color: "Yellow",
+            font_size: "XX-Small",
+            font_weight:"Bolder",
+            font_style:"Normal"
+        },
+        image: [],
+        slide_settings: 80
     }
 ];
 
-// not work
-function hexToBase64(str) {
-    return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-}
-// need some way to transfer buffer to an src
-var imagedata = fs.readFileSync('./sample_image/google.jpg')
-// console.log(imagedata)
-var stringdata = "data:image/jpg;base64,"+btoa(imagedata.toString());
-// console.log(stringdata)
+
 
 function seedDB(){
     // clear database
+    // console.log(imagedata)
     event.remove({},function(err){
         if(err){
             console.log(err);
         }
         else{
-            console.log("remove event");
             default_event.forEach(function(seed){
                 event.create(seed,function(err,aevent){
                     if(err){
                         console.log(err);
                     }
                     else{
-                        // console.log("newly created event");
-                        image.create(
-                            {
-                                data: stringdata
-                            }, 
-                            function(err,aimage){
-                                if(err){ 
-                                    console.log(err)
-                                }
-                                else{
-                                    // console.log(aimage)
-                                    aevent.images.push(aimage);
-                                    aevent.save();
-                                    // console.log(aevent)
-                                }
-                            }
-                        )
-                       
+                       aevent.images.push(imagedata);
+                       aevent.save();
                     }
                 });
             });

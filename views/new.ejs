@@ -1,12 +1,51 @@
 <form action="/events/new" method="POST" enctype="multipart/form-data" >
     <div>
-        <input type="text" name="name" placeholder="name">
+        <input type="text" name="title" placeholder="title">
+        <br>
+        <input type="text" name="title_color" placeholder="title_color">
+        <br>
+        <input type="text" name="title_font_size" placeholder="title_font_size">
+        <br>
+        <input type="text" name="title_font_weight" placeholder="title_font_weight">
+        <br>
+        <input type="text" name="title_font_style" placeholder="title_font_style">
+    </div>
+    <div>
+        <input type="text" name="description" placeholder="description">
+        <br>
+        <input type="text" name="description_color" placeholder="description_color">
+        <br>
+        <input type="text" name="description_font_size" placeholder="description_font_size">
+        <br>
+        <input type="text" name="description_font_weight" placeholder="description_font_weight">
+        <br>
+        <input type="text" name="description_font_style" placeholder="description_font_style">
+    </div>
+    <div>
+        <input type="text" name="date_color" placeholder="date_color">
+        <br>
+        <input type="text" name="date_font_size" placeholder="date_font_size">
+        <br>
+        <input type="text" name="date_font_weight" placeholder="date_font_weight">
+        <br>
+        <input type="text" name="date_font_style" placeholder="date_font_style">
+    </div>
+    <div>
+        <input type="text" name="time" placeholder="time">
+        <br>
+        <input type="text" name="time_color" placeholder="time_color">
+        <br>
+        <input type="text" name="time_font_size" placeholder="time_font_size">
+        <br>
+        <input type="text" name="time_font_weight" placeholder="time_font_weight">
+        <br>
+        <input type="text" name="time_font_style" placeholder="time_font_style">
     </div>
     <div>
         <input type="file" name="image" accept="image/*" multiple>
     </div>
     <div>
-        <input type="text" name="description" placeholder="description">
+        <input type="text" name="slide_settings" placeholder="slide_settings_time">
     </div>
     <input type="submit"/>
 </form>

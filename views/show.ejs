@@ -1,7 +1,7 @@
 <div>
     <% events.forEach(function(event){ %>
-        <p>Name: <%= event.name %></p>
-        <p>Description: <%= event.description %></p>
+        <p>Name: <%= event.title.title %></p>
+        <p>Description: <%= event.description.description %></p>
         <a href="/show/<%= event._id%>">show this event</a>
         <a href="/events/<%= event._id%>">Edit this event</a>
         <br>

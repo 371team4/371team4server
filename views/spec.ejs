@@ -1,8 +1,39 @@
 <div>
-    <p>Name: <%= event.name %></p>
-    <p>Description: <%= event.description %></p>
-    <% event.images.forEach(function(d){%>
-        <img src=<%= d.data %>/>
+    <p>Title: <%= event.title.title %></p>
+    <div>
+        Title Specific:
+        <p><%= event.title.color %></p>
+        <p><%= event.title.font_size %></p>
+        <p><%= event.title.font_style %></p>
+        <p><%= event.title.font_weight %></p>
+    </div>
+    <p>Description: <%= event.description.description %></p>
+    <div>
+        Description Specific:
+        <p><%= event.description.color %></p>
+        <p><%= event.description.font_size %></p>
+        <p><%= event.description.font_style %></p>
+        <p><%= event.description.font_weight %></p>
+    </div>
+    <p>Date: <%= event.date.date %></p>
+    <div>
+        Date Specific:
+        <p><%= event.date.color %></p>
+        <p><%= event.date.font_size %></p>
+        <p><%= event.date.font_style %></p>
+        <p><%= event.date.font_weight %></p>
+    </div>
+    <p>Time: <%= event.time.time %></p>
+    <div>
+        Time Specific:
+        <p><%= event.time.color %></p>
+        <p><%= event.time.font_size %></p>
+        <p><%= event.time.font_style %></p>
+        <p><%= event.time.font_weight %></p>
+    </div>
+    <% event.images.forEach(function(img){ %>
+         <p><%= img %></p>
     <%})%>
+    <p> <%= event.slide_settings %> </p>
     <a href="/"></a>
-</di
+</div>

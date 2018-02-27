@@ -1,18 +1,62 @@
-
-    <form action="/events/<%= event._id%>" method="POST">
-        <p>Name: <%= event.name %></p>
-        <div>
-            <input type="text" name="name" placeholder="new name">
-        </div>
-        <p>Image: <%= event.image %></p>
-        <div>
-           <input type="file" name="image" accept="image/*" multiple>
-        </div>
-        <p>Description: <%= event.description %></p>
-        <div>
-            <input type="text" name="description" placeholder="new description">
-        </div>
-        <div>
-            <button>Submit!</button>
-        </div>
-    </form>
+<form action="/events/new" method="POST" enctype="multipart/form-data" >
+    <p>Title: <%= event.title.title %></p>
+    <input type="text" name="title" placeholder="title">
+    <div>
+        Title Specific:
+        <p><%= event.title.color %></p>
+        <input type="text" name="title_color" placeholder="title_color">
+        <p><%= event.title.font_size %></p>
+        <input type="text" name="title_font_size" placeholder="title_font_size">
+        <p><%= event.title.font_style %></p>
+        <input type="text" name="title_font_style" placeholder="title_font_style">
+        <p><%= event.title.font_weight %></p>
+        <input type="text" name="title_font_weight" placeholder="title_font_weight">
+    </div>
+    <p>Description: <%= event.description.description %></p>
+    <input type="text" name="description" placeholder="description">
+    <div>
+        Description Specific:
+        <p><%= event.description.color %></p>
+        <input type="text" name="description_color" placeholder="description_color">
+        <p><%= event.description.font_size %></p>
+        <input type="text" name="description_font_size" placeholder="description_font_size">
+        <p><%= event.description.font_style %></p>
+        <input type="text" name="description_font_style" placeholder="description_font_style">
+        <p><%= event.description.font_weight %></p>
+        <input type="text" name="description_font_weight" placeholder="description_font_weight">
+    </div>
+    <p>Date: <%= event.date.date %></p>
+    <p> <%= new Date %> </p>
+    <div>
+        Date Specific:
+        <p><%= event.date.color %></p>
+        <input type="text" name="date_color" placeholder="date_color">
+        <p><%= event.date.font_size %></p>
+        <input type="text" name="date_font_size" placeholder="date_font_size">
+        <p><%= event.date.font_style %></p>
+        <input type="text" name="date_font_style" placeholder="date_font_style">
+        <p><%= event.date.font_weight %></p>
+        <input type="text" name="date_font_weight" placeholder="date_font_weight">
+    </div>
+    <p>Time: <%= event.time.time %></p>
+    <input type="text" name="time" placeholder="time">
+    <div>
+        Time Specific:
+        <p><%= event.time.color %></p>
+        <input type="text" name="time_color" placeholder="time_color">
+        <p><%= event.time.font_size %></p>
+        <input type="text" name="time_font_size" placeholder="time_font_size">
+        <p><%= event.time.font_style %></p>
+        <input type="text" name="time_font_style" placeholder="time_font_style">
+        <p><%= event.time.font_weight %></p>
+        <input type="text" name="time_font_weight" placeholder="time_font_weight">
+    </div>
+    <% event.images.forEach(function(img){ %>
+         <p><%= img %></p>
+    <%})%>
+    <input type="file" name="image" accept="image/*" multiple>
+    <p> <%= event.slide_settings %> </p>
+    <input type="text" name="slide_settings" placeholder="slide_settings_time">
+    <a href="/"></a>
+    <input type="submit"/>
+</form>
