@@ -115,6 +115,7 @@ app.post("/slides/new", function(req,res){
     }
 });
 
+// update exist slide
 app.post("/slides/:id", function(req,res){
     var fileUploaded = 0;
     var imageEncoded = 0;
@@ -282,8 +283,6 @@ function encodeImgPromise(path){
         });
     });
 }
-
-
 
 // following code is only useful for testing
 
