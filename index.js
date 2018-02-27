@@ -168,6 +168,8 @@ app.post("/events/new", function(req,res){
                         else{
                             console.log("new event created");
                         }
+                        fileUploaded = 0;
+                        imageEncoded = 0;
                         res.render("main")
                     });
                 }
@@ -252,6 +254,8 @@ app.post("/events/:id", function(req,res){
                         if(err){
                             console.log(err);
                         }
+                        fileUploaded = 0;
+                        imageEncoded = 0;
                         res.render("main");
                     });
                 }
@@ -273,6 +277,7 @@ app.get("/events/delete/:id", function(req,res){
     });
 });
 
+// testing code for base64Img
 app.get("/image_test", function(req,res){
     var imagedata = base64Img.base64Sync('./show/google.jpg');
     res.render("image", {img: imagedata});
