@@ -1,13 +1,12 @@
 var mongoose = require('mongoose');
-var event = require('./models/event');
-// var image = require('./models/image');
-
-
 var fs = require('fs');
 var base64Img = require('base64-img');
+var event = require('./models/event');
 
+// connvert image to base 64
 var imagedata = base64Img.base64Sync('./show/google.jpg')
 
+// demo event array
 var default_event = [
     {
         title: {
@@ -25,7 +24,7 @@ var default_event = [
             font_style:"Oblique"
         },
         date: {
-            date: new Date,
+            date: "Wed 5 Feb 2015",
             color: "Green",
             font_size: "X-Small",
             font_weight:"Lighter",
@@ -57,7 +56,7 @@ var default_event = [
             font_style:"Oblique"
         },
         date: {
-            date: new Date,
+            date: "Mon 6 Mar 2016",
             color: "Green",
             font_size: "Larger",
             font_weight:"Lighter",
@@ -89,7 +88,7 @@ var default_event = [
             font_style:"Oblique"
         },
         date: {
-            date: new Date,
+            date: "Fri 8 Apr 2017",
             color: "Green",
             font_size: "X-Small",
             font_weight:"Lighter",
@@ -108,23 +107,24 @@ var default_event = [
 ];
 
 
-
+// initialize database
 function seedDB(){
     // clear database
-    // console.log(imagedata)
     event.remove({},function(err){
         if(err){
             console.log(err);
         }
         else{
+            // re-insert all data
             default_event.forEach(function(seed){
                 event.create(seed,function(err,aevent){
                     if(err){
                         console.log(err);
                     }
                     else{
-                       aevent.images.push(imagedata);
-                       aevent.save();
+                        // update image array 
+                        aevent.images.push(imagedata);
+                        aevent.save();
                     }
                 });
             });

@@ -16,7 +16,7 @@ var event_schema = new mongoose.Schema({
         font_style: String
     },
     date: {
-        date: Date,
+        date: String,
         color: String,
         font_size: String,
         font_weight: String,

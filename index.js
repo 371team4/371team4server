@@ -7,34 +7,34 @@ var fileUpload = require('express-fileupload');
 var fs = require('fs');
 var base64Img = require('base64-img');
 
+var app = express();
 
 mongoose.connect("mongodb://localhost/events");
 
-var app = express();
 seedDB();
 app.set("view engine","ejs");
 app.use(body_parser.urlencoded({extended:true}));
 app.use(fileUpload());
 app.use(express.static(__dirname + '/show'));
 
-
-
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("yale camp server start");
 });
 
+// main page generally for testing
 app.get("/", function(req,res){
     res.render("main");
 });
 
+// getter for all events
 app.get("/events", function(req,res){
     event.find({}, function(err,allevent){
         if(err){
             console.log(err);
         }
         else{
-            // console.log(allevent)
-            res.render("show",{events:allevent});  
+            res.render("show",{events:allevent}); 
+            // res.send(JSON.parse(allevent))
         }
     });
 });
@@ -54,21 +54,28 @@ app.get("/events/:id", function(req,res){
     });
 });
 
+app.get("/events/delete/:id", function(req,res){
+    event.remove({_id:req.params.id},function(err){
+        if(err){
+            console.log(err);
+            // res.send("delete fail")
+        }
+        res.render("main");
+        // res.send("delete success")
+    });
+});
+
 app.get("/show/:id", function(req,res){
     event.findById(req.params.id).exec(function(err, findEvent){
         if(err){
             console.log(err);
         }
         else{
-            // console.log(findEvent);
             res.render("spec", {event:findEvent});
+            // res.send(JSON.parse(findEvent))
         }
     });
 });
-
-var fileUploaded = 0;
-
-var imageEncoded = 0;
 
 function writeFilePromise(name, path){
     return new Promise(function (resolve, reject) {
@@ -87,16 +94,18 @@ function encodeImgPromise(path){
     return new Promise(function(resolve, reject){
         base64Img.base64(path,function(err, data){
             if(err){
-                reject(err)
+                reject(err);
             }
             else{
-                resolve(data)
+                resolve(data);
             }
-        })
-    })
+        });
+    });
 }
 
 app.post("/events/new", function(req,res){
+    var fileUploaded = 0;
+    var imageEncoded = 0;
     var atitle = req.body.title;
     var atitle_color = req.body.title_color;
     var atitle_font_size = req.body.title_font_size;
@@ -107,7 +116,7 @@ app.post("/events/new", function(req,res){
     var adescription_font_size = req.body.description_font_size;
     var adescription_font_style = req.body.description_font_style;
     var adescription_font_weight = req.body.description_font_weight;
-    var adate = new Date;
+    var adate = req.body.date;
     var adate_color = req.body.date_color;
     var adate_font_size = req.body.date_font_size;
     var adate_font_style = req.body.date_font_style;
@@ -128,7 +137,6 @@ app.post("/events/new", function(req,res){
                 images64.push(value);
                 imageEncoded++;
                 if(fileUploaded == images.length && imageEncoded == images.length){
-                    console.log(images64)
                     var aevent = {
                         title: {
                             title: atitle,
@@ -175,16 +183,16 @@ app.post("/events/new", function(req,res){
                 }
             }).catch(function(err){
                 console.log(err);
-            })
+            });
         }).catch(function(err){
             console.log(err);
-        })
+        });
     });
 });
 
-
-
 app.post("/events/:id", function(req,res){
+    var fileUploaded = 0;
+    var imageEncoded = 0;
     var aid = req.params.id;
     var atitle = req.body.title;
     var atitle_color = req.body.title_color;
@@ -196,7 +204,7 @@ app.post("/events/:id", function(req,res){
     var adescription_font_size = req.body.description_font_size;
     var adescription_font_style = req.body.description_font_style;
     var adescription_font_weight = req.body.description_font_weight;
-    var adate = new Date;
+    var adate = req.body.date;
     var adate_color = req.body.date_color;
     var adate_font_size = req.body.date_font_size;
     var adate_font_style = req.body.date_font_style;
@@ -261,19 +269,10 @@ app.post("/events/:id", function(req,res){
                 }
             }).catch(function(err){
                 console.log(err);
-            })
+            });
         }).catch(function(err){
             console.log(err);
-        })
-    });
-});
-
-app.get("/events/delete/:id", function(req,res){
-    event.remove({_id:req.params.id},function(err){
-        if(err){
-            console.log(err);
-        }
-        res.render("main");
+        });
     });
 });
 
@@ -286,19 +285,19 @@ app.get("/image_test2", function(req,res){
     var imagedata = [];
     base64Img.base64('./show/google.jpg', function(err,data){
         if(err){
-            console.log(err)
+            console.log(err);
         }
         else{
             imagedata.push(data);
             base64Img.base64('./show/print.png', function(err,data){
                 if(err){
-                    console.log(err)
+                    console.log(err);
                 }
                 else{
                     imagedata.push(data);
                     base64Img.base64('./show/select.png', function(err,data){
                         if(err){
-                            console.log(err)
+                            console.log(err);
                         }
                         else{
                             imagedata.push(data);
