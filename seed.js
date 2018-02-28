@@ -4,7 +4,9 @@ var base64Img = require('base64-img');
 var slide = require('./models/slide');
 
 // connvert image to base 64
-var imagedata = base64Img.base64Sync('./show/google.jpg')
+var imagedata0 = base64Img.base64Sync('./image/google.jpg')
+var imagedata1 = base64Img.base64Sync('./image/androidparty.jpg')
+var imagedata2 = base64Img.base64Sync('./image/glass.jpg')
 
 // demo slide array
 var default_slide = [
@@ -122,8 +124,22 @@ function seedDB(){
                         console.log(err);
                     }
                     else{
-                        // update image array 
-                        aslide.images.push(imagedata);
+                        // update image array
+                        var image0 = {
+                            path: "image/google.jpg",
+                            data: imagedata0
+                        };
+                        var image1 = {
+                            path: "image/androidparty.jpg",
+                            data: imagedata1
+                        };
+                        var image2 = {
+                            path: "image/glass.jpg",
+                            data: imagedata2
+                        };
+                        aslide.images.push(image0);
+                        aslide.images.push(image1);
+                        aslide.images.push(image2);
                         aslide.save();
                     }
                 });

@@ -1,11 +1,11 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var body_parser = require("body-parser");
+var fileUpload = require('express-fileupload');
+var fs = require('file-system');
+var base64Img = require('base64-img');
 var slide = require("./models/slide");
 var seedDB = require("./seed");
-var fileUpload = require('express-fileupload');
-var fs = require('fs');
-var base64Img = require('base64-img');
 
 var app = express();
 
@@ -15,7 +15,6 @@ seedDB();
 app.set("view engine","ejs");
 app.use(body_parser.urlencoded({extended:true}));
 app.use(fileUpload());
-app.use(express.static(__dirname + '/show'));
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("yale camp server start");
@@ -64,6 +63,69 @@ app.get("/show/:id", function(req,res){
     });
 });
 
+// view all image 
+app.get("/image", function(req,res){
+    var images = [];
+    fs.readdir("./image", (err, files) => {
+        if(err){
+            console.log(err);
+        }
+        var length = files.length;
+        var count = 0;
+        fs.recurse("./image", function(filepath, relative, filename) { 
+            encodeImgPromise("./"+filepath).then(function(value){
+                count++;
+                var image = {
+                    name: filename,
+                    data: value
+                };
+                images.push(image);
+                if(count == length){
+                    res.render("image",{images:images});
+                }
+            }).catch(function(err){
+                console.log(err);
+            });
+        });
+    });
+});
+
+// delete a image 
+app.post("/image/:path", function(req,res){
+    var path = req.params.path;
+    fs.unlink("./image/"+path,function(err){
+        if(err){
+            console.log(err);
+        }
+        else{
+            slide.find({}, function(err,allslide){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                   allslide.forEach(function(slide, allindex){
+                       slide.images.forEach(function(image,index){
+                           // console.log("path: "+path);
+                           // console.log("image:"+image.path);
+                           if(image.path == ("image/"+path)){
+                               // console.log("image deleted")
+                               slide.images.splice(index,1);
+                               slide.save();
+                               if(allindex == allslide.length-1 && index == slide.images.length-1){
+                                    allslide.save();
+                                    res.render("main");
+                               }
+                           }
+                       });
+                   });
+                   res.render("main");
+                }
+            });
+            res.render("main");
+        }
+    });
+});
+
 // create new slide
 app.post("/slides/new", function(req,res){
     var fileUploaded = 0;
@@ -73,11 +135,15 @@ app.post("/slides/new", function(req,res){
     // upload multiple images
     if(Array.isArray(images)){
         images.forEach(function(aimage){
-            writeFilePromise("./show/"+aimage.name,aimage.path).then(function(value){
+            writeFilePromise("./images/"+aimage.name,aimage.path).then(function(value){
                 fileUploaded++;
                 var path = "./show/"+aimage.name;
                 encodeImgPromise(path).then(function(value){
-                    images64.push(value);
+                    var image = {
+                        path: path,
+                        data: value
+                    };
+                    images64.push(image);
                     imageEncoded++;
                     // wait until all image is uploaded ans encoded
                     if(fileUploaded == images.length && imageEncoded == images.length){
@@ -96,9 +162,14 @@ app.post("/slides/new", function(req,res){
     }
     // upload one image
     else if (images != undefined) {
-        writeFilePromise("./show/"+images.name,images.path).then(function(value){
+        writeFilePromise("./images/"+images.name,images.path).then(function(value){
             var path = "./show/"+images.name;
             encodeImgPromise(path).then(function(value){
+                var image = {
+                        path: path,
+                        data: value
+                };
+                images64.push(image);
                 createOrUpdateSlide(0,req,images64);
                 res.render("main");
             }).catch(function(err){
@@ -124,11 +195,15 @@ app.post("/slides/:id", function(req,res){
     // if uplaod multiple image
     if(Array.isArray(images)){
         images.forEach(function(aimage){
-            writeFilePromise("./show/"+aimage.name,aimage.path).then(function(value){
+            writeFilePromise("./images/"+aimage.name,aimage.path).then(function(value){
                 fileUploaded++;
                 var path = "./show/"+aimage.name;
                 encodeImgPromise(path).then(function(value){
-                    images64.push(value);
+                    var image = {
+                        path: path,
+                        data: value
+                    };
+                    images64.push(image);
                     imageEncoded++;
                     // wait until all image uploaded and encoded
                     if(fileUploaded == images.length && imageEncoded == images.length){
@@ -147,9 +222,14 @@ app.post("/slides/:id", function(req,res){
     }
     // only one image uploaded
     else if (images != undefined){
-        writeFilePromise("./show/"+images.name,images.path).then(function(value){
+        writeFilePromise("./images/"+images.name,images.path).then(function(value){
             var path = "./show/"+images.name;
             encodeImgPromise(path).then(function(value){
+                var image = {
+                        path: path,
+                        data: value
+                };
+                images64.push(image);
                 createOrUpdateSlide(req.params.id,req,images64);
                 res.render("main");
             }).catch(function(err){
@@ -299,40 +379,6 @@ app.get("/slides/:id", function(req,res){
         }
         else{
             res.render("edit", {slide:findslide, id:req.params.id});
-        }
-    });
-});
-
-// testing code for base64Img
-app.get("/image_test", function(req,res){
-    var imagedata = base64Img.base64Sync('./show/google.jpg');
-    res.render("image", {img: imagedata});
-});
-app.get("/image_test2", function(req,res){
-    var imagedata = [];
-    base64Img.base64('./show/google.jpg', function(err,data){
-        if(err){
-            console.log(err);
-        }
-        else{
-            imagedata.push(data);
-            base64Img.base64('./show/print.png', function(err,data){
-                if(err){
-                    console.log(err);
-                }
-                else{
-                    imagedata.push(data);
-                    base64Img.base64('./show/select.png', function(err,data){
-                        if(err){
-                            console.log(err);
-                        }
-                        else{
-                            imagedata.push(data);
-                            res.render("image", {img: imagedata});
-                        }
-                    });
-                }
-            });
         }
     });
 });

@@ -52,7 +52,7 @@
         <input type="text" name="time_font_weight" placeholder="time_font_weight">
     </div>
     <% slide.images.forEach(function(img){ %>
-         <p><%= img %></p>
+         <p><%= img.data %></p>
     <%})%>
     <input type="file" name="image" accept="image/*" multiple>
     <p> <%= slide.slide_settings %> </p>

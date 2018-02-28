@@ -1,3 +1,7 @@
-<img src=<%=img[0]%>/>
-<img src=<%=img[1]%>/>
-<img src=<%=img[2]%>/>
+<% images.forEach(function(image){ %>
+    <p> <%= image.name %> </p>
+    <p> <%= image.data %></p>
+    <form action="/image/<%= image.name %>" method="POST" enctype="multipart/form-data">
+        <input type="submit">delete</imput>
+    </form>
+<% }) %>

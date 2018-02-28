@@ -32,7 +32,7 @@
         <p><%= slide.time.font_weight %></p>
     </div>
     <% slide.images.forEach(function(img){ %>
-         <p><%= img %></p>
+         <p><%= img.data %></p>
     <%})%>
     <p> slide_settings: <%= slide.slide_settings %> </p>
     <a href="/">go back</a>
