@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "cross-env NODE_ENV=development nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "yukun li",
@@ -11,11 +12,17 @@
   "dependencies": {
     "base64-img": "^1.0.4",
     "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
+    "joi": "^13.1.2",
     "mongoose": "^5.0.6"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.3",
+    "nodemon": "^1.17.1"
   }
 }
