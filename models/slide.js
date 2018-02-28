@@ -1,36 +1,46 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
-var slide_schema = new mongoose.Schema({
-    title: {
-        title: String,
-        color: String,
-        font_size: String,
-        font_weight: String,
-        font_style: String
-    },
-    description: {
-        description: String,
-        color: String,
-        font_size: String,
-        font_weight: String,
-        font_style: String
-    },
-    date: {
-        date: String,
-        color: String,
-        font_size: String,
-        font_weight: String,
-        font_style: String
-    },
-    time:  {
-        time: String,
-        color: String,
-        font_size: String,
-        font_weight: String,
-        font_style: String
-    },
-    images:[],
-    slide_settings: Number
+
+/**
+ * Defin the Slide schema
+ */
+var SlideSchema = new mongoose.Schema({
+  title: {
+    content: String,
+    fontColor: String,
+    fontSize: String,
+    fontWeight: String,
+    fontStyle: String
+  },
+  description: {
+    content: String,
+    fontColor: String,
+    fontSize: String,
+    fontWeight: String,
+    fontStyle: String
+  },
+  date: {
+    content: String,
+    fontColor: String,
+    fontSize: String,
+    fontWeight: String,
+    fontStyle: String
+  },
+  time: {
+    content: String,
+    fontColor: String,
+    fontSize: String,
+    fontWeight: String,
+    fontStyle: String
+  },
+  meta: {
+    template: String,
+    timeout: String,
+    repeatable: Boolean,
+    startDate: String,
+    endDate: String
+  },
+  images: []
 });
 
-module.exports = mongoose.model("slide",slide_schema);
+module.exports = mongoose.model("Slide", SlideSchema);
