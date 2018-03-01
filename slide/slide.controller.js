@@ -1,11 +1,11 @@
-const Slide = require('./slide.model');
+const Slide = require("./slide.model");
 
 /**
  * Load slide and append to req.
  */
 function load(req, res, next, id) {
   Slide.get(id)
-    .then((slide) => {
+    .then(slide => {
       req.slide = slide; // eslint-disable-line no-param-reassign
       return next();
     })
@@ -22,33 +22,34 @@ function get(req, res) {
 
 /**
  * Create new slide
- * @property {string} req.body.slidename - The slidename of slide.
- * @property {string} req.body.mobileNumber - The mobileNumber of slide.
  * @returns {Slide}
  */
 function create(req, res, next) {
-  const slide = new Slide({
-    slidename: req.body.slidename,
-    mobileNumber: req.body.mobileNumber
-  });
+  const slide = new Slide(perpSlide(req.body));
 
-  slide.save()
+  slide
+    .save()
     .then(savedSlide => res.json(savedSlide))
     .catch(e => next(e));
 }
 
 /**
  * Update existing slide
- * @property {string} req.body.slidename - The slidename of slide.
- * @property {string} req.body.mobileNumber - The mobileNumber of slide.
  * @returns {Slide}
  */
 function update(req, res, next) {
   const slide = req.slide;
-  slide.slidename = req.body.slidename;
-  slide.mobileNumber = req.body.mobileNumber;
+  const updates = perpSlide(req.body)
+  
+  slide.title = updates.title;
+  slide.description = updates.description;
+  slide.time = updates.time;
+  slide.date = updates.date;
+  slide.meta = updates.meta;
+  slide.images = updates.images;
 
-  slide.save()
+  slide
+    .save()
     .then(savedSlide => res.json(savedSlide))
     .catch(e => next(e));
 }
@@ -72,9 +73,55 @@ function list(req, res, next) {
  */
 function remove(req, res, next) {
   const slide = req.slide;
-  slide.remove()
+  slide
+    .remove()
     .then(deletedSlide => res.json(deletedSlide))
     .catch(e => next(e));
+}
+
+/**
+ * Helper function for `create()` this will
+ * return a Slide object from the body object provided
+ */
+function perpSlide(body) {
+  return {
+    title: {
+      content: body.title.content,
+      fontColor: body.title.fontColor,
+      fontSize: body.title.fontSize,
+      fontWeight: body.title.fontWeight,
+      fontStyle: body.title.fontStyle
+    },
+    description: {
+      content: body.description.content,
+      fontColor: body.description.fontColor,
+      fontSize: body.description.fontSize,
+      fontWeight: body.description.fontWeight,
+      fontStyle: body.description.fontStyle
+    },
+    date: {
+      content: body.date.content,
+      fontColor: body.date.fontColor,
+      fontSize: body.date.fontSize,
+      fontWeight: body.date.fontWeight,
+      fontStyle: body.date.fontStyle
+    },
+    time: {
+      content: body.time.content,
+      fontColor: body.time.fontColor,
+      fontSize: body.time.fontSize,
+      fontWeight: body.time.fontWeight,
+      fontStyle: body.time.fontStyle
+    },
+    meta: {
+      template: body.meta.template,
+      timeout: body.meta.timeout,
+      repeatable: body.meta.repeatable,
+      startDate: body.meta.startDate,
+      endDate: body.meta.endDate
+    },
+    images: body.images
+  };
 }
 
 module.exports = { load, get, create, update, list, remove };
