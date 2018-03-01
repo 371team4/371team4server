@@ -1,25 +1,36 @@
 {
   "name": "moogoose_event",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server for sherbrooke",
   "main": "index.js",
+  "license": "ISC",
+  "author": "yukun li",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=development nodemon index1.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "yukun li",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MoranLi/mongoose_event.git"
+  },
   "dependencies": {
-    "base64-img": "^1.0.4",
     "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
+    "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
+    "express-winston": "^2.5.0",
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
+    "helmet": "^3.11.0",
+    "http-status": "^1.0.1",
     "joi": "^13.1.2",
-    "mongoose": "^5.0.6"
+    "method-override": "^2.3.10",
+    "mongoose": "^5.0.6",
+    "morgan": "^1.9.0",
+    "winston": "^2.4.0"
   },
   "devDependencies": {
     "cross-env": "^5.1.3",
