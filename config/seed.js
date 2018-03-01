@@ -5,28 +5,28 @@ const initialSlides = [
   {
     title: {
       content: "first",
-      color: "Blue",
+      fontColor: "Blue",
       fontSize: "Small",
       fontWeight: "Normal",
       fontStyle: "Italic"
     },
     description: {
       content: "first Slide",
-      color: "Red",
+      fontColor: "Red",
       fontSize: "Large",
       fontWeight: "Bold",
       fontStyle: "Oblique"
     },
     date: {
       content: "Wed 5 Feb 2015",
-      color: "Green",
+      fontColor: "Green",
       fontSize: "X-Small",
       fontWeight: "Lighter",
       fontStyle: "Normal"
     },
     time: {
       content: "02:05 AM",
-      color: "Yellow",
+      fontColor: "Yellow",
       fontSize: "XX-Small",
       fontWeight: "Bolder",
       fontStyle: "Normal"
@@ -53,28 +53,28 @@ const initialSlides = [
   {
     title: {
       content: "Second",
-      color: "Blue",
+      fontColor: "Blue",
       fontSize: "Smaller",
       fontWeight: "Normal",
       fontStyle: "Italic"
     },
     description: {
       content: "second Slide",
-      color: "Red",
+      fontColor: "Red",
       fontSize: "Medium",
       fontWeight: "Bold",
       fontStyle: "Oblique"
     },
     date: {
       content: "Mon 6 Mar 2016",
-      color: "Green",
+      fontColor: "Green",
       fontSize: "Larger",
       fontWeight: "Lighter",
       fontStyle: "Normal"
     },
     time: {
       content: "01:00 AM",
-      color: "Yellow",
+      fontColor: "Yellow",
       fontSize: "XX-Large",
       fontWeight: "Bolder",
       fontStyle: "Normal"
@@ -101,28 +101,28 @@ const initialSlides = [
   {
     title: {
       content: "Third",
-      color: "Blue",
+      fontColor: "Blue",
       fontSize: "X-Large",
       fontWeight: "Normal",
       fontStyle: "Italic"
     },
     description: {
       content: "third Slide",
-      color: "Red",
+      fontColor: "Red",
       fontSize: "Large",
       fontWeight: "Bold",
       fontStyle: "Oblique"
     },
     date: {
       content: "Fri 8 Apr 2017",
-      color: "Green",
+      fontColor: "Green",
       fontSize: "X-Small",
       fontWeight: "Lighter",
       fontStyle: "Normal"
     },
     time: {
       content: "23:05 AM",
-      color: "Yellow",
+      fontColor: "Yellow",
       fontSize: "XX-Small",
       fontWeight: "Bolder",
       fontStyle: "Normal"
