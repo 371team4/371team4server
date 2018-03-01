@@ -23,7 +23,6 @@
     "express-fileupload": "^0.4.0",
     "express-winston": "^2.5.0",
     "file-system": "^2.2.2",
-    "fs": "0.0.1-security",
     "helmet": "^3.11.0",
     "http-status": "^1.0.1",
     "joi": "^13.1.2",

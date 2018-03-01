@@ -8,7 +8,7 @@ const router = express.Router(); // eslint-disable-line new-cap
 /** GET /health-check - Check service health */
 router.get("/health-check", (req, res) => res.send("OK"));
 
-// mount user routes at /slides
+// mount slide routes at /slides
 router.use("/slides", slideRoutes);
 
 module.exports = router;

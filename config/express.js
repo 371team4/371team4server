@@ -45,10 +45,10 @@ if (config.env === 'development') {
 }
 
 // TODO fix me I cannot serve images
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 
 // mount all routes on /api path
-app.use(routes);
+app.use('/api', routes);
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {

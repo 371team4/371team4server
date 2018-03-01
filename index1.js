@@ -14,7 +14,7 @@ mongoose.connect(mongoUri, { keepAlive: 1 }).then(
   () => {
     seed
       .initSlidesCollection()
-      .then(console.log("Clean up and Init was done!"));
+      .then(console.log("Clean up and Init was completed!"));
   },
   err => {
     throw new Error(`unable to connect to database: ${mongoUri}`);

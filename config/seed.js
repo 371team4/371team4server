@@ -152,7 +152,7 @@ function clearSlidesCollection() {
   // clear database
   return Slide.remove({}, () => {
     console.log("Collection clean up was completed!");
-  });
+  }).exec();// need .exec() to return a promise 
 }
 
 function seedSlidesCollection() {
