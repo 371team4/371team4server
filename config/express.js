@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 const httpStatus = require('http-status');
 const expressWinston = require('express-winston');
+const expressValidation = require('express-validation');
 const helmet = require('helmet');
 const winstonInstance = require('./winston');
 const routes = require('../index.route');
@@ -44,7 +45,7 @@ if (config.env === 'development') {
     }));
 }
 
-// TODO fix me I cannot serve images
+// server static images from the main endpoint 
 app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 
 // mount all routes on /api path
@@ -52,9 +53,9 @@ app.use('/api', routes);
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {
-    if (err && err.errors && err.errors.length > 0) {
+    if (err instanceof expressValidation.ValidationError) {
     // validation error contains errors which is an array of error each containing message[]
-    const unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join(' and ');
+    const unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join(' and ').replace(/\"/g, '\'');
     const error = new APIError(unifiedErrorMessage, err.status, true);
     return next(error);
   } else if (!(err instanceof APIError)) {
