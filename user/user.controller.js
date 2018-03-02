@@ -78,6 +78,18 @@ function update(req, res, next) {
 }
 
 /**
+ * Delete User.
+ * @returns {User}
+ */
+function remove(req, res, next) {
+  const user = req.user
+  user
+    .remove()
+    .then(deletedUser => res.json(deletedUser))
+    .catch(e => next(e))
+}
+
+/**
  * Load user and append to req.
  */
 function load(req, res, next, id) {
@@ -89,4 +101,4 @@ function load(req, res, next, id) {
     .catch(e => next(e))
 }
 
-module.exports = { login, create, update, load };
+module.exports = { login, create, update, remove, load };
