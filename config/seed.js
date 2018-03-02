@@ -1,5 +1,6 @@
 const Slide = require('../slide/slide.model')
 const Image = require('../image/image.model')
+const User = require('../user/user.model')
 
 // demo Slide array
 const initialSlides = [
@@ -155,6 +156,17 @@ const initialImages = [
   }
 ]
 
+const initialUsers = [
+  {
+    username:'admin',
+    password:'admin'
+  },
+  {
+    username:'first',
+    password:'second'
+  }
+]
+
 function clearSlidesCollection() {
   // clear database
   return Slide.remove({}, () => {
@@ -195,11 +207,34 @@ function initImagesCollection() {
   })
 }
 
+function clearUsersCollection() {
+  // clear database
+  return User.remove({}, () => {
+    console.log('User Collection clean up was completed!')
+  }).exec() // need .exec() to return a promise
+}
+
+function seedUsersCollection() {
+  // seed the database
+  return User.insertMany(initialUsers, () => {
+    console.log('User Collection initialization was completed!')
+  })
+}
+
+function initUsersCollection() {
+  return clearUsersCollection().then(() => {
+    return seedUsersCollection()
+  })
+}
+
 module.exports = {
   initSlidesCollection,
   seedSlidesCollection,
   clearSlidesCollection,
   initImagesCollection,
   seedImagesCollection,
-  clearImagesCollection
+  clearImagesCollection,
+  initUsersCollection,
+  seedUsersCollection,
+  clearUsersCollection
 }

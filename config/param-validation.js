@@ -147,5 +147,13 @@ module.exports = {
     imageId: Joi.string()
       .hex()
       .required()
+  },
+
+  // POST /api/user/login
+  login: {
+    body: {
+      username: Joi.string().required(),
+      password: Joi.string().required()
+    }
   }
 }

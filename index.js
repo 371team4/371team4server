@@ -14,7 +14,10 @@ mongoose.connect(mongoUri, { keepAlive: 1 }).then(
   () => {
     seed
       .initSlidesCollection()
-      .then(seed.initImagesCollection())
+      .then(seed.initImagesCollection().then(
+          seed.initUsersCollection()
+        )
+      )
       .then(console.log('Clean up and Init was completed!'))
   },
   err => {
