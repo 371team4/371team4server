@@ -16,7 +16,7 @@ function login(req, res, next) {
   User.get()
     .then(AllUser => {
       // Loop Through Each User To Match A User
-      var find = false;
+      var find = false
       AllUser.forEach(user => {
         // If User Info Is Found
         if (req.body.username === user.username && req.body.password === user.password) {
@@ -24,21 +24,37 @@ function login(req, res, next) {
           // console.log("user: name:"+user.username+" password: "+user.password)
           const token = jwt.sign({
             username: user.username
-          }, config.jwtSecret);
-          find = true;
+          }, config.jwtSecret)
+          find = true
           return res.json({
             token,
             username: user.username
-          });
+          })
         }
       });
       // If User Info Not Found In Database
       if(!find){
-        const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true);
-        return next(err);
+        const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true)
+        return next(err)
       }
     })
     .catch(e => next(e))
 }
 
-module.exports = { login };
+/**
+ * Create new User
+ * @returns {Slide}
+ */
+function create(req, res, next) {
+  const user = new User({
+    username: req.body.username,
+    password: req.body.password
+  })
+
+  user
+    .save()
+    .then(savedUser => res.json(savedUser))
+    .catch(e => next(e))
+}
+
+module.exports = { login, create };

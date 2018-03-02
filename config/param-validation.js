@@ -149,6 +149,14 @@ module.exports = {
       .required()
   },
 
+  // POST /api/user
+  register: {
+    body: {
+      username: Joi.string().required(),
+      password: Joi.string().required()
+    }
+  },
+
   // POST /api/user/login
   login: {
     body: {
