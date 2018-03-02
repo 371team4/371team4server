@@ -50,6 +50,12 @@ const SlideSchema = new Schema({
 })
 
 /**
+ * // TODO: add a hook for post delete to remove
+ *          images that are only in this slide
+ * // END TODO
+ */
+
+/**
  * Statics
  */
 SlideSchema.statics = {
