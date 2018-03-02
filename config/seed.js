@@ -1,4 +1,5 @@
 const Slide = require("../slide/slide.model");
+const Image = require("../image/image.model");
 
 // demo Slide array
 const initialSlides = [
@@ -148,17 +149,38 @@ const initialSlides = [
   }
 ];
 
+const initialImages = [
+  {
+    name: "androidparty.jpg",
+    mimetype: "image/jpeg",
+    md5: "5cc6106614b3d9a3feb886e0fee9c25e",
+    path: "/images/androidparty.jpg"
+  },
+  {
+    name: "glass.jpg",
+    mimetype: "image/png",
+    md5: "1aff56d3ac29f45b6283917d3b5d3adb",
+    path: "/images/glass.jpg"
+  },
+  {
+    name: "google.jpg",
+    mimetype: "image/jpeg",
+    md5: "7864df87770667b3d7e291a5f6642a14",
+    path: "/images/google.jpg"
+  }
+];
+
 function clearSlidesCollection() {
   // clear database
   return Slide.remove({}, () => {
-    console.log("Collection clean up was completed!");
-  }).exec();// need .exec() to return a promise 
+    console.log("Slides Collection clean up was completed!");
+  }).exec(); // need .exec() to return a promise
 }
 
 function seedSlidesCollection() {
   // seed the database
   return Slide.insertMany(initialSlides, () => {
-    console.log("Collection initialization was completed!");
+    console.log("Slide Collection initialization was completed!");
   });
 }
 
@@ -168,8 +190,31 @@ function initSlidesCollection() {
   });
 }
 
+function clearImagesCollection() {
+  // clear database
+  return Image.remove({}, () => {
+    console.log("Image Collection clean up was completed!");
+  }).exec(); // need .exec() to return a promise
+}
+
+function seedImagesCollection() {
+  // seed the database
+  return Image.insertMany(initialImages, () => {
+    console.log("Image Collection initialization was completed!");
+  });
+}
+
+function initImagesCollection() {
+  return clearImagesCollection().then(() => {
+    return seedImagesCollection();
+  });
+}
+
 module.exports = {
   initSlidesCollection,
   seedSlidesCollection,
-  clearSlidesCollection
+  clearSlidesCollection,
+  initImagesCollection,
+  seedImagesCollection,
+  clearImagesCollection
 };
