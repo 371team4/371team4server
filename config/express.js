@@ -8,6 +8,7 @@ const cors = require('cors');
 const httpStatus = require('http-status');
 const expressWinston = require('express-winston');
 const expressValidation = require('express-validation');
+const fileUpload = require('express-fileupload')
 const helmet = require('helmet');
 const winstonInstance = require('./winston');
 const routes = require('../index.route');
@@ -23,6 +24,9 @@ if (config.env === 'development') {
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// allow for multipart/form-data
+app.use(fileUpload());
 
 app.use(compress());
 app.use(methodOverride());
@@ -45,8 +49,8 @@ if (config.env === 'development') {
     }));
 }
 
-// server static images from the main endpoint 
-app.use('/images', express.static(path.join(__dirname, '..', 'images')));
+// server static images from the main endpoint
+app.use('/images', express.static(path.join(__dirname, '..', 'image', 'images')));
 
 // mount all routes on /api path
 app.use('/api', routes);

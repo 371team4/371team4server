@@ -200,5 +200,18 @@ module.exports = {
         .hex()
         .required()
     }
-  }
+  },
+
+  // PUT /api/images
+  uploadImage: {
+    files: {
+      image: Joi.object().required()
+    }
+  },
+
+  // DELETE /api/images/:imageId
+  deleteImage: {
+    imageId: Joi.string().hex().required()
+  },
+
 };
