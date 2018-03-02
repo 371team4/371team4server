@@ -150,10 +150,23 @@ module.exports = {
   },
 
   // POST /api/user
-  register: {
+  createUser: {
     body: {
       username: Joi.string().required(),
       password: Joi.string().required()
+    }
+  },
+
+  // UPDATE /api/user/:slideId
+  updateUser: {
+    body: {
+      username: Joi.string().required(),
+      password: Joi.string().required()
+    },
+    params: {
+      userId: Joi.string()
+        .hex()
+        .required()
     }
   },
 

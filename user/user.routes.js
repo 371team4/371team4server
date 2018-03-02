@@ -8,11 +8,18 @@ const router = express.Router() // eslint-disable-line new-cap
 router.
   route('/')
   /** POST /api/user - create a new user */
-  .post(validate(paramValidation.register),userCtrl.create)
+  .post(validate(paramValidation.createUser),userCtrl.create)
 
 router.
   route('/login')
   /** POST /api/user/login - login as an administrater */
   .post(validate(paramValidation.login), userCtrl.login)
+
+router.
+  route('/:userId')
+  /** POST /api/user - create a new user */
+  .post(validate(paramValidation.createUser),userCtrl.create)
+
+router.param('userId', userCtrl.load)
 
 module.exports = router

@@ -43,7 +43,7 @@ function login(req, res, next) {
 
 /**
  * Create new User
- * @returns {Slide}
+ * @returns {User}
  */
 function create(req, res, next) {
   const user = new User({
@@ -57,4 +57,36 @@ function create(req, res, next) {
     .catch(e => next(e))
 }
 
-module.exports = { login, create };
+/**
+ * Update existing user
+ * @returns {User}
+ */
+function update(req, res, next) {
+  const user = req.user
+  const updates = {
+    username: req.body.username,
+    password: req.body.password
+  }
+
+  user.username = updates.username
+  user.password = updates.password
+
+  user
+    .save()
+    .then(savedUser => res.json(savedUser))
+    .catch(e => next(e))
+}
+
+/**
+ * Load user and append to req.
+ */
+function load(req, res, next, id) {
+  User.getById(id)
+    .then(user => {
+      req.user = user // eslint-disable-line no-param-reassign
+      return next()
+    })
+    .catch(e => next(e))
+}
+
+module.exports = { login, create, update, load };

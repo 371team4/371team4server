@@ -28,6 +28,21 @@ UserSchema.statics = {
         const err = new APIError('No user exists!', httpStatus.NOT_FOUND)
         return Promise.reject(err)
       })
+  },
+
+  /**
+   * Get Specific User
+   * @returns {Promise<user, APIError>}
+   */
+  getById(id) {
+    return this.findById(id)
+      .then(user => {
+        if (user) {
+          return user
+        }
+        const err = new APIError('No user exists!', httpStatus.NOT_FOUND)
+        return Promise.reject(err)
+      })
   }
 
 }
