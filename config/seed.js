@@ -40,15 +40,9 @@ const initialSlides = [
       endDate: '2018-03-05'
     },
     images: [
-      {
-        src: '/images/google.jpg'
-      },
-      {
-        src: '/images/androidparty.jpg'
-      },
-      {
-        src: '/images/glass.jpg'
-      }
+      '5a98ada216608d51864ef43c',
+      '5a98ad9a16608d51864ef439',
+      '5a98ad9a16608d51864ef43b'
     ]
   },
   {
@@ -88,15 +82,9 @@ const initialSlides = [
       endDate: '2018-03-05'
     },
     images: [
-      {
-        src: '/images/google.jpg'
-      },
-      {
-        src: '/images/androidparty.jpg'
-      },
-      {
-        src: '/images/glass.jpg'
-      }
+      '5a98ada216608d51864ef43c',
+      '5a98ad9a16608d51864ef439',
+      '5a98ad9a16608d51864ef43b'
     ]
   },
   {
@@ -136,33 +124,30 @@ const initialSlides = [
       endDate: '2018-03-05'
     },
     images: [
-      {
-        src: '/images/google.jpg'
-      },
-      {
-        src: '/images/androidparty.jpg'
-      },
-      {
-        src: '/images/glass.jpg'
-      }
+      '5a98ada216608d51864ef43c',
+      '5a98ad9a16608d51864ef439',
+      '5a98ad9a16608d51864ef43b'
     ]
   }
 ]
 
 const initialImages = [
   {
+    _id: '5a98ad9a16608d51864ef43b',
     name: 'androidparty.jpg',
     mimetype: 'image/jpeg',
     md5: '5cc6106614b3d9a3feb886e0fee9c25e',
     path: '/images/androidparty.jpg'
   },
   {
+    _id: '5a98ad9a16608d51864ef439',
     name: 'glass.jpg',
     mimetype: 'image/png',
     md5: '1aff56d3ac29f45b6283917d3b5d3adb',
     path: '/images/glass.jpg'
   },
   {
+    _id: '5a98ada216608d51864ef43c',
     name: 'google.jpg',
     mimetype: 'image/jpeg',
     md5: '7864df87770667b3d7e291a5f6642a14',
