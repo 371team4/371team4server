@@ -1,4 +1,4 @@
-const winston = require("winston");
+const winston = require('winston')
 
 const logger = new winston.Logger({
   transports: [
@@ -7,6 +7,6 @@ const logger = new winston.Logger({
       colorize: true
     })
   ]
-});
+})
 
-module.exports = logger;
+module.exports = logger

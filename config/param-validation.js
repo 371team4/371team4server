@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi')
 
 module.exports = {
   // POST /api/slides
@@ -7,94 +7,94 @@ module.exports = {
       title: {
         content: Joi.string()
           .required()
-          .label("title.content"),
+          .label('title.content'),
         fontColor: Joi.string()
           .required()
-          .label("title.fontColor"),
+          .label('title.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("title.fontSize"),
+          .label('title.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("title.fontWeight"),
+          .label('title.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("title.fontStyle")
+          .label('title.fontStyle')
       },
       description: {
         content: Joi.string()
           .required()
-          .label("description.content"),
+          .label('description.content'),
         fontColor: Joi.string()
           .required()
-          .label("description.fontColor"),
+          .label('description.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("description.fontSize"),
+          .label('description.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("description.fontWeight"),
+          .label('description.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("description.fontStyle")
+          .label('description.fontStyle')
       },
       date: {
         content: Joi.string()
           .required()
-          .label("date.content"),
+          .label('date.content'),
         fontColor: Joi.string()
           .required()
-          .label("date.fontColor"),
+          .label('date.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("date.fontSize"),
+          .label('date.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("date.fontWeight"),
+          .label('date.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("date.fontStyle")
+          .label('date.fontStyle')
       },
       time: {
         content: Joi.string()
           .required()
-          .label("time.content"),
+          .label('time.content'),
         fontColor: Joi.string()
           .required()
-          .label("time.fontColor"),
+          .label('time.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("time.fontSize"),
+          .label('time.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("time.fontWeight"),
+          .label('time.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("time.fontStyle")
+          .label('time.fontStyle')
       },
       meta: {
         template: Joi.string()
           .required()
-          .label("meta.template"),
+          .label('meta.template'),
         timeout: Joi.string()
           .required()
-          .label("meta.timeout"),
+          .label('meta.timeout'),
         repeatable: Joi.boolean()
           .required()
-          .label("meta.repeatable"),
+          .label('meta.repeatable'),
         startDate: Joi.string()
           .required()
-          .label("meta.startDate"),
+          .label('meta.startDate'),
         endDate: Joi.string()
           .required()
-          .label("meta.endDate")
+          .label('meta.endDate')
       },
       images: Joi.array()
-        .items({
-          src: Joi.string()
+        .items(
+          Joi.string()
             .required()
-            .label("image.src")
-        })
+            .label('image ids')
+        )
         .required()
     }
   },
@@ -105,94 +105,94 @@ module.exports = {
       title: {
         content: Joi.string()
           .required()
-          .label("title.content"),
+          .label('title.content'),
         fontColor: Joi.string()
           .required()
-          .label("title.fontColor"),
+          .label('title.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("title.fontSize"),
+          .label('title.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("title.fontWeight"),
+          .label('title.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("title.fontStyle")
+          .label('title.fontStyle')
       },
       description: {
         content: Joi.string()
           .required()
-          .label("description.content"),
+          .label('description.content'),
         fontColor: Joi.string()
           .required()
-          .label("description.fontColor"),
+          .label('description.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("description.fontSize"),
+          .label('description.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("description.fontWeight"),
+          .label('description.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("description.fontStyle")
+          .label('description.fontStyle')
       },
       date: {
         content: Joi.string()
           .required()
-          .label("date.content"),
+          .label('date.content'),
         fontColor: Joi.string()
           .required()
-          .label("date.fontColor"),
+          .label('date.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("date.fontSize"),
+          .label('date.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("date.fontWeight"),
+          .label('date.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("date.fontStyle")
+          .label('date.fontStyle')
       },
       time: {
         content: Joi.string()
           .required()
-          .label("time.content"),
+          .label('time.content'),
         fontColor: Joi.string()
           .required()
-          .label("time.fontColor"),
+          .label('time.fontColor'),
         fontSize: Joi.string()
           .required()
-          .label("time.fontSize"),
+          .label('time.fontSize'),
         fontWeight: Joi.string()
           .required()
-          .label("time.fontWeight"),
+          .label('time.fontWeight'),
         fontStyle: Joi.string()
           .required()
-          .label("time.fontStyle")
+          .label('time.fontStyle')
       },
       meta: {
         template: Joi.string()
           .required()
-          .label("meta.template"),
+          .label('meta.template'),
         timeout: Joi.string()
           .required()
-          .label("meta.timeout"),
+          .label('meta.timeout'),
         repeatable: Joi.boolean()
           .required()
-          .label("meta.repeatable"),
+          .label('meta.repeatable'),
         startDate: Joi.string()
           .required()
-          .label("meta.startDate"),
+          .label('meta.startDate'),
         endDate: Joi.string()
           .required()
-          .label("meta.endDate")
+          .label('meta.endDate')
       },
       images: Joi.array()
-        .items({
-          src: Joi.string()
+        .items(
+          Joi.string()
             .required()
-            .label("image.src")
-        })
+            .label('image ids')
+        )
         .required()
     },
     params: {
@@ -211,7 +211,8 @@ module.exports = {
 
   // DELETE /api/images/:imageId
   deleteImage: {
-    imageId: Joi.string().hex().required()
-  },
-
-};
+    imageId: Joi.string()
+      .hex()
+      .required()
+  }
+}

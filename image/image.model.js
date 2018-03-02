@@ -1,7 +1,7 @@
-const httpStatus = require('http-status');
-const mongoose = require("mongoose");
-const APIError = require('../helpers/APIError');
-const Schema = mongoose.Schema;
+const httpStatus = require('http-status')
+const mongoose = require('mongoose')
+const APIError = require('../helpers/APIError')
+const Schema = mongoose.Schema
 
 /**
  * Define the Image schema
@@ -15,7 +15,7 @@ const ImageSchema = new Schema({
     type: Date,
     default: Date.now
   }
-});
+})
 
 /**
  * Statics
@@ -31,11 +31,11 @@ ImageSchema.statics = {
       .exec()
       .then(image => {
         if (image) {
-          return image;
+          return image
         }
-        const err = new APIError("No such image exists!", httpStatus.NOT_FOUND);
-        return Promise.reject(err);
-      });
+        const err = new APIError('No such image exists!', httpStatus.NOT_FOUND)
+        return Promise.reject(err)
+      })
   },
 
   /**
@@ -49,8 +49,8 @@ ImageSchema.statics = {
       .sort({ createdAt: -1 })
       .skip(+skip)
       .limit(+limit)
-      .exec();
+      .exec()
   }
-};
+}
 
-module.exports = mongoose.model("Image", ImageSchema);
+module.exports = mongoose.model('Image', ImageSchema)

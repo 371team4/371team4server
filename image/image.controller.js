@@ -47,7 +47,7 @@ function upload(req, res, next) {
     next(err)
   }
 
-  if (req.files.image.mimetype.indexOf('image/') === -1){
+  if (req.files.image.mimetype.indexOf('image/') === -1) {
     const err = new APIError(
       'Upload file must be of type image!',
       httpStatus.BAD_REQUEST
@@ -80,7 +80,8 @@ function upload(req, res, next) {
             .then(savedImage => res.json(savedImage))
             .catch(e => next(e))
         })
-      } else { // we have found the image in our collection
+      } else {
+        // we have found the image in our collection
         // return the image
         res.json(dbImage)
       }

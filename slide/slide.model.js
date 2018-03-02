@@ -1,7 +1,7 @@
-const httpStatus = require('http-status');
-const mongoose = require("mongoose");
-const APIError = require('../helpers/APIError');
-const Schema = mongoose.Schema;
+const httpStatus = require('http-status')
+const mongoose = require('mongoose')
+const APIError = require('../helpers/APIError')
+const Schema = mongoose.Schema
 
 /**
  * Define the Slide schema
@@ -42,16 +42,12 @@ const SlideSchema = new Schema({
     startDate: String,
     endDate: String
   },
-  images: [
-      {
-          src: String
-      }
-  ],
+  images: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
   createdAt: {
     type: Date,
     default: Date.now
   }
-});
+})
 
 /**
  * Statics
@@ -64,14 +60,15 @@ SlideSchema.statics = {
    */
   get(id) {
     return this.findById(id)
+      .populate('images')
       .exec()
       .then(slide => {
         if (slide) {
-          return slide;
+          return slide
         }
-        const err = new APIError("No such slide exists!", httpStatus.NOT_FOUND);
-        return Promise.reject(err);
-      });
+        const err = new APIError('No such slide exists!', httpStatus.NOT_FOUND)
+        return Promise.reject(err)
+      })
   },
 
   /**
@@ -82,11 +79,12 @@ SlideSchema.statics = {
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
+      .populate('images')
       .sort({ createdAt: -1 })
       .skip(+skip)
       .limit(+limit)
-      .exec();
+      .exec()
   }
-};
+}
 
-module.exports = mongoose.model("Slide", SlideSchema);
+module.exports = mongoose.model('Slide', SlideSchema)

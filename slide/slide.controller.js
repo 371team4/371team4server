@@ -1,4 +1,4 @@
-const Slide = require("./slide.model");
+const Slide = require('./slide.model')
 
 /**
  * Load slide and append to req.
@@ -6,10 +6,10 @@ const Slide = require("./slide.model");
 function load(req, res, next, id) {
   Slide.get(id)
     .then(slide => {
-      req.slide = slide; // eslint-disable-line no-param-reassign
-      return next();
+      req.slide = slide // eslint-disable-line no-param-reassign
+      return next()
     })
-    .catch(e => next(e));
+    .catch(e => next(e))
 }
 
 /**
@@ -17,7 +17,7 @@ function load(req, res, next, id) {
  * @returns {Slide}
  */
 function get(req, res) {
-  return res.json(req.slide);
+  return res.json(req.slide)
 }
 
 /**
@@ -25,12 +25,12 @@ function get(req, res) {
  * @returns {Slide}
  */
 function create(req, res, next) {
-  const slide = new Slide(perpSlide(req.body));
+  const slide = new Slide(perpSlide(req.body))
 
   slide
     .save()
     .then(savedSlide => res.json(savedSlide))
-    .catch(e => next(e));
+    .catch(e => next(e))
 }
 
 /**
@@ -38,20 +38,20 @@ function create(req, res, next) {
  * @returns {Slide}
  */
 function update(req, res, next) {
-  const slide = req.slide;
+  const slide = req.slide
   const updates = perpSlide(req.body)
-  
-  slide.title = updates.title;
-  slide.description = updates.description;
-  slide.time = updates.time;
-  slide.date = updates.date;
-  slide.meta = updates.meta;
-  slide.images = updates.images;
+
+  slide.title = updates.title
+  slide.description = updates.description
+  slide.time = updates.time
+  slide.date = updates.date
+  slide.meta = updates.meta
+  slide.images = updates.images
 
   slide
     .save()
     .then(savedSlide => res.json(savedSlide))
-    .catch(e => next(e));
+    .catch(e => next(e))
 }
 
 /**
@@ -61,10 +61,10 @@ function update(req, res, next) {
  * @returns {Slide[]}
  */
 function list(req, res, next) {
-  const { limit = 50, skip = 0 } = req.query;
+  const { limit = 50, skip = 0 } = req.query
   Slide.list({ limit, skip })
     .then(slides => res.json(slides))
-    .catch(e => next(e));
+    .catch(e => next(e))
 }
 
 /**
@@ -72,11 +72,11 @@ function list(req, res, next) {
  * @returns {Slide}
  */
 function remove(req, res, next) {
-  const slide = req.slide;
+  const slide = req.slide
   slide
     .remove()
     .then(deletedSlide => res.json(deletedSlide))
-    .catch(e => next(e));
+    .catch(e => next(e))
 }
 
 /**
@@ -121,7 +121,7 @@ function perpSlide(body) {
       endDate: body.meta.endDate
     },
     images: body.images
-  };
+  }
 }
 
-module.exports = { load, get, create, update, list, remove };
+module.exports = { load, get, create, update, list, remove }

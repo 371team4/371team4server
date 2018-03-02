@@ -1,213 +1,213 @@
-const Slide = require("../slide/slide.model");
-const Image = require("../image/image.model");
+const Slide = require('../slide/slide.model')
+const Image = require('../image/image.model')
 
 // demo Slide array
 const initialSlides = [
   {
     title: {
-      content: "first",
-      fontColor: "Blue",
-      fontSize: "Small",
-      fontWeight: "Normal",
-      fontStyle: "Italic"
+      content: 'first',
+      fontColor: 'Blue',
+      fontSize: 'Small',
+      fontWeight: 'Normal',
+      fontStyle: 'Italic'
     },
     description: {
-      content: "first Slide",
-      fontColor: "Red",
-      fontSize: "Large",
-      fontWeight: "Bold",
-      fontStyle: "Oblique"
+      content: 'first Slide',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontWeight: 'Bold',
+      fontStyle: 'Oblique'
     },
     date: {
-      content: "Wed 5 Feb 2015",
-      fontColor: "Green",
-      fontSize: "X-Small",
-      fontWeight: "Lighter",
-      fontStyle: "Normal"
+      content: 'Wed 5 Feb 2015',
+      fontColor: 'Green',
+      fontSize: 'X-Small',
+      fontWeight: 'Lighter',
+      fontStyle: 'Normal'
     },
     time: {
-      content: "02:05 AM",
-      fontColor: "Yellow",
-      fontSize: "XX-Small",
-      fontWeight: "Bolder",
-      fontStyle: "Normal"
+      content: '02:05 AM',
+      fontColor: 'Yellow',
+      fontSize: 'XX-Small',
+      fontWeight: 'Bolder',
+      fontStyle: 'Normal'
     },
     meta: {
-      template: "DefaultSlideTemplate",
-      timeout: "20",
+      template: 'DefaultSlideTemplate',
+      timeout: '20',
       repeatable: true,
-      startDate: "2018-02-16",
-      endDate: "2018-03-05"
+      startDate: '2018-02-16',
+      endDate: '2018-03-05'
     },
     images: [
       {
-        src: "/images/google.jpg"
+        src: '/images/google.jpg'
       },
       {
-        src: "/images/androidparty.jpg"
+        src: '/images/androidparty.jpg'
       },
       {
-        src: "/images/glass.jpg"
+        src: '/images/glass.jpg'
       }
     ]
   },
   {
     title: {
-      content: "Second",
-      fontColor: "Blue",
-      fontSize: "Smaller",
-      fontWeight: "Normal",
-      fontStyle: "Italic"
+      content: 'Second',
+      fontColor: 'Blue',
+      fontSize: 'Smaller',
+      fontWeight: 'Normal',
+      fontStyle: 'Italic'
     },
     description: {
-      content: "second Slide",
-      fontColor: "Red",
-      fontSize: "Medium",
-      fontWeight: "Bold",
-      fontStyle: "Oblique"
+      content: 'second Slide',
+      fontColor: 'Red',
+      fontSize: 'Medium',
+      fontWeight: 'Bold',
+      fontStyle: 'Oblique'
     },
     date: {
-      content: "Mon 6 Mar 2016",
-      fontColor: "Green",
-      fontSize: "Larger",
-      fontWeight: "Lighter",
-      fontStyle: "Normal"
+      content: 'Mon 6 Mar 2016',
+      fontColor: 'Green',
+      fontSize: 'Larger',
+      fontWeight: 'Lighter',
+      fontStyle: 'Normal'
     },
     time: {
-      content: "01:00 AM",
-      fontColor: "Yellow",
-      fontSize: "XX-Large",
-      fontWeight: "Bolder",
-      fontStyle: "Normal"
+      content: '01:00 AM',
+      fontColor: 'Yellow',
+      fontSize: 'XX-Large',
+      fontWeight: 'Bolder',
+      fontStyle: 'Normal'
     },
     meta: {
-      template: "DefaultSlideTemplate",
-      timeout: "20",
+      template: 'DefaultSlideTemplate',
+      timeout: '20',
       repeatable: true,
-      startDate: "2018-02-16",
-      endDate: "2018-03-05"
+      startDate: '2018-02-16',
+      endDate: '2018-03-05'
     },
     images: [
       {
-        src: "/images/google.jpg"
+        src: '/images/google.jpg'
       },
       {
-        src: "/images/androidparty.jpg"
+        src: '/images/androidparty.jpg'
       },
       {
-        src: "/images/glass.jpg"
+        src: '/images/glass.jpg'
       }
     ]
   },
   {
     title: {
-      content: "Third",
-      fontColor: "Blue",
-      fontSize: "X-Large",
-      fontWeight: "Normal",
-      fontStyle: "Italic"
+      content: 'Third',
+      fontColor: 'Blue',
+      fontSize: 'X-Large',
+      fontWeight: 'Normal',
+      fontStyle: 'Italic'
     },
     description: {
-      content: "third Slide",
-      fontColor: "Red",
-      fontSize: "Large",
-      fontWeight: "Bold",
-      fontStyle: "Oblique"
+      content: 'third Slide',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontWeight: 'Bold',
+      fontStyle: 'Oblique'
     },
     date: {
-      content: "Fri 8 Apr 2017",
-      fontColor: "Green",
-      fontSize: "X-Small",
-      fontWeight: "Lighter",
-      fontStyle: "Normal"
+      content: 'Fri 8 Apr 2017',
+      fontColor: 'Green',
+      fontSize: 'X-Small',
+      fontWeight: 'Lighter',
+      fontStyle: 'Normal'
     },
     time: {
-      content: "23:05 AM",
-      fontColor: "Yellow",
-      fontSize: "XX-Small",
-      fontWeight: "Bolder",
-      fontStyle: "Normal"
+      content: '23:05 AM',
+      fontColor: 'Yellow',
+      fontSize: 'XX-Small',
+      fontWeight: 'Bolder',
+      fontStyle: 'Normal'
     },
     meta: {
-      template: "DefaultSlideTemplate",
-      timeout: "20",
+      template: 'DefaultSlideTemplate',
+      timeout: '20',
       repeatable: true,
-      startDate: "2018-02-16",
-      endDate: "2018-03-05"
+      startDate: '2018-02-16',
+      endDate: '2018-03-05'
     },
     images: [
       {
-        src: "/images/google.jpg"
+        src: '/images/google.jpg'
       },
       {
-        src: "/images/androidparty.jpg"
+        src: '/images/androidparty.jpg'
       },
       {
-        src: "/images/glass.jpg"
+        src: '/images/glass.jpg'
       }
     ]
   }
-];
+]
 
 const initialImages = [
   {
-    name: "androidparty.jpg",
-    mimetype: "image/jpeg",
-    md5: "5cc6106614b3d9a3feb886e0fee9c25e",
-    path: "/images/androidparty.jpg"
+    name: 'androidparty.jpg',
+    mimetype: 'image/jpeg',
+    md5: '5cc6106614b3d9a3feb886e0fee9c25e',
+    path: '/images/androidparty.jpg'
   },
   {
-    name: "glass.jpg",
-    mimetype: "image/png",
-    md5: "1aff56d3ac29f45b6283917d3b5d3adb",
-    path: "/images/glass.jpg"
+    name: 'glass.jpg',
+    mimetype: 'image/png',
+    md5: '1aff56d3ac29f45b6283917d3b5d3adb',
+    path: '/images/glass.jpg'
   },
   {
-    name: "google.jpg",
-    mimetype: "image/jpeg",
-    md5: "7864df87770667b3d7e291a5f6642a14",
-    path: "/images/google.jpg"
+    name: 'google.jpg',
+    mimetype: 'image/jpeg',
+    md5: '7864df87770667b3d7e291a5f6642a14',
+    path: '/images/google.jpg'
   }
-];
+]
 
 function clearSlidesCollection() {
   // clear database
   return Slide.remove({}, () => {
-    console.log("Slides Collection clean up was completed!");
-  }).exec(); // need .exec() to return a promise
+    console.log('Slides Collection clean up was completed!')
+  }).exec() // need .exec() to return a promise
 }
 
 function seedSlidesCollection() {
   // seed the database
   return Slide.insertMany(initialSlides, () => {
-    console.log("Slide Collection initialization was completed!");
-  });
+    console.log('Slide Collection initialization was completed!')
+  })
 }
 
 function initSlidesCollection() {
   return clearSlidesCollection().then(() => {
-    return seedSlidesCollection();
-  });
+    return seedSlidesCollection()
+  })
 }
 
 function clearImagesCollection() {
   // clear database
   return Image.remove({}, () => {
-    console.log("Image Collection clean up was completed!");
-  }).exec(); // need .exec() to return a promise
+    console.log('Image Collection clean up was completed!')
+  }).exec() // need .exec() to return a promise
 }
 
 function seedImagesCollection() {
   // seed the database
   return Image.insertMany(initialImages, () => {
-    console.log("Image Collection initialization was completed!");
-  });
+    console.log('Image Collection initialization was completed!')
+  })
 }
 
 function initImagesCollection() {
   return clearImagesCollection().then(() => {
-    return seedImagesCollection();
-  });
+    return seedImagesCollection()
+  })
 }
 
 module.exports = {
@@ -217,4 +217,4 @@ module.exports = {
   initImagesCollection,
   seedImagesCollection,
   clearImagesCollection
-};
+}
