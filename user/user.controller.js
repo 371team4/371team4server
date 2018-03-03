@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const httpStatus = require('http-status');
-const APIError = require('../helpers/APIError');
-const config = require('../config/config');
+const jwt = require('jsonwebtoken')
+const httpStatus = require('http-status')
+const APIError = require('../helpers/APIError')
+const config = require('../config/config')
 const User = require('./user.model')
 
 /**
@@ -20,11 +20,11 @@ function login(req, res, next) {
       AllUser.forEach(user => {
         // If User Info Is Found
         if (req.body.username === user.username && req.body.password === user.password) {
-          // console.log("req: name:"+req.body.username+" password: "+req.body.password)
-          // console.log("user: name:"+user.username+" password: "+user.password)
           const token = jwt.sign({
             username: user.username
-          }, config.jwtSecret)
+          }, config.jwtSecret,
+          // default token expire in 1 hour
+          { expiresIn: 60 * 60 })
           find = true
           return res.json({
             token,
