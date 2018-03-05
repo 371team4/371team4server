@@ -11,11 +11,6 @@ router.
   .post(validate(paramValidation.createUser),userCtrl.create)
 
 router.
-  route('/login')
-  /** POST /api/user/login - Login as user */
-  .post(validate(paramValidation.login), userCtrl.login)
-
-router.
   route('/:userId')
   /** POST /api/user/:userId - Update current user */
   .post(validate(paramValidation.createUser),userCtrl.create)
