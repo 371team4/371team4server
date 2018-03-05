@@ -2,7 +2,7 @@ const express = require('express')
 const slideRoutes = require('./slide/slide.routes')
 const imageRoutes = require('./image/image.routes')
 const userRoutes = require('./user/user.routes')
-const authRoutes = require('./auth/ath.routes')
+const authRoutes = require('./auth/auth.routes')
 
 const router = express.Router() // eslint-disable-line new-cap
 
