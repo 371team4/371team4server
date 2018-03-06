@@ -167,64 +167,58 @@ const initialUsers = [
   }
 ]
 
-function clearSlidesCollection() {
+async function clearSlidesCollection() {
   // clear database
-  return Slide.remove({}, () => {
+  await Slide.remove({}, () => {
     console.log('Slides Collection clean up was completed!')
   }).exec() // need .exec() to return a promise
 }
 
-function seedSlidesCollection() {
+async function seedSlidesCollection() {
   // seed the database
-  return Slide.insertMany(initialSlides, () => {
-    console.log('Slide Collection initialization was completed!')
-  })
+  await Slide.insertMany(initialSlides)
+  console.log('Slide Collection initialization was completed!')
 }
 
-function initSlidesCollection() {
-  return clearSlidesCollection().then(() => {
-    return seedSlidesCollection()
-  })
+async function initSlidesCollection() {
+  await clearSlidesCollection()
+  await seedSlidesCollection()
 }
 
-function clearImagesCollection() {
+async function clearImagesCollection() {
   // clear database
-  return Image.remove({}, () => {
+  await Image.remove({}, () => {
     console.log('Image Collection clean up was completed!')
   }).exec() // need .exec() to return a promise
 }
 
-function seedImagesCollection() {
+async function seedImagesCollection() {
   // seed the database
-  return Image.insertMany(initialImages, () => {
-    console.log('Image Collection initialization was completed!')
-  })
+  await Image.insertMany(initialImages)
+  console.log('Image Collection initialization was completed!')
 }
 
-function initImagesCollection() {
-  return clearImagesCollection().then(() => {
-    return seedImagesCollection()
-  })
+async function initImagesCollection() {
+  await clearImagesCollection()
+  await seedImagesCollection()
 }
 
-function clearUsersCollection() {
+async function clearUsersCollection() {
   // clear database
-  return User.remove({}, () => {
+  await User.remove({}, () => {
     console.log('User Collection clean up was completed!')
   }).exec() // need .exec() to return a promise
 }
 
-function seedUsersCollection() {
+async function seedUsersCollection() {
   // seed the database
-  return User.insertMany(initialUsers, () => {
-    console.log('User Collection initialization was completed!')
-  })
+  await User.insertMany(initialUsers)
+  console.log('User Collection initialization was completed!')
 }
 
-function initUsersCollection() {
-  return clearUsersCollection().then(() => {
-    return seedUsersCollection()
-  })
+async function initUsersCollection() {
+  await clearUsersCollection()
+  await seedUsersCollection()
 }
 
 module.exports = {
