@@ -19,6 +19,6 @@ router.use('/images', imageRoutes)
 router.use('/user', userRoutes);
 
 // mount login routes at /login
-router.use('/login',authRoutes);
+router.use('/login', authRoutes);
 
 module.exports = router
