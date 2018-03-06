@@ -17,7 +17,7 @@ mongoose.connect(mongoUri, { keepAlive: 1 }).then(
       //await seed.initImagesCollection()
       //await seed.initSlidesCollection()
       //await seed.initUsersCollection()
-      console.log('Clean up and Init was completed!')
+      //console.log('Clean up and Init was completed!')
     }
   },
   err => {

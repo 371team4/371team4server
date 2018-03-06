@@ -7,7 +7,7 @@ const router = express.Router() // eslint-disable-line new-cap
 
 router.
   route('/')
-  /** POST /api/user/login - Login as user */
+  /** POST /api/login - Login as user */
   .post(validate(paramValidation.login), authCtrl.login)
 
 module.exports = router

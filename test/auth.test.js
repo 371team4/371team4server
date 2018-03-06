@@ -3,7 +3,7 @@ const httpStatus = require('http-status')
 const jwt = require('jsonwebtoken')
 const chai = require('chai')
 const expect = chai.expect
-const app = require('../index')
+const { app, server } = require('../index')
 const config = require('../config/config')
 const mongoose = require('mongoose')
 const seed = require('../config/seed')
@@ -13,20 +13,24 @@ chai.config.includeStack = true
 
 describe('## Auth APIs', () => {
   beforeEach(done => {
-    debugger
     const mongoUri = config.mongoURI
     mongoose
       .connect(mongoUri, { keepAlive: 1 })
-      .then(seed.initUsersCollection())
-      .then(done())
+      .then(async () => {
+        await seed.clearUsersCollection()
+        await seed.seedUsersCollection()
+        done()
+      })
       .catch(e => console.error(e))
   })
 
   afterEach(done => {
-    mongoose.models = {}
-    mongoose.modelSchemas = {}
-    mongoose.connection.close()
-    app.close()
+    // may need to enable these once mocha watch is working
+    //mongoose.models = {}
+    //mongoose.modelSchemas = {}
+    //mongoose.connection.close()
+    server.close()
+    done()
   })
 
   const validUserCredentials = {
@@ -44,7 +48,7 @@ describe('## Auth APIs', () => {
   describe('# POST /api/login', () => {
     it('should get valid JWT token', done => {
       request(app)
-        .post('/api/auth/login')
+        .post('/api/login')
         .send(validUserCredentials)
         .expect(httpStatus.OK)
         .then(res => {
