@@ -7,8 +7,8 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --inspect index.js",
-    "tdd": "cross-env NODE_ENV=test mocha --ui bdd --reporter spec --colors --recursive --watch",
-    "test": "cross-env NODE_ENV=test mocha --ui bdd --reporter spec --colors server --recursive"
+    "tdd": "cross-env NODE_ENV=test mocha --ui tdd --reporter spec --colors --inspect --watch",
+    "test": "cross-env NODE_ENV=test mocha --ui tdd --reporter spec --colors --exit"
   },
   "repository": {
     "type": "git",
