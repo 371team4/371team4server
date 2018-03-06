@@ -12,6 +12,8 @@ const seed = require('./config/seed')
 const mongoUri = config.mongoURI
 mongoose.connect(mongoUri, { keepAlive: 1 }).then(
   () => {
+    // seed the database if we are in test environment
+    if (config.env === 'test' || config.env === 'development') {
     seed
       .initSlidesCollection()
       .then(seed.initImagesCollection().then(
@@ -19,6 +21,7 @@ mongoose.connect(mongoUri, { keepAlive: 1 }).then(
         )
       )
       .then(console.log('Clean up and Init was completed!'))
+    }
   },
   err => {
     throw new Error(`unable to connect to database: ${mongoUri}`)

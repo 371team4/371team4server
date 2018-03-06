@@ -158,12 +158,12 @@ const initialImages = [
 
 const initialUsers = [
   {
-    username:'admin',
-    password:'admin'
+    username: 'admin',
+    password: 'admin'
   },
   {
-    username:'first',
-    password:'second'
+    username: 'first',
+    password: 'second'
   }
 ]
 

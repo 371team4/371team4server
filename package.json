@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --inspect index.js",
-    "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha"
+    "tdd": "cross-env NODE_ENV=test mocha --ui bdd --reporter spec --colors --recursive --watch",
+    "test": "cross-env NODE_ENV=test mocha --ui bdd --reporter spec --colors server --recursive"
   },
   "repository": {
     "type": "git",
@@ -32,7 +33,6 @@
     "mongoose": "^5.0.6",
     "morgan": "^1.9.0",
     "supertest": "^3.0.0",
-    "supertest-as-promised": "^4.0.2",
     "winston": "^2.4.0"
   },
   "devDependencies": {
