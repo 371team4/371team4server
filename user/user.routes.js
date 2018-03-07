@@ -9,6 +9,7 @@ router.
   route('/')
   /** POST /api/user - Create new user */
   .post(validate(paramValidation.createUser),userCtrl.create)
+  .get(userCtrl.list)
 
 router.
   route('/:userId')

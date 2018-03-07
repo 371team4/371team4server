@@ -64,4 +64,9 @@ function load(req, res, next, id) {
     .catch(e => next(e))
 }
 
-module.exports = { create, update, remove, load };
+function list(req, res, next){
+  User.get().then(AllUser => res.json(AllUser))
+  .catch(e => next(e))
+}
+
+module.exports = { create, update, remove, load, list };
