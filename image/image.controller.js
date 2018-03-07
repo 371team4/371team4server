@@ -7,7 +7,7 @@ const Image = require('./image.model')
 /**
  * Load image and append to req.
  */
-function load(req, res, next, id) {
+function load (req, res, next, id) {
   Image.get(id)
     .then(image => {
       req.image = image // eslint-disable-line no-param-reassign
@@ -20,7 +20,7 @@ function load(req, res, next, id) {
  * Get image
  * @returns {Image}
  */
-function get(req, res) {
+function get (req, res) {
   return res.json(req.image)
 }
 
@@ -28,30 +28,21 @@ function get(req, res) {
  * Upload new image
  * @returns {Image}
  */
-function upload(req, res, next) {
+function upload (req, res, next) {
   // TODO move this check to the paramvalidator
   // check that we were called with an upload file
   if (!req.files) {
-    const err = new APIError(
-      'No files were provided to upload!',
-      httpStatus.BAD_REQUEST
-    )
+    const err = new APIError('No files were provided to upload!', httpStatus.BAD_REQUEST)
     next(err)
   }
   // check that we have an object called image which has the file info
   if (!req.files.image) {
-    const err = new APIError(
-      'Upload name must be an image!',
-      httpStatus.BAD_REQUEST
-    )
+    const err = new APIError('Upload name must be an image!', httpStatus.BAD_REQUEST)
     next(err)
   }
 
   if (req.files.image.mimetype.indexOf('image/') === -1) {
-    const err = new APIError(
-      'Upload file must be of type image!',
-      httpStatus.BAD_REQUEST
-    )
+    const err = new APIError('Upload file must be of type image!', httpStatus.BAD_REQUEST)
     next(err)
   }
   //END TODO
@@ -68,7 +59,7 @@ function upload(req, res, next) {
         const saveLocation = `/images/${image.name}`
 
         // read from the socket connection and write to the saveLocation
-        req.files.image.mv(path.join(__dirname, saveLocation), function(err) {
+        req.files.image.mv(path.join(__dirname, saveLocation), function (err) {
           // if there is an error then return to the client
           if (err) {
             next(err)
@@ -94,7 +85,7 @@ function upload(req, res, next) {
  * @property {number} req.query.limit - Limit number of images to be returned.
  * @returns {Image[]}
  */
-function list(req, res, next) {
+function list (req, res, next) {
   const { limit = 50, skip = 0 } = req.query
   Image.list({ limit, skip })
     .then(images => res.json(images))
@@ -105,9 +96,9 @@ function list(req, res, next) {
  * Delete image.
  * @returns {Image}
  */
-function remove(req, res, next) {
+function remove (req, res, next) {
   const image = req.image
-  fs.unlink(path.join(__dirname, image.path), function() {
+  fs.unlink(path.join(__dirname, image.path), function () {
     image
       .remove()
       .then(deletedImage => res.json(deletedImage))
@@ -118,7 +109,7 @@ function remove(req, res, next) {
 /**
  * Helper function to create an image
  */
-function perpImage(image) {
+function perpImage (image) {
   return {
     name: image.name,
     mimetype: image.mimetype,

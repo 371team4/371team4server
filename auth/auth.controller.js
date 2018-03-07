@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const httpStatus = require('http-status');
-const APIError = require('../helpers/APIError');
-const config = require('../config/config');
+const jwt = require('jsonwebtoken')
+const httpStatus = require('http-status')
+const APIError = require('../helpers/APIError')
+const config = require('../config/config')
 const User = require('../user/user.model')
 
 /**
@@ -11,7 +11,7 @@ const User = require('../user/user.model')
  * @param next
  * @returns {*}
  */
-function login(req, res, next) {
+function login (req, res, next) {
   // Get All User From Database
   User.get()
     .then(AllUser => {
@@ -20,20 +20,23 @@ function login(req, res, next) {
       AllUser.forEach(user => {
         // If User Info Is Found
         if (req.body.username === user.username && req.body.password === user.password) {
-          const token = jwt.sign({
-            username: user.username
-          }, config.jwtSecret,
-          // default token expire in 1 hour
-          { expiresIn: 60 * 60 })
+          const token = jwt.sign(
+            {
+              username: user.username
+            },
+            config.jwtSecret,
+            // default token expire in 1 hour
+            { expiresIn: 60 * 60 }
+          )
           find = true
           return res.json({
             token,
             username: user.username
           })
         }
-      });
+      })
       // If User Info Not Found In Database
-      if(!find){
+      if (!find) {
         const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true)
         return next(err)
       }
@@ -41,4 +44,4 @@ function login(req, res, next) {
     .catch(e => next(e))
 }
 
-module.exports = { login };
+module.exports = { login }

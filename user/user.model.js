@@ -7,8 +7,15 @@ const Schema = mongoose.Schema
  * Define the Slide schema
  */
 const UserSchema = new Schema({
-  username: String,
-  password: String
+  username: {
+    type: String,
+    unique: true
+  },
+  password: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 })
 
 /**
@@ -16,26 +23,26 @@ const UserSchema = new Schema({
  */
 UserSchema.statics = {
   /**
-   * Get All User
-   * @returns {Promise<allUser, APIError>}
+   * List users in descending order of 'createdAt' timestamp.
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<User[]>}
    */
-  get() {
+  list ({ skip = 0, limit = 50 } = {}) {
     return this.find()
-      .then(allUser => {
-        if (allUser) {
-          return allUser
-        }
-        const err = new APIError('No user exists!', httpStatus.NOT_FOUND)
-        return Promise.reject(err)
-      })
+      .sort({ createdAt: -1 })
+      .skip(+skip)
+      .limit(+limit)
+      .exec()
   },
 
   /**
    * Get Specific User
    * @returns {Promise<user, APIError>}
    */
-  getById(id) {
+  get (id) {
     return this.findById(id)
+      .exec()
       .then(user => {
         if (user) {
           return user
@@ -44,7 +51,6 @@ UserSchema.statics = {
         return Promise.reject(err)
       })
   }
-
 }
 
 module.exports = mongoose.model('User', UserSchema)

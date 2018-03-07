@@ -40,11 +40,7 @@ const initialSlides = [
       startDate: '2018-02-16',
       endDate: '2018-03-05'
     },
-    images: [
-      '5a98ada216608d51864ef43c',
-      '5a98ad9a16608d51864ef439',
-      '5a98ad9a16608d51864ef43b'
-    ]
+    images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
   },
   {
     title: {
@@ -82,11 +78,7 @@ const initialSlides = [
       startDate: '2018-02-16',
       endDate: '2018-03-05'
     },
-    images: [
-      '5a98ada216608d51864ef43c',
-      '5a98ad9a16608d51864ef439',
-      '5a98ad9a16608d51864ef43b'
-    ]
+    images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
   },
   {
     title: {
@@ -124,11 +116,7 @@ const initialSlides = [
       startDate: '2018-02-16',
       endDate: '2018-03-05'
     },
-    images: [
-      '5a98ada216608d51864ef43c',
-      '5a98ad9a16608d51864ef439',
-      '5a98ad9a16608d51864ef43b'
-    ]
+    images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
   }
 ]
 
@@ -167,56 +155,56 @@ const initialUsers = [
   }
 ]
 
-async function clearSlidesCollection() {
+async function clearSlidesCollection () {
   // clear database
   await Slide.remove({}, () => {
     console.log('Slides Collection clean up was completed!')
   }).exec() // need .exec() to return a promise
 }
 
-async function seedSlidesCollection() {
+async function seedSlidesCollection () {
   // seed the database
   await Slide.insertMany(initialSlides)
   console.log('Slide Collection initialization was completed!')
 }
 
-async function initSlidesCollection() {
+async function initSlidesCollection () {
   await clearSlidesCollection()
   await seedSlidesCollection()
 }
 
-async function clearImagesCollection() {
+async function clearImagesCollection () {
   // clear database
   await Image.remove({}, () => {
     console.log('Image Collection clean up was completed!')
   }).exec() // need .exec() to return a promise
 }
 
-async function seedImagesCollection() {
+async function seedImagesCollection () {
   // seed the database
   await Image.insertMany(initialImages)
   console.log('Image Collection initialization was completed!')
 }
 
-async function initImagesCollection() {
+async function initImagesCollection () {
   await clearImagesCollection()
   await seedImagesCollection()
 }
 
-async function clearUsersCollection() {
+async function clearUsersCollection () {
   // clear database
   await User.remove({}, () => {
     console.log('User Collection clean up was completed!')
   }).exec() // need .exec() to return a promise
 }
 
-async function seedUsersCollection() {
+async function seedUsersCollection () {
   // seed the database
   await User.insertMany(initialUsers)
   console.log('User Collection initialization was completed!')
 }
 
-async function initUsersCollection() {
+async function initUsersCollection () {
   await clearUsersCollection()
   await seedUsersCollection()
 }
