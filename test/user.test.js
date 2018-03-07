@@ -52,16 +52,17 @@ describe('## Auth APIs', () => {
     });
   })
 
-  describe('# POST /api/user/:userId', () => {
+  describe('# PUT /api/user/:userId', () => {
     it('should update user details', (done) => {
-      user.username = 'KK'
+      user.password = 'KK'
       request(app)
-        .post(`/api/user/${user._id}`)
+        .put(`/api/user/${user._id}`)
         .send(user)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body.username).to.equal('KK')
-          expect(res.body.password).to.equal(user.password)
+          console.log(res.body)
+          expect(res.body.username).to.equal(user.username)
+          expect(res.body.password).to.equal('KK')
           done()
         })
         .catch(done)
@@ -74,8 +75,8 @@ describe('## Auth APIs', () => {
         .delete(`/api/user/${user._id}`)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body.username).to.equal('KK123')
-          expect(res.body.password).to.equal(user.password)
+          expect(res.body.username).to.equal(user.username)
+          expect(res.body.password).to.equal('KK')
           done();
         })
         .catch(done)

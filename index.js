@@ -16,8 +16,8 @@ mongoose.connect(mongoUri, { keepAlive: 1 }).then(
     if (config.env === 'test' || config.env === 'development') {
       //await seed.initImagesCollection()
       //await seed.initSlidesCollection()
-      //await seed.initUsersCollection()
-      //console.log('Clean up and Init was completed!')
+      // await seed.initUsersCollection()
+      // console.log('Clean up and Init was completed!')
     }
   },
   err => {

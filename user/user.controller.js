@@ -1,14 +1,10 @@
-const jwt = require('jsonwebtoken')
-const httpStatus = require('http-status')
-const APIError = require('../helpers/APIError')
-const config = require('../config/config')
 const User = require('./user.model')
 
 /**
  * Create new User
  * @returns {User}
  */
-function create(req, res, next) {
+function create (req, res, next) {
   const user = new User({
     username: req.body.username,
     password: req.body.password
@@ -24,14 +20,15 @@ function create(req, res, next) {
  * Update existing user
  * @returns {User}
  */
-function update(req, res, next) {
+function update (req, res, next) {
   const user = req.user
+  console.log(user)
   const updates = {
-    username: req.body.username,
+    //username: req.body.username,
     password: req.body.password
   }
 
-  user.username = updates.username
+  //user.username = updates.username
   user.password = updates.password
 
   user
@@ -44,7 +41,7 @@ function update(req, res, next) {
  * Delete User.
  * @returns {User}
  */
-function remove(req, res, next) {
+function remove (req, res, next) {
   const user = req.user
   user
     .remove()
@@ -55,8 +52,8 @@ function remove(req, res, next) {
 /**
  * Load user and append to req.
  */
-function load(req, res, next, id) {
-  User.getById(id)
+function load (req, res, next, id) {
+  User.get(id)
     .then(user => {
       req.user = user // eslint-disable-line no-param-reassign
       return next()
@@ -64,9 +61,25 @@ function load(req, res, next, id) {
     .catch(e => next(e))
 }
 
-function list(req, res, next){
-  User.get().then(AllUser => res.json(AllUser))
-  .catch(e => next(e))
+/**
+ * Get user
+ * @returns {User}
+ */
+function get (req, res) {
+  return res.json(req.user)
 }
 
-module.exports = { create, update, remove, load, list };
+/**
+ * Get user list.
+ * @property {number} req.query.skip - Number of users to be skipped.
+ * @property {number} req.query.limit - Limit number of users to be returned.
+ * @returns {Slide[]}
+ */
+function list (req, res, next) {
+  const { limit = 50, skip = 0 } = req.query
+  User.list({ limit, skip })
+    .then(users => res.json(users))
+    .catch(e => next(e))
+}
+
+module.exports = { list, get, create, update, remove, load }

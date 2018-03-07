@@ -19,14 +19,14 @@ const ImageSchema = new Schema({
 })
 
 // remove the references from the slides collection n..n relation
-ImageSchema.pre('remove', function(next) {
+ImageSchema.pre('remove', function (next) {
   Slide.update(
     { images: this._id },
     { $pull: { images: this._id } },
     { multi: true },
-    function(err) {
+    function (err) {
       if(err){
-        console.log(err)
+        throw new Error(err)
       }
     }
   ).exec()
@@ -42,7 +42,7 @@ ImageSchema.statics = {
    * @param {ObjectId} id - The objectId of image.
    * @returns {Promise<Image, APIError>}
    */
-  get(id) {
+  get (id) {
     return this.findById(id)
       .exec()
       .then(image => {
@@ -60,7 +60,7 @@ ImageSchema.statics = {
    * @param {number} limit - Limit number of images to be returned.
    * @returns {Promise<Image[]>}
    */
-  list({ skip = 0, limit = 50 } = {}) {
+  list ({ skip = 0, limit = 50 } = {}) {
     return this.find()
       .sort({ createdAt: -1 })
       .skip(+skip)

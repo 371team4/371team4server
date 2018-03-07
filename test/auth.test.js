@@ -7,7 +7,6 @@ const { app, server } = require('../index')
 const config = require('../config/config')
 const mongoose = require('mongoose')
 const seed = require('../config/seed')
-const User = require('../user/user.model')
 
 chai.config.includeStack = true
 
@@ -21,7 +20,9 @@ describe('## Auth APIs', () => {
         await seed.seedUsersCollection()
         done()
       })
-      .catch(e => console.error(e))
+      .catch(e => {
+        throw new Error(e)
+      })
   })
 
   afterEach(done => {
@@ -43,8 +44,6 @@ describe('## Auth APIs', () => {
     password: 'IDontKnow'
   }
 
-  let jwtToken
-
   describe('# POST /api/login', () => {
     it('should get valid JWT token', done => {
       request(app)
@@ -56,7 +55,6 @@ describe('## Auth APIs', () => {
           jwt.verify(res.body.token, config.jwtSecret, (err, decoded) => {
             expect(err).to.not.be.ok // eslint-disable-line no-unused-expressions
             expect(decoded.username).to.equal(validUserCredentials.username)
-            jwtToken = `Bearer ${res.body.token}`
             done()
           })
         })

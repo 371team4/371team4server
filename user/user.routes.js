@@ -5,17 +5,25 @@ const userCtrl = require('./user.controller')
 
 const router = express.Router() // eslint-disable-line new-cap
 
-router.
-  route('/')
-  /** POST /api/user - Create new user */
-  .post(validate(paramValidation.createUser),userCtrl.create)
+router
+  .route('/')
+
+  /** GET /api/users - Get list of users */
   .get(userCtrl.list)
 
-router.
-  route('/:userId')
-  /** POST /api/user/:userId - Update current user */
-  .post(validate(paramValidation.createUser),userCtrl.create)
-  /** DELETE /api/user/:userId - Delete user */
+  /** POST /api/users - Create new user */
+  .post(validate(paramValidation.createUser), userCtrl.create)
+
+router
+  .route('/:userId')
+
+  /** GET /api/users/:userId - Get user */
+  .get(userCtrl.get)
+
+  /** POST /api/users/:userId - Update current user */
+  .put(validate(paramValidation.updateUser), userCtrl.update)
+
+  /** DELETE /api/users/:userId - Delete user */
   .delete(userCtrl.remove)
 
 router.param('userId', userCtrl.load)

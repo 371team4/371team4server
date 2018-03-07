@@ -64,7 +64,7 @@ SlideSchema.statics = {
    * @param {ObjectId} id - The objectId of slide.
    * @returns {Promise<Slide, APIError>}
    */
-  get(id) {
+  get (id) {
     return this.findById(id)
       .populate('images')
       .exec()
@@ -83,7 +83,7 @@ SlideSchema.statics = {
    * @param {number} limit - Limit number of slides to be returned.
    * @returns {Promise<Slide[]>}
    */
-  list({ skip = 0, limit = 50 } = {}) {
+  list ({ skip = 0, limit = 50 } = {}) {
     return this.find()
       .populate('images')
       .sort({ createdAt: -1 })

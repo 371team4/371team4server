@@ -1,12 +1,11 @@
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
-const APIError = require('../helpers/APIError')
 const Slide = require('./slide.model')
 
 /**
  * Load slide and append to req.
  */
-function load(req, res, next, id) {
+function load (req, res, next, id) {
   Slide.get(id)
     .then(slide => {
       req.slide = slide // eslint-disable-line no-param-reassign
@@ -19,7 +18,7 @@ function load(req, res, next, id) {
  * Get slide
  * @returns {Slide}
  */
-function get(req, res) {
+function get (req, res) {
   return res.json(req.slide)
 }
 
@@ -27,39 +26,41 @@ function get(req, res) {
  * Create new slide
  * @returns {Slide}
  */
-function create(req, res, next) {
-  JwtVerify(req.body).then(function(decode){
-    const slide = new Slide(perpSlide(req.body))
-    slide
-      .save()
-      .then(savedSlide => res.json(savedSlide))
-      .catch(e => next(e))
-  })
-  .catch(e => next(e))
+function create (req, res, next) {
+  JwtVerify(req.body)
+    .then(function () {
+      const slide = new Slide(perpSlide(req.body))
+      slide
+        .save()
+        .then(savedSlide => res.json(savedSlide))
+        .catch(e => next(e))
+    })
+    .catch(e => next(e))
 }
 
 /**
  * Update existing slide
  * @returns {Slide}
  */
-function update(req, res, next) {
-  JwtVerify(req.body).then(function(decode){
-    const slide = req.slide
-    const updates = perpSlide(req.body)
+function update (req, res, next) {
+  JwtVerify(req.body)
+    .then(function () {
+      const slide = req.slide
+      const updates = perpSlide(req.body)
 
-    slide.title = updates.title
-    slide.description = updates.description
-    slide.time = updates.time
-    slide.date = updates.date
-    slide.meta = updates.meta
-    slide.images = updates.images
+      slide.title = updates.title
+      slide.description = updates.description
+      slide.time = updates.time
+      slide.date = updates.date
+      slide.meta = updates.meta
+      slide.images = updates.images
 
-    slide
-      .save()
-      .then(savedSlide => res.json(savedSlide))
-      .catch(e => next(e))
-  })
-  .catch(e => next(e))
+      slide
+        .save()
+        .then(savedSlide => res.json(savedSlide))
+        .catch(e => next(e))
+    })
+    .catch(e => next(e))
 }
 
 /**
@@ -68,7 +69,7 @@ function update(req, res, next) {
  * @property {number} req.query.limit - Limit number of slides to be returned.
  * @returns {Slide[]}
  */
-function list(req, res, next) {
+function list (req, res, next) {
   const { limit = 50, skip = 0 } = req.query
   Slide.list({ limit, skip })
     .then(slides => res.json(slides))
@@ -79,22 +80,23 @@ function list(req, res, next) {
  * Delete slide.
  * @returns {Slide}
  */
-function remove(req, res, next) {
-  JwtVerify(req.body).then(function(decode){
-    const slide = req.slide
-    slide
-      .remove()
-      .then(deletedSlide => res.json(deletedSlide))
-      .catch(e => next(e))
-  })
-  .catch(e => next(e))
+function remove (req, res, next) {
+  JwtVerify(req.body)
+    .then(function () {
+      const slide = req.slide
+      slide
+        .remove()
+        .then(deletedSlide => res.json(deletedSlide))
+        .catch(e => next(e))
+    })
+    .catch(e => next(e))
 }
 
 /**
  * Helper function for `create()` this will
  * return a Slide object from the body object provided
  */
-function perpSlide(body) {
+function perpSlide (body) {
   return {
     title: {
       content: body.title.content,
@@ -139,13 +141,12 @@ function perpSlide(body) {
  * Helper function for `create(), update(), remove()` this will
  * check the token from the body object provided if it valid or invalid
  */
-function JwtVerify(body) {
-  return new Promise(function(resolve,reject){
-    jwt.verify(body.token,config.jwtSecret,function(err,decode){
-      if(err){
+function JwtVerify (body) {
+  return new Promise(function (resolve, reject) {
+    jwt.verify(body.token, config.jwtSecret, function (err, decode) {
+      if (err) {
         reject(err)
-      }
-      else{
+      } else {
         resolve(decode)
       }
     })
