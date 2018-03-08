@@ -22,12 +22,10 @@ function create (req, res, next) {
  */
 function update (req, res, next) {
   const user = req.user
-  console.log(user)
   const updates = {
     //username: req.body.username,
     password: req.body.password
   }
-
   //user.username = updates.username
   user.password = updates.password
 

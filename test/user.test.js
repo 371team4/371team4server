@@ -36,6 +36,14 @@ describe('## Auth APIs', () => {
     password: '1234567890'
   }
 
+  let noNameUser = {
+    password : 'helloworld'
+  }
+
+  let noPasswordUser = {
+    username : 'admin'
+  }
+
   describe('# POST /api/user', () => {
     it('should create a new user', (done) => {
       request(app)
@@ -52,6 +60,34 @@ describe('## Auth APIs', () => {
     });
   })
 
+  describe('# POST /api/user', () => {
+    it('should create a new user', (done) => {
+      request(app)
+        .post('/api/user')
+        .send(noNameUser)
+        .expect(httpStatus.BAD_REQUEST)
+        .then((res) => {
+          expect(res.body.message).to.equal('\'username\' is required')
+          done()
+        })
+        .catch(done)
+    });
+  })
+
+  describe('# POST /api/user', () => {
+    it('should create a new user', (done) => {
+      request(app)
+        .post('/api/user')
+        .send(noPasswordUser)
+        .expect(httpStatus.BAD_REQUEST)
+        .then((res) => {
+          expect(res.body.message).to.equal('\'password\' is required')
+          done()
+        })
+        .catch(done)
+    });
+  })
+
   describe('# PUT /api/user/:userId', () => {
     it('should update user details', (done) => {
       user.password = 'KK'
@@ -60,7 +96,6 @@ describe('## Auth APIs', () => {
         .send(user)
         .expect(httpStatus.OK)
         .then((res) => {
-          console.log(res.body)
           expect(res.body.username).to.equal(user.username)
           expect(res.body.password).to.equal('KK')
           done()
