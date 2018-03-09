@@ -14,8 +14,8 @@ mongoose.connect(mongoUri, { keepAlive: 1 }).then(
   async () => {
     // seed the database if we are in test environment
     if (config.env === 'test' || config.env === 'development') {
-      //await seed.initImagesCollection()
-      //await seed.initSlidesCollection()
+      // await seed.initImagesCollection()
+      // await seed.initSlidesCollection()
       // await seed.initUsersCollection()
       // console.log('Clean up and Init was completed!')
     }

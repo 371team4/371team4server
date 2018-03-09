@@ -30,7 +30,7 @@ function login (req, res, next) {
           )
           find = true
           return res.json({
-            token,
+            token: token,
             username: user.username
           })
         }

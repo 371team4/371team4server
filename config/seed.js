@@ -152,6 +152,9 @@ const initialUsers = [
   {
     username: 'first',
     password: 'second'
+  },{
+    username: 'test',
+    password: 'test'
   }
 ]
 

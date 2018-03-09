@@ -9,14 +9,13 @@ const seed = require('../config/seed');
 
 chai.config.includeStack = true;
 
-describe('## Auth APIs', () => {
+describe('## User APIs', () => {
   before(done => {
     const mongoUri = config.mongoURI
     mongoose
       .connect(mongoUri, { keepAlive: 1 })
       .then(async () => {
-        await seed.clearUsersCollection()
-        await seed.seedUsersCollection()
+        await seed.initUsersCollection()
         done()
       })
       .catch(e => console.error(e))
