@@ -10,7 +10,9 @@ const seed = require('../config/seed')
 chai.config.includeStack = true
 chai.config.truncateThreshold = 0
 
-var token
+let token
+
+let newId
 
 const initialSlides =
 [
@@ -223,6 +225,30 @@ const initialSlides =
   }
 ]
 
+const slideTitles = [
+  {
+    "content": "Third",
+    "fontColor": "Blue",
+    "fontSize": "X-Large",
+    "fontWeight": "Normal",
+    "fontStyle": "Italic"
+  },
+  {
+    "content": "first",
+    "fontColor": "Blue",
+    "fontSize": "Small",
+    "fontWeight": "Normal",
+    "fontStyle": "Italic"
+  },
+  {
+    "content": "Second",
+    "fontColor": "Blue",
+    "fontSize": "Smaller",
+    "fontWeight": "Normal",
+    "fontStyle": "Italic"
+  }
+]
+
 let samplePostSlide ={
   title: {
     content: 'some',
@@ -262,7 +288,47 @@ let samplePostSlide ={
   images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
 }
 
-describe('## Auth APIs', () => {
+let sampleUpdateSlide ={
+  title: {
+    content: 'someNew',
+    fontColor: 'Blue',
+    fontSize: 'Small',
+    fontWeight: 'Normal',
+    fontStyle: 'Italic'
+  },
+  description: {
+    content: 'some Slide',
+    fontColor: 'Red',
+    fontSize: 'Large',
+    fontWeight: 'Bold',
+    fontStyle: 'Oblique'
+  },
+  date: {
+    content: 'Fri 6 Apr 2016',
+    fontColor: 'Green',
+    fontSize: 'X-Small',
+    fontWeight: 'Lighter',
+    fontStyle: 'Normal'
+  },
+  time: {
+    content: '01:01 AM',
+    fontColor: 'Yellow',
+    fontSize: 'XX-Small',
+    fontWeight: 'Bolder',
+    fontStyle: 'Normal'
+  },
+  meta: {
+    template: 'DefaultSlideTemplate',
+    timeout: '20',
+    repeatable: true,
+    startDate: '2017-02-16',
+    endDate: '2018-03-05'
+  },
+  images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
+}
+
+describe('## Auth APIs', function () {
+  this.timeout(15000)
   before(done => {
     const mongoUri = config.mongoURI
     mongoose
@@ -272,18 +338,17 @@ describe('## Auth APIs', () => {
         await seed.initSlidesCollection()
         await seed.initUsersCollection()
         // how should I call await and async here ?
-        await request(app)
+        request(app)
                 .post('/api/login')
                 .send({
                   username: 'test',
                   password: 'test'
                 })
-                .then(async (res) => {
-                  await function(){
-                    token = res.body.toke
+                .then((res) => {
+                  samplePostSlide.token = res.body.token
+                  sampleUpdateSlide.token = res.body.token
                     done()
-                  }
-                })
+                  })
                 .catch(e => console.error(e))
       })
       .catch(e => console.error(e))
@@ -305,111 +370,70 @@ describe('## Auth APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           for(var i = 0;i < 3;i++){
-            expect(res.body[i].title).to.deep.equal(initialSlides[i].title)
-            expect(res.body[i].description).to.deep.equal(initialSlides[i].description)
-            expect(res.body[i].date).to.deep.equal(initialSlides[i].date)
-            expect(res.body[i].time).to.deep.equal(initialSlides[i].time)
-            expect(res.body[i].meta).to.deep.equal(initialSlides[i].meta)
-            // loop through images of initialSlides
-            for(var j = 0; j < 3; j++){
-              expect(res.body[i].images[j]._id).to.deep.equal(initialSlides[i].images[j]._id)
-              expect(res.body[i].images[j].md5).to.deep.equal(initialSlides[i].images[j].md5)
-              expect(res.body[i].images[j].mimetype).to.deep.equal(initialSlides[i].images[j].mimetype)
-              expect(res.body[i].images[j].name).to.deep.equal(initialSlides[i].images[j].name)
-              expect(res.body[i].images[j].path).to.deep.equal(initialSlides[i].images[j].path)
-              expect(res.body[i].images[j]._v).to.deep.equal(initialSlides[i].images[j]._v)
-            }
+           expect(slideTitles).to.deep.include(res.body[i].title);
           }
           done()
         })
         .catch(done)
     });
   })
-console.log(token)
+
   describe('# POST /api/slides', () => {
     it('should create a new slide', (done) => {
       request(app)
         .post('/api/slides')
-        .send({
-          token : token,
-          slide : samplePostSlide
-        })
+        .send( samplePostSlide)
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.title).to.deep.equal(samplePostSlide.title)
-          expect(res.body.description).to.deep.equal(samplePostSlide.description)
-          expect(res.body.date).to.deep.equal(samplePostSlide.date)
-          expect(res.body.time).to.deep.equal(samplePostSlide.time)
-          expect(res.body.meta).to.deep.equal(samplePostSlide.meta)
-          for(var i = 0; i < 3 ; i++){
-            expect(res.body.images[i]._id).to.equal(samplePostSlide.images[i]._id)
-          }
+          newId = res.body._id
           done()
         })
         .catch(done)
     });
   })
 
-  /*
-  describe('# POST /api/user', () => {
-    it('should create a new user', (done) => {
+  describe('# GET /api/slides', () => {
+    it('should return all slides', (done) => {
       request(app)
-        .post('/api/user')
-        .send(noNameUser)
-        .expect(httpStatus.BAD_REQUEST)
-        .then((res) => {
-          expect(res.body.message).to.equal('\'username\' is required')
-          done()
-        })
-        .catch(done)
-    });
-  })
-
-  describe('# POST /api/user', () => {
-    it('should create a new user', (done) => {
-      request(app)
-        .post('/api/user')
-        .send(noPasswordUser)
-        .expect(httpStatus.BAD_REQUEST)
-        .then((res) => {
-          expect(res.body.message).to.equal('\'password\' is required')
-          done()
-        })
-        .catch(done)
-    });
-  })
-
-  describe('# PUT /api/user/:userId', () => {
-    it('should update user details', (done) => {
-      user.password = 'KK'
-      request(app)
-        .put(`/api/user/${user._id}`)
-        .send(user)
+        .get(`/api/slides/${newId}`)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body.username).to.equal(user.username)
-          expect(res.body.password).to.equal('KK')
+          expect(res.body.title).to.deep.equal(samplePostSlide.title)
           done()
         })
         .catch(done)
-    })
+    });
   })
 
-  describe('# DELETE /api/user/:userId', () => {
-    it('should delete user', (done) => {
+  describe('# PUT /api/slides/slideId', () => {
+    it('should update a current slide', (done) => {
       request(app)
-        .delete(`/api/user/${user._id}`)
+        .put(`/api/slides/${newId}`)
+        .send(sampleUpdateSlide)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body.username).to.equal(user.username)
-          expect(res.body.password).to.equal('KK')
-          done();
+          expect(res.body.title).to.deep.equal(sampleUpdateSlide.title)
+          done()
         })
         .catch(done)
-    })
+    });
   })
 
-  */
+  describe('# DELETE /api/slides/slideId', () => {
+    it('should DELETE a current slide', (done) => {
+      request(app)
+        .delete(`/api/slides/${newId}`)
+        .send(sampleUpdateSlide)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body.title).to.deep.equal(sampleUpdateSlide.title)
+          done()
+        })
+        .catch(done)
+    });
+  })
+
 
 })
 

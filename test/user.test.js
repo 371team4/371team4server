@@ -9,7 +9,8 @@ const seed = require('../config/seed');
 
 chai.config.includeStack = true;
 
-describe('## User APIs', () => {
+describe('## User APIs', function () {
+  this.timeout(15000)
   before(done => {
     const mongoUri = config.mongoURI
     mongoose
