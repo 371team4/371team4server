@@ -4,6 +4,8 @@ const httpStatus = require('http-status')
 const chai = require('chai') // eslint-disable-line import/newline-after-import
 const expect = chai.expect
 const Mock = require('mockjs')
+const path = require('path')
+const fs = require('file-system')
 const { app, server } = require('../index')
 const config = require('../config/config')
 const seed = require('../config/seed')
@@ -38,9 +40,9 @@ const initialImages = [
 
 const imageIds = ['5a98ad9a16608d51864ef439','5a98ada216608d51864ef43c','5a98ad9a16608d51864ef43b']
 
-var sampleImage = new Image();
+var newId;
 
-describe.only('## Image APIs', function () {
+describe('## Image APIs', function () {
   this.timeout(15000)
   before(done => {
     const mongoUri = config.mongoURI
@@ -48,12 +50,6 @@ describe.only('## Image APIs', function () {
       .connect(mongoUri, { keepAlive: 1 })
       .then(async () => {
         await seed.initImagesCollection()
-        // sampleImage = Mock.Random.dataImage()
-        sampleImage.name = 'sampleImage.jpg',
-        sampleImage.mimetype = 'image/jpeg',
-        sampleImage.path = '/images/sampleImage.jpg',
-        sampleImage.md5 = 'a017e0caf9119cc47e6729799c0161ba',
-        sampleImage._id = '5a98ad9a16608d51864ef567'
         done()
       })
       .catch(e => console.error(e))
@@ -87,14 +83,11 @@ describe.only('## Image APIs', function () {
     it('should create a new image', (done) => {
       request(app)
         .put('/api/images')
-        .send({
-          files: {
-            image: sampleImage
-          }
-        })
+        .attach('image',path.join(__dirname, './Image/001.jpg'))
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body._id).to.deep.equal(sampleImage._id)
+          expect(res.body.name).to.equal('001.jpg')
+          newId = res.body._id
           done()
         })
         .catch(done)
@@ -119,12 +112,10 @@ describe.only('## Image APIs', function () {
   describe('# DELETE /api/images/:userId', () => {
     it('should delete image', (done) => {
       request(app)
-        .delete(`/api/images/${initialImages[0]._id}`)
+        .delete(`/api/images/${newId}`)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body.md5).to.deep.equal(initialImages[0].md5)
-          expect(res.body.mimetype).to.deep.equal(initialImages[0].mimetype)
-          expect(res.body.name).to.deep.equal(initialImages[0].name)
+          expect(res.body.name).to.equal('001.jpg')
           done();
         })
         .catch(done)
