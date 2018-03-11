@@ -8,9 +8,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon index.js",
     "start:debug": "npm run start -- --inspect",
-    "_test": "cross-env NODE_ENV=test mocha test/*.js --require babel-core/register --exit",
-    "test": "npm run _test",
-    "tdd": "npm run nodemon --exec \"npm run _test\""
+    "tdd": "cross-env NODE_ENV=test nodemon --exec nyc --cache --reporter=text-summary mocha test/*.js --exit",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov --cache --reporter=text-summary --report-dir=./test/coverage mocha test/*.js --exit",
+    "lint": "eslint --ext .js"
   },
   "repository": {
     "type": "git",
@@ -34,27 +34,19 @@
     "method-override": "^2.3.10",
     "mongoose": "^5.0.9",
     "morgan": "^1.9.0",
-    "supertest": "^3.0.0",
-    "winston": "^2.4.0"
+    "winston": "^2.4.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.2",
-    "babel-istanbul": "^0.12.2",
-    "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
-    "cross-env": "^5.1.3",
+    "cross-env": "^5.1.4",
     "eslint": "^4.18.2",
     "eslint-plugin-import": "^2.9.0",
     "husky": "^0.14.3",
     "istanbul": "^0.4.5",
-    "mocha": "^5.0.1",
+    "mocha": "^5.0.4",
     "nodemon": "^1.17.1",
-    "nyc": "^11.4.1",
-    "sinon": "^4.4.2"
-  },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
+    "nyc": "^11.5.0",
+    "sinon": "^4.4.2",
+    "supertest": "^3.0.0"
   }
 }
