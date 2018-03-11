@@ -1,6 +1,6 @@
-const Slide = require('../slide/slide.model')
-const Image = require('../image/image.model')
-const User = require('../user/user.model')
+const Slide = require('../models/slide/slide.model')
+const Image = require('../models/image/image.model')
+const User = require('../models/user/user.model')
 
 // demo Slide array
 const initialSlides = [

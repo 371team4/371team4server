@@ -1,6 +1,6 @@
 const httpStatus = require('http-status')
 const mongoose = require('mongoose')
-const APIError = require('../helpers/APIError')
+const APIError = require('../../helpers/APIError')
 const Slide = require('../slide/slide.model')
 const Schema = mongoose.Schema
 

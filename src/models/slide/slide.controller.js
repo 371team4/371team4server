@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const config = require('../config/config')
+const config = require('../../config/config')
 const Slide = require('./slide.model')
 
 /**

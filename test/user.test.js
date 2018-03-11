@@ -4,8 +4,8 @@ const httpStatus = require('http-status');
 const chai = require('chai'); // eslint-disable-line import/newline-after-import
 const expect = chai.expect;
 const { app, server } = require('../index')
-const config = require('../config/config');
-const seed = require('../config/seed');
+const config = require('../src/config/config');
+const seed = require('../src/config/seed');
 
 chai.config.includeStack = true;
 

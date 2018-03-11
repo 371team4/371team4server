@@ -1,6 +1,6 @@
 const express = require('express')
 const validate = require('express-validation')
-const paramValidation = require('../config/param-validation')
+const paramValidation = require('../../config/param-validation')
 const imageCtrl = require('./image.controller')
 
 const router = express.Router() // eslint-disable-line new-cap

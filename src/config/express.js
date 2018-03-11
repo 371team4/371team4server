@@ -11,7 +11,7 @@ const expressValidation = require('express-validation')
 const fileUpload = require('express-fileupload')
 const helmet = require('helmet')
 const winstonInstance = require('./winston')
-const routes = require('../index.route')
+const routes = require('../../index.route')
 const config = require('./config')
 const APIError = require('../helpers/APIError')
 
@@ -52,7 +52,7 @@ if (config.env === 'development') {
 }
 
 // server static images from the main endpoint
-app.use('/images', express.static(path.join(__dirname, '..', 'image', 'images')))
+app.use('/images', express.static(path.join(__dirname, '..', 'models', 'image', 'images')))
 
 // mount all routes on /api path
 app.use('/api', routes)

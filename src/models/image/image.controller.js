@@ -1,7 +1,7 @@
 const httpStatus = require('http-status')
 const path = require('path')
 const fs = require('file-system')
-const APIError = require('../helpers/APIError')
+const APIError = require('../../helpers/APIError')
 const Image = require('./image.model')
 
 /**

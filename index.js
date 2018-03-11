@@ -1,12 +1,11 @@
 const mongoose = require('mongoose')
-const util = require('util')
 
 // config should be imported before importing any other file
-const config = require('./config/config')
-const app = require('./config/express')
+const config = require('./src/config/config')
+const app = require('./src/config/express')
 
 // Slides collection seeds
-const seed = require('./config/seed')
+const seed = require('./src/config/seed')
 
 // connect to mongo db
 const mongoUri = config.mongoURI
@@ -20,8 +19,8 @@ mongoose.connect(mongoUri, { keepAlive: 1 }).then(
       // console.log('Clean up and Init was completed!')
     }
   },
-  err => {
-    throw new Error(`unable to connect to database: ${mongoUri}`)
+  (err) => {
+    throw new Error(`Unable to connect to database: ${mongoUri}, ${err}`)
   }
 )
 // listen on port config.port

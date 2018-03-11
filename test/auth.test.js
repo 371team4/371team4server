@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken')
 const chai = require('chai')
 const expect = chai.expect
 const { app, server } = require('../index')
-const config = require('../config/config')
+const config = require('../src/config/config')
 const mongoose = require('mongoose')
-const seed = require('../config/seed')
+const seed = require('../src/config/seed')
 
 chai.config.includeStack = true
 
