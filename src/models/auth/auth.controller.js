@@ -27,7 +27,7 @@ function login (req, res, next) {
           const token = jwt.sign(
             { username: user.username },
             config.jwtSecret,
-            { expiresIn: 60 * 60 } // default token expire in 1 hour
+            { expiresIn: '1h' } // default token expire in 1 hour
           )
           // populate the response object
           response.token = token
