@@ -1,3 +1,5 @@
+const fs = require('fs')
+const https = require('https')
 const mongoose = require('mongoose')
 
 // config should be imported before importing any other file
@@ -31,9 +33,18 @@ mongoose
   .catch(err => {
     throw new Error(`Unable to connect to database: ${mongoUri}, ${err}`)
   })
+
+const sslOptions = {
+  key: fs.readFileSync('./key.pem', 'utf8'),
+  cert: fs.readFileSync('./cert.pem', 'utf8'),
+  passphrase: 'localhost'
+}
+
+const server = https.createServer(sslOptions, app).listen(9443)
+
 // listen on port config.port
-const server = app.listen(config.port, () => {
-  console.info(`server started on port ${config.port} (${config.env})`) // eslint-disable-line no-console
-})
+// const server = app.listen(config.port, () => {
+//   console.info(`server started on port ${config.port} (${config.env})`) // eslint-disable-line no-console
+// })
 
 module.exports = { app, server }
