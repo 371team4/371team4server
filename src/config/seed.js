@@ -164,15 +164,22 @@ const initialUsers = [
 
 async function clearSlidesCollection () {
   // clear database
-  await Slide.remove({}, () => {
-    console.log('Slides Collection clean up was completed!')
+  await Slide.remove({}, err => {
+    if (err) {
+      console.log('Failed to clear Slides collection')
+      console.log(err)
+    }
   }).exec() // need .exec() to return a promise
 }
 
 async function seedSlidesCollection () {
   // seed the database
-  await Slide.insertMany(initialSlides)
-  console.log('Slide Collection initialization was completed!')
+  try {
+    await Slide.insertMany(initialSlides)
+  } catch (err) {
+    console.log('Failed to initialize Slides collection')
+    console.log(err)
+  }
 }
 
 async function initSlidesCollection () {
@@ -182,15 +189,22 @@ async function initSlidesCollection () {
 
 async function clearImagesCollection () {
   // clear database
-  await Image.remove({}, () => {
-    console.log('Image Collection clean up was completed!')
+  await Image.remove({}, err => {
+    if (err) {
+      console.log('Failed to clear Images collection')
+      console.log(err)
+    }
   }).exec() // need .exec() to return a promise
 }
 
 async function seedImagesCollection () {
   // seed the database
-  await Image.insertMany(initialImages)
-  console.log('Image Collection initialization was completed!')
+  try {
+    await Image.insertMany(initialImages)
+  } catch (err) {
+    console.log('Failed to initialize Images collection')
+    console.log(err)
+  }
 }
 
 async function initImagesCollection () {
@@ -200,15 +214,22 @@ async function initImagesCollection () {
 
 async function clearUsersCollection () {
   // clear database
-  await User.remove({}, () => {
-    console.log('User Collection clean up was completed!')
+  await User.remove({}, err => {
+    if (err) {
+      console.log('Failed to clear Users collection')
+      console.log(err)
+    }
   }).exec() // need .exec() to return a promise
 }
 
 async function seedUsersCollection () {
   // seed the database
-  await User.insertMany(initialUsers)
-  console.log('User Collection initialization was completed!')
+  try {
+    await User.insertMany(initialUsers)
+  } catch (err) {
+    console.log('Failed to initialize Users collection')
+    console.log(err)
+  }
 }
 
 async function initUsersCollection () {
