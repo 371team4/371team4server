@@ -12,7 +12,7 @@ function JwtVerify (req, res, next) {
   const err = new APIError('No token is present', httpStatus.UNAUTHORIZED, true)
 
   // check that token is present in the request
-  const token = req.body.token || req.param('token') || req.headers['x-access-token'];
+  const token = req.body.token || req.param('token') || req.headers['x-access-token']
   if (token) {
     // verify the token against the secret
     jwt.verify(token, config.jwtSecret, function (e) {
@@ -23,7 +23,8 @@ function JwtVerify (req, res, next) {
         return next()
       }
     })
-  } else {// return error if no token is provided
+  } else {
+    // return error if no token is provided
     return next(err)
   }
 }

@@ -16,9 +16,9 @@ router.use('/slides', slideRoutes)
 router.use('/images', imageRoutes)
 
 // mount user routes at /users
-router.use('/users', userRoutes);
+router.use('/users', userRoutes)
 
 // mount login routes at /login
-router.use('/login', authRoutes);
+router.use('/login', authRoutes)
 
 module.exports = router

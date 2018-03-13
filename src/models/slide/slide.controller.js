@@ -25,11 +25,11 @@ function get (req, res) {
  * @returns {Slide}
  */
 function create (req, res, next) {
-      const slide = new Slide(prepSlide(req.body))
-      slide
-        .save()
-        .then(savedSlide => res.json(savedSlide))
-        .catch(e => next(e))
+  const slide = new Slide(prepSlide(req.body))
+  slide
+    .save()
+    .then(savedSlide => res.json(savedSlide))
+    .catch(e => next(e))
 }
 
 /**
@@ -37,20 +37,20 @@ function create (req, res, next) {
  * @returns {Slide}
  */
 function update (req, res, next) {
-      const slide = req.slide
-      const updates = prepSlide(req.body)
+  const slide = req.slide
+  const updates = prepSlide(req.body)
 
-      slide.title = updates.title
-      slide.description = updates.description
-      slide.time = updates.time
-      slide.date = updates.date
-      slide.meta = updates.meta
-      slide.images = updates.images
+  slide.title = updates.title
+  slide.description = updates.description
+  slide.time = updates.time
+  slide.date = updates.date
+  slide.meta = updates.meta
+  slide.images = updates.images
 
-      slide
-        .save()
-        .then(savedSlide => res.json(savedSlide))
-        .catch(e => next(e))
+  slide
+    .save()
+    .then(savedSlide => res.json(savedSlide))
+    .catch(e => next(e))
 }
 
 /**
@@ -79,11 +79,11 @@ function list (req, res, next) {
  * @returns {Slide}
  */
 function remove (req, res, next) {
-      const slide = req.slide
-      slide
-        .remove()
-        .then(deletedSlide => res.json(deletedSlide))
-        .catch(e => next(e))
+  const slide = req.slide
+  slide
+    .remove()
+    .then(deletedSlide => res.json(deletedSlide))
+    .catch(e => next(e))
 }
 
 /**
