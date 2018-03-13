@@ -54,7 +54,7 @@ function upload (req, res, next) {
     .then(dbImage => {
       // if we don't find the same image, then upload it
       if (!dbImage) {
-        const image = new Image(perpImage(req.files.image))
+        const image = new Image(prepImage(req.files.image))
 
         // the path to save the image
         const saveLocation = `/images/${image.name}`
@@ -118,7 +118,7 @@ function remove (req, res, next) {
 /**
  * Helper function to create an image
  */
-function perpImage (image) {
+function prepImage (image) {
   return {
     name: image.name,
     mimetype: image.mimetype,

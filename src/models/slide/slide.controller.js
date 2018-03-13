@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken')
-const config = require('../../config/config')
 const Slide = require('./slide.model')
 
 /**
@@ -27,15 +25,11 @@ function get (req, res) {
  * @returns {Slide}
  */
 function create (req, res, next) {
-  JwtVerify(req.body)
-    .then(function () {
-      const slide = new Slide(perpSlide(req.body))
+      const slide = new Slide(prepSlide(req.body))
       slide
         .save()
         .then(savedSlide => res.json(savedSlide))
         .catch(e => next(e))
-    })
-    .catch(e => next(e))
 }
 
 /**
@@ -43,10 +37,8 @@ function create (req, res, next) {
  * @returns {Slide}
  */
 function update (req, res, next) {
-  JwtVerify(req.body)
-    .then(function () {
       const slide = req.slide
-      const updates = perpSlide(req.body)
+      const updates = prepSlide(req.body)
 
       slide.title = updates.title
       slide.description = updates.description
@@ -59,8 +51,6 @@ function update (req, res, next) {
         .save()
         .then(savedSlide => res.json(savedSlide))
         .catch(e => next(e))
-    })
-    .catch(e => next(e))
 }
 
 /**
@@ -89,22 +79,18 @@ function list (req, res, next) {
  * @returns {Slide}
  */
 function remove (req, res, next) {
-  JwtVerify(req.body)
-    .then(function () {
       const slide = req.slide
       slide
         .remove()
         .then(deletedSlide => res.json(deletedSlide))
         .catch(e => next(e))
-    })
-    .catch(e => next(e))
 }
 
 /**
  * Helper function for `create()` this will
  * return a Slide object from the body object provided
  */
-function perpSlide (body) {
+function prepSlide (body) {
   return {
     title: {
       content: body.title.content,
@@ -143,22 +129,6 @@ function perpSlide (body) {
     },
     images: body.images
   }
-}
-
-/**
- * Helper function for `create(), update(), remove()` this will
- * check the token from the body object provided if it valid or invalid
- */
-function JwtVerify (body) {
-  return new Promise(function (resolve, reject) {
-    jwt.verify(body.token, config.jwtSecret, function (err, decode) {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(decode)
-      }
-    })
-  })
 }
 
 module.exports = { load, get, create, update, list, remove }
