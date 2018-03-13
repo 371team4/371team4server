@@ -11,7 +11,7 @@ const expressValidation = require('express-validation')
 const fileUpload = require('express-fileupload')
 const helmet = require('helmet')
 const winstonInstance = require('./winston')
-const routes = require('../../index.route')
+const routes = require('../models/api.routes')
 const config = require('./config')
 const APIError = require('../helpers/APIError')
 
