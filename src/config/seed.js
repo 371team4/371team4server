@@ -147,15 +147,18 @@ const initialImages = [
 const initialUsers = [
   {
     username: 'admin',
-    password: 'admin'
+    password: '$2a$13$LfUzP5HUbmWIqVXHcEH5L.h6bfmW7nW8aLpk0IL809ee907UpIlqq', //admin001
+    email: 'email@email.com'
   },
   {
     username: 'first',
-    password: 'second'
+    password: '$2a$13$KZlokgIgetcX6LT8DDTvDuZ/aJVS0KmguXZruntXaJmYH5.GE3Fre', //admin001
+    email: 'email@email.com'
   },
   {
     username: 'test',
-    password: 'test'
+    password: '$2a$13$DGSRoyvSy1QgT6q5BwmL1.9omsExIoDowsMkSP3PVIbfppuS0ux1C', //admin001
+    email: 'email@email.com'
   }
 ]
 
@@ -214,6 +217,9 @@ async function initUsersCollection () {
 }
 
 module.exports = {
+  initialSlides,
+  initialImages,
+  initialUsers,
   initSlidesCollection,
   seedSlidesCollection,
   clearSlidesCollection,
