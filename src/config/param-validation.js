@@ -17,7 +17,7 @@ const titleValidationSchema = Joi.object().keys({
   fontStyle: Joi.string()
     .required()
     .label('title.fontStyle')
-})
+}).required()
 
 // validation schema for description object and its contents
 const descriptionValidationSchema = Joi.object().keys({
@@ -36,7 +36,7 @@ const descriptionValidationSchema = Joi.object().keys({
   fontStyle: Joi.string()
     .required()
     .label('description.fontStyle')
-})
+}).required()
 
 // validation schema for date object and its contents
 const dateValidationSchema = Joi.object().keys({
@@ -55,7 +55,7 @@ const dateValidationSchema = Joi.object().keys({
   fontStyle: Joi.string()
     .required()
     .label('date.fontStyle')
-})
+}).required()
 
 // validation schema for time object and its contents
 const timeValidationSchema = Joi.object().keys({
@@ -74,7 +74,7 @@ const timeValidationSchema = Joi.object().keys({
   fontStyle: Joi.string()
     .required()
     .label('time.fontStyle')
-})
+}).required()
 
 // validation schema for meta object and its contents
 const metaValidationSchema = Joi.object().keys({
@@ -93,7 +93,7 @@ const metaValidationSchema = Joi.object().keys({
   endDate: Joi.string()
     .required()
     .label('meta.endDate')
-})
+}).required()
 
 // validation schema for images array and its contents
 const imagesValidationSchema = Joi.array()
@@ -137,9 +137,9 @@ module.exports = {
 
   // PUT /api/images
   uploadImage: {
-    files: {
+    files: Joi.object().keys({
       image: Joi.object().required()
-    }
+    }).required()
   },
 
   // DELETE /api/images/:imageId
@@ -152,16 +152,18 @@ module.exports = {
   // POST /api/users
   createUser: {
     body: {
-      username: Joi.string().required(),
-      password: Joi.string().required()
+      username: Joi.string().min(3).max(30).required(),
+      password: Joi.string().min(8).max(30).required(),
+      email: Joi.string().email().required()
     }
   },
 
-  // UPDATE /api/users/:slideId
+  // UPDATE /api/users/:userId
   updateUser: {
     body: {
-      username: Joi.string().required(),
-      password: Joi.string().required()
+      username: Joi.string().min(3).max(30).required(),
+      password: Joi.string().min(8).max(30).required(),
+      email: Joi.string().email().required()
     },
     params: {
       userId: Joi.string()
@@ -170,11 +172,11 @@ module.exports = {
     }
   },
 
-  // POST /api/users/login
+  // POST /api/login
   login: {
     body: {
-      username: Joi.string().required(),
-      password: Joi.string().required()
+      username: Joi.string().min(3).max(30).required(),
+      password: Joi.string().min(3).max(30).required()
     }
   }
 }
