@@ -2,6 +2,7 @@ const express = require('express')
 const validate = require('express-validation')
 const paramValidation = require('../../config/param-validation')
 const imageCtrl = require('./image.controller')
+const { JwtVerify } = require('../auth/auth.helpers')
 
 const router = express.Router() // eslint-disable-line new-cap
 
@@ -11,7 +12,7 @@ router
   .get(imageCtrl.list)
 
   /** PUT /api/images - Upload a new image */
-  .put(validate(paramValidation.uploadImage), imageCtrl.upload)
+  .put(JwtVerify, validate(paramValidation.uploadImage), imageCtrl.upload)
 
 router
   .route('/:imageId')
@@ -19,7 +20,7 @@ router
   .get(imageCtrl.get)
 
   /** DELETE /api/images/:imageId - Delete image */
-  .delete(validate(paramValidation.deleteImage), imageCtrl.remove)
+  .delete(JwtVerify, validate(paramValidation.deleteImage), imageCtrl.remove)
 
 /** Load image when API with imageId route parameter is hit */
 router.param('imageId', imageCtrl.load)
