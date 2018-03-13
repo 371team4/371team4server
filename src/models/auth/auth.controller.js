@@ -12,36 +12,35 @@ const User = require('../user/user.model')
  * @returns {*}
  */
 function login (req, res, next) {
-  // Get All User From Database
-  User.list()
-    .then(AllUser => {
-      // Loop Through Each User To Match A User
-      var find = false
-      AllUser.forEach(user => {
-        // If User Info Is Found
-        if (req.body.username === user.username && req.body.password === user.password) {
+  // find a user with
+  const response = {} // empty response object
+  // find a user with given name
+  User.findOne({ username: req.body.username })
+    .exec() // need to return a promise
+    .then(async function (user) {
+      // check that we were able to find a user
+      if (user) {
+        // compare the hash of the password
+        const match = await user.comparePassword(req.body.password)
+        if (match) {
+          // create the JWT
           const token = jwt.sign(
-            {
-              username: user.username
-            },
+            { username: user.username },
             config.jwtSecret,
-            // default token expire in 1 hour
-            { expiresIn: 60 * 60 }
+            { expiresIn: 60 * 60 } // default token expire in 1 hour
           )
-          find = true
-          return res.json({
-            token: token,
-            username: user.username
-          })
+          // populate the response object
+          response.token = token
+          response.username = user.username
+        } else {// password didn't match
+          throw new APIError('Either username or password is incorrect', httpStatus.UNAUTHORIZED, true)
         }
-      })
-      // If User Info Not Found In Database
-      if (!find) {
-        const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true)
-        return next(err)
+      } else {// username was not found
+        throw new APIError('Either username or password is incorrect', httpStatus.UNAUTHORIZED, true)
       }
+      return res.json(response)
     })
-    .catch(e => next(e))
+    .catch(err => next(err))
 }
 
 module.exports = { login }
