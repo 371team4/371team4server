@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const httpStatus = require('http-status')
 const mongoose = require('mongoose')
 const APIError = require('../../helpers/APIError')
@@ -9,9 +10,19 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
   username: {
     type: String,
-    unique: true
+    unique: true,
+    required: true
   },
-  password: String,
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   createdAt: {
     type: Date,
     default: Date.now
@@ -52,5 +63,21 @@ UserSchema.statics = {
       })
   }
 }
+
+UserSchema.pre('save', async function (next) {
+  try {
+    // this --> current user object
+    var SALT_FACTOR = 12 // should take about one second per hash
+
+    if (!this.isModified('password')) {
+      return next()
+    }
+
+    this.password = await bcrypt.hash(this.password, SALT_FACTOR)
+    return next()
+  } catch (err) {
+    return next(err)
+  }
+})
 
 module.exports = mongoose.model('User', UserSchema)
