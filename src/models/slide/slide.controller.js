@@ -70,8 +70,16 @@ function update (req, res, next) {
  * @returns {Slide[]}
  */
 function list (req, res, next) {
+  // extract the limit and skip from the query object,
+  // if limit or object is not present then assign defaults
   const { limit = 50, skip = 0 } = req.query
-  Slide.list({ limit, skip })
+
+  // limit the batch size to 50 objects
+  // skip must be positive
+  const safeLimit = limit > 50 ? 50 : limit
+  const safeSkip = skip < 0 ? 0 : skip
+
+  Slide.list({ safeLimit, safeSkip })
     .then(slides => res.json(slides))
     .catch(e => next(e))
 }
