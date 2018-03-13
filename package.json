@@ -6,15 +6,18 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon --inspect index.js",
-    "tdd": "cross-env NODE_ENV=test mocha --ui tdd --reporter spec --colors --inspect --watch",
-    "test": "cross-env NODE_ENV=test mocha --ui tdd --reporter spec --colors --exit"
+    "start": "cross-env NODE_ENV=development nodemon index.js",
+    "start:debug": "cross-env NODE_ENV=development nodemon --inspect index.js",
+    "tdd": "cross-env NODE_ENV=test nodemon --exec nyc --cache --reporter=text-summary --temp-directory=./test/coverage/.nyc_output mocha test/*.js --exit",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov --cache --reporter=text-summary --report-dir=./test/coverage --temp-directory=./test/coverage/.nyc_output mocha test/*.js --exit",
+    "lint": "eslint --cache --ext .js src test --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:MoranLi/mongoose_event.git"
+    "url": "https://github.com/371team4/371team4server"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
     "cors": "^2.8.4",
@@ -32,14 +35,19 @@
     "method-override": "^2.3.10",
     "mongoose": "^5.0.9",
     "morgan": "^1.9.0",
-    "supertest": "^3.0.0",
-    "winston": "^2.4.0"
+    "winston": "^2.4.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "cross-env": "^5.1.3",
-    "eslint": "^4.18.1",
-    "mocha": "^5.0.1",
-    "nodemon": "^1.17.1"
+    "cross-env": "^5.1.4",
+    "eslint": "^4.18.2",
+    "eslint-plugin-import": "^2.9.0",
+    "husky": "^0.14.3",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.0.4",
+    "nodemon": "^1.17.1",
+    "nyc": "^11.5.0",
+    "sinon": "^4.4.2",
+    "supertest": "^3.0.0"
   }
 }

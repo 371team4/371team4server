@@ -11,7 +11,7 @@ const expressValidation = require('express-validation')
 const fileUpload = require('express-fileupload')
 const helmet = require('helmet')
 const winstonInstance = require('./winston')
-const routes = require('../index.route')
+const routes = require('../models/api.routes')
 const config = require('./config')
 const APIError = require('../helpers/APIError')
 
@@ -45,18 +45,14 @@ if (config.env === 'development') {
     expressWinston.logger({
       winstonInstance,
       meta: true, // optional: log meta data about request (defaults to true)
-      msg:
-        'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
+      msg: 'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
       colorStatus: true // Color the status code (default green, 3XX cyan, 4XX yellow, 5XX red).
     })
   )
 }
 
 // server static images from the main endpoint
-app.use(
-  '/images',
-  express.static(path.join(__dirname, '..', 'image', 'images'))
-)
+app.use('/images', express.static(path.join(__dirname, '..', 'models', 'image', 'images')))
 
 // mount all routes on /api path
 app.use('/api', routes)
@@ -68,7 +64,7 @@ app.use((err, req, res, next) => {
     const unifiedErrorMessage = err.errors
       .map(error => error.messages.join('. '))
       .join(' and ')
-      .replace(/\"/g, "'")
+      .replace(/"/g, "'")
     const error = new APIError(unifiedErrorMessage, err.status, true)
     return next(error)
   } else if (!(err instanceof APIError)) {
