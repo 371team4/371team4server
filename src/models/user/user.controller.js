@@ -5,10 +5,7 @@ const User = require('./user.model')
  * @returns {User}
  */
 function create (req, res, next) {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password
-  })
+  const user = new User(prepUser(req.body))
 
   user
     .save()
@@ -22,12 +19,10 @@ function create (req, res, next) {
  */
 function update (req, res, next) {
   const user = req.user
-  const updates = {
-    //username: req.body.username,
-    password: req.body.password
-  }
-  //user.username = updates.username
+  const updates = prepUser(req.body)
+
   user.password = updates.password
+  user.email = updates.email
 
   user
     .save()
@@ -86,6 +81,18 @@ function list (req, res, next) {
   User.list({ safeLimit, safeSkip })
     .then(users => res.json(users))
     .catch(e => next(e))
+}
+
+/**
+ * Helper function for `create()` and update() this will
+ * return a User object from the body object provided
+ */
+function prepUser (body) {
+  return {
+    username: body.username,
+    password: body.password,
+    email: body.email
+  }
 }
 
 module.exports = { list, get, create, update, remove, load }
