@@ -67,7 +67,7 @@ UserSchema.statics = {
 UserSchema.pre('save', async function (next) {
   try {
     // this --> current user object
-    var SALT_FACTOR = 12 // should take about one second per hash
+    var SALT_FACTOR = 13 // should take about one second per hash
 
     if (!this.isModified('password')) {
       return next()
