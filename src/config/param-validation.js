@@ -1,7 +1,7 @@
 const Joi = require('joi')
 
 // validation schema for title object and its contents
-const titleValidationSchema = {
+const titleValidationSchema = Joi.object().keys({
   content: Joi.string()
     .required()
     .label('title.content'),
@@ -17,10 +17,10 @@ const titleValidationSchema = {
   fontStyle: Joi.string()
     .required()
     .label('title.fontStyle')
-}
+})
 
 // validation schema for description object and its contents
-const descriptionValidationSchema = {
+const descriptionValidationSchema = Joi.object().keys({
   content: Joi.string()
     .required()
     .label('description.content'),
@@ -36,10 +36,10 @@ const descriptionValidationSchema = {
   fontStyle: Joi.string()
     .required()
     .label('description.fontStyle')
-}
+})
 
 // validation schema for date object and its contents
-const dateValidationSchema = {
+const dateValidationSchema = Joi.object().keys({
   content: Joi.string()
     .required()
     .label('date.content'),
@@ -55,10 +55,10 @@ const dateValidationSchema = {
   fontStyle: Joi.string()
     .required()
     .label('date.fontStyle')
-}
+})
 
 // validation schema for time object and its contents
-const timeValidationSchema = {
+const timeValidationSchema = Joi.object().keys({
   content: Joi.string()
     .required()
     .label('time.content'),
@@ -74,10 +74,10 @@ const timeValidationSchema = {
   fontStyle: Joi.string()
     .required()
     .label('time.fontStyle')
-}
+})
 
 // validation schema for meta object and its contents
-const metaValidationSchema = {
+const metaValidationSchema = Joi.object().keys({
   template: Joi.string()
     .required()
     .label('meta.template'),
@@ -93,7 +93,7 @@ const metaValidationSchema = {
   endDate: Joi.string()
     .required()
     .label('meta.endDate')
-}
+})
 
 // validation schema for images array and its contents
 const imagesValidationSchema = Joi.array()
