@@ -149,7 +149,7 @@ module.exports = {
       .required()
   },
 
-  // POST /api/user
+  // POST /api/users
   createUser: {
     body: {
       username: Joi.string().required(),
@@ -157,7 +157,7 @@ module.exports = {
     }
   },
 
-  // UPDATE /api/user/:slideId
+  // UPDATE /api/users/:slideId
   updateUser: {
     body: {
       username: Joi.string().required(),
@@ -170,7 +170,7 @@ module.exports = {
     }
   },
 
-  // POST /api/user/login
+  // POST /api/users/login
   login: {
     body: {
       username: Joi.string().required(),

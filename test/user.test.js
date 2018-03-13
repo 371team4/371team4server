@@ -44,10 +44,10 @@ describe('## User APIs', function () {
     username : 'admin'
   }
 
-  describe('# POST /api/user', () => {
+  describe('# POST /api/users', () => {
     it('should create a new user', (done) => {
       request(app)
-        .post('/api/user')
+        .post('/api/users')
         .send(user)
         .expect(httpStatus.OK)
         .then((res) => {
@@ -60,10 +60,10 @@ describe('## User APIs', function () {
     });
   })
 
-  describe('# POST /api/user', () => {
+  describe('# POST /api/users', () => {
     it('should create a new user', (done) => {
       request(app)
-        .post('/api/user')
+        .post('/api/users')
         .send(noNameUser)
         .expect(httpStatus.BAD_REQUEST)
         .then((res) => {
@@ -74,10 +74,10 @@ describe('## User APIs', function () {
     });
   })
 
-  describe('# POST /api/user', () => {
+  describe('# POST /api/users', () => {
     it('should create a new user', (done) => {
       request(app)
-        .post('/api/user')
+        .post('/api/users')
         .send(noPasswordUser)
         .expect(httpStatus.BAD_REQUEST)
         .then((res) => {
@@ -88,11 +88,11 @@ describe('## User APIs', function () {
     });
   })
 
-  describe('# PUT /api/user/:userId', () => {
+  describe('# PUT /api/users/:userId', () => {
     it('should update user details', (done) => {
       user.password = 'KK'
       request(app)
-        .put(`/api/user/${user._id}`)
+        .put(`/api/users/${user._id}`)
         .send(user)
         .expect(httpStatus.OK)
         .then((res) => {
@@ -104,10 +104,10 @@ describe('## User APIs', function () {
     })
   })
 
-  describe('# DELETE /api/user/:userId', () => {
+  describe('# DELETE /api/users/:userId', () => {
     it('should delete user', (done) => {
       request(app)
-        .delete(`/api/user/${user._id}`)
+        .delete(`/api/users/${user._id}`)
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.username).to.equal(user.username)

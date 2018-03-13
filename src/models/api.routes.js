@@ -15,8 +15,8 @@ router.use('/slides', slideRoutes)
 // mount slide routes at /images
 router.use('/images', imageRoutes)
 
-// mount user routes at /user
-router.use('/user', userRoutes);
+// mount user routes at /users
+router.use('/users', userRoutes);
 
 // mount login routes at /login
 router.use('/login', authRoutes);
