@@ -2,12 +2,12 @@ const request = require('supertest')
 const httpStatus = require('http-status')
 const jwt = require('jsonwebtoken')
 const chai = require('chai')
-const expect = chai.expect
 const { app, server } = require('../index')
 const config = require('../src/config/config')
 const mongoose = require('mongoose')
 const seed = require('../src/config/seed')
 
+const expect = chai.expect
 chai.config.includeStack = true
 
 describe('## Auth APIs', function () {
@@ -27,26 +27,20 @@ describe('## Auth APIs', function () {
   })
 
   afterEach(done => {
-    // may need to enable these once mocha watch is working
-    //mongoose.models = {}
-    //mongoose.modelSchemas = {}
-    //mongoose.connection.close()
     server.close()
     done()
   })
 
-  const validUserCredentials = {
-    username: 'admin',
-    password: 'admin'
-  }
+  const validUserCredentials = JSON.parse(JSON.stringify(seed.initialUsers[0]))
+  validUserCredentials.password = 'admin001'
 
-  const invalidUserCredentials = {
-    username: 'admin',
-    password: 'IDontKnow'
-  }
+  // deep clone the object
+  const invalidUserCredentials = JSON.parse(JSON.stringify(seed.initialUsers[1]))
+  invalidUserCredentials.password = 'invalid password'
 
   describe('# POST /api/login', () => {
     it('should get valid JWT token', done => {
+      debugger
       request(app)
         .post('/api/login')
         .send(validUserCredentials)
@@ -68,7 +62,7 @@ describe('## Auth APIs', function () {
         .send(invalidUserCredentials)
         .expect(httpStatus.UNAUTHORIZED)
         .then(res => {
-          expect(res.body.message).to.equal('Authentication error')
+          expect(res.body.message).to.equal('Either username or password is incorrect')
           done()
         })
         .catch(done)
