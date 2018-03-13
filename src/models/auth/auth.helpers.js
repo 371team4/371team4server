@@ -10,9 +10,8 @@ const config = require('../../config/config')
 function JwtVerify (req, res, next) {
   // error to throw when no token is present
   const err = new APIError('No token is present', httpStatus.UNAUTHORIZED, true)
-
   // check that token is present in the request
-  const token = req.body.token || req.param('token') || req.headers['x-access-token']
+  const token = req.body.token || req.params('token') || req.headers['x-access-token']
   if (token) {
     // verify the token against the secret
     jwt.verify(token, config.jwtSecret, function (e) {
