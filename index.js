@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
 const config = require('./src/config/config')
 const app = require('./src/config/express')
 
+// import the redirection http server
+require('./src/config/http-redirection-server')
+
 // Slides collection seeds
 //const seed = require('./src/config/seed')
 
@@ -40,7 +43,9 @@ const sslOptions = {
   passphrase: 'localhost'
 }
 
-const server = https.createServer(sslOptions, app).listen(9443)
+const server = https.createServer(sslOptions, app).listen(config.httpsPort, () => {
+  console.info(`server started on port ${config.httpsPort} (${config.env})`) // eslint-disable-line no-console
+})
 
 // listen on port config.port
 // const server = app.listen(config.port, () => {

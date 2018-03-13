@@ -8,7 +8,8 @@ const envVarsSchema = Joi.object({
   NODE_ENV: Joi.string()
     .allow(['development', 'production', 'test'])
     .default('development'),
-  PORT: Joi.number().default(4040),
+  HTTP_PORT: Joi.number().default(8080),
+  HTTPS_PORT: Joi.number().default(8443),
   JWT_SECRET: Joi.string()
     .required()
     .description('JWT Secret required to sign'),
@@ -26,7 +27,8 @@ if (error) {
 
 const config = {
   env: envVars.NODE_ENV,
-  port: envVars.PORT,
+  httpPort: envVars.HTTP_PORT,
+  httpsPort: envVars.HTTPS_PORT,
   jwtSecret: envVars.JWT_SECRET,
   mongoURI: envVars.MONGOLAB_URI
 }
