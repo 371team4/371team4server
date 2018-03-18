@@ -1,5 +1,5 @@
-const fs = require('fs')
-const https = require('https')
+// const fs = require('fs')
+// const https = require('https')
 const mongoose = require('mongoose')
 
 // config should be imported before importing any other file
@@ -7,7 +7,7 @@ const config = require('./src/config/config')
 const app = require('./src/config/express')
 
 // import the redirection http server
-require('./src/config/http-redirection-server')
+// require('./src/config/http-redirection-server')
 
 // Slides collection seeds
 //const seed = require('./src/config/seed')
@@ -37,19 +37,19 @@ mongoose
     throw new Error(`Unable to connect to database: ${mongoUri}, ${err}`)
   })
 
-const sslOptions = {
-  key: fs.readFileSync('./key.pem', 'utf8'),
-  cert: fs.readFileSync('./cert.pem', 'utf8'),
-  passphrase: 'localhost'
-}
+// const sslOptions = {
+//   key: fs.readFileSync('./key.pem', 'utf8'),
+//   cert: fs.readFileSync('./cert.pem', 'utf8'),
+//   passphrase: 'localhost'
+// }
 
-const server = https.createServer(sslOptions, app).listen(config.httpsPort, () => {
-  console.info(`server started on port ${config.httpsPort} (${config.env})`) // eslint-disable-line no-console
-})
+// const server = https.createServer(sslOptions, app).listen(config.httpsPort, () => {
+//   console.info(`server started on port ${config.httpsPort} (${config.env})`) // eslint-disable-line no-console
+// })
 
 // listen on port config.port
-// const server = app.listen(config.port, () => {
-//   console.info(`server started on port ${config.port} (${config.env})`) // eslint-disable-line no-console
-// })
+const server = app.listen(config.httpPort, () => {
+  console.info(`server started on port ${config.httpPort} (${config.env})`) // eslint-disable-line no-console
+})
 
 module.exports = { app, server }
