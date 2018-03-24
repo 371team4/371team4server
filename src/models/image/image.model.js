@@ -25,6 +25,7 @@ ImageSchema.pre('remove', function (next) {
     { $pull: { images: this._id } },
     { multi: true },
     function (err) {
+      /* istanbul ignore next: Cannot test error from cascade delete */
       if(err){
         throw new Error(err)
       }
@@ -49,7 +50,7 @@ ImageSchema.statics = {
         if (image) {
           return image
         }
-        const err = new APIError('No such image exists!', httpStatus.NOT_FOUND)
+        const err = new APIError('No such image exists!', httpStatus.NOT_FOUND, true)
         return Promise.reject(err)
       })
   },

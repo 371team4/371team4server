@@ -33,17 +33,17 @@ function upload (req, res, next) {
   // TODO move this check to the paramvalidator
   // check that we were called with an upload file
   if (!req.files) {
-    const err = new APIError('No files were provided to upload!', httpStatus.BAD_REQUEST)
+    const err = new APIError('No files were provided to upload!', httpStatus.BAD_REQUEST, true)
     next(err)
   }
   // check that we have an object called image which has the file info
   if (!req.files.image) {
-    const err = new APIError('Upload name must be an image!', httpStatus.BAD_REQUEST)
+    const err = new APIError('Upload name must be an image!', httpStatus.BAD_REQUEST, true)
     next(err)
   }
 
   if (req.files.image.mimetype.indexOf('image/') === -1) {
-    const err = new APIError('Upload file must be of type image!', httpStatus.BAD_REQUEST)
+    const err = new APIError('Upload file must be of type image!', httpStatus.BAD_REQUEST, true)
     next(err)
   }
   //END TODO
@@ -62,6 +62,7 @@ function upload (req, res, next) {
         // read from the socket connection and write to the saveLocation
         req.files.image.mv(path.join(__dirname, saveLocation), function (err) {
           // if there is an error then return to the client
+          /* istanbul ignore if: don't know how to cause an error here */
           if (err) {
             next(err)
           }
@@ -70,7 +71,7 @@ function upload (req, res, next) {
           image
             .save()
             .then(savedImage => res.json(savedImage))
-            .catch(e => next(e))
+            .catch(/* istanbul ignore next */ e => next(e))
         })
       } else {
         // we have found the image in our collection
@@ -96,9 +97,9 @@ function list (req, res, next) {
   const safeLimit = limit > 50 ? 50 : limit
   const safeSkip = skip < 0 ? 0 : skip
 
-  Image.list({ safeLimit, safeSkip })
+  Image.list({ limit: safeLimit, skip: safeSkip })
     .then(images => res.json(images))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**
@@ -111,7 +112,7 @@ function remove (req, res, next) {
     image
       .remove()
       .then(deletedImage => res.json(deletedImage))
-      .catch(e => next(e))
+      .catch(/* istanbul ignore next */ e => next(e))
   })
 }
 

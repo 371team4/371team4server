@@ -29,7 +29,7 @@ function create (req, res, next) {
   slide
     .save()
     .then(savedSlide => res.json(savedSlide))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**
@@ -50,7 +50,7 @@ function update (req, res, next) {
   slide
     .save()
     .then(savedSlide => res.json(savedSlide))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**
@@ -69,9 +69,9 @@ function list (req, res, next) {
   const safeLimit = limit > 50 ? 50 : limit
   const safeSkip = skip < 0 ? 0 : skip
 
-  Slide.list({ safeLimit, safeSkip })
+  Slide.list({ limit: safeLimit, skip: safeSkip })
     .then(slides => res.json(slides))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**
@@ -83,7 +83,7 @@ function remove (req, res, next) {
   slide
     .remove()
     .then(deletedSlide => res.json(deletedSlide))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**
