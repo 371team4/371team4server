@@ -31,7 +31,7 @@ ImageSchema.pre('remove', function (next) {
       }
     }
   ).exec()
-  next()
+  return next()
 })
 
 /**

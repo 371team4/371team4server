@@ -18,7 +18,7 @@ function create (req, res, next) {
       user.save().then(savedUser => res.json(savedUser))
     })
     .catch(e => {
-      next(e)
+      return next(e)
     })
 }
 

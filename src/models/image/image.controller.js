@@ -30,23 +30,21 @@ function get (req, res) {
  */
 
 function upload (req, res, next) {
-  // TODO move this check to the paramvalidator
   // check that we were called with an upload file
   if (!req.files) {
     const err = new APIError('No files were provided to upload!', httpStatus.BAD_REQUEST, true)
-    next(err)
+    return next(err)
   }
   // check that we have an object called image which has the file info
   if (!req.files.image) {
     const err = new APIError('Upload name must be an image!', httpStatus.BAD_REQUEST, true)
-    next(err)
+    return next(err)
   }
 
   if (req.files.image.mimetype.indexOf('image/') === -1) {
     const err = new APIError('Upload file must be of type image!', httpStatus.BAD_REQUEST, true)
-    next(err)
+    return next(err)
   }
-  //END TODO
 
   // check if we have an image in the collection with the same md5 hash
   Image.findOne({ md5: req.files.image.md5 })
@@ -64,7 +62,7 @@ function upload (req, res, next) {
           // if there is an error then return to the client
           /* istanbul ignore if: don't know how to cause an error here */
           if (err) {
-            next(err)
+            return next(err)
           }
           // otherwise save the image and return the result
           image.path = saveLocation
@@ -76,7 +74,7 @@ function upload (req, res, next) {
       } else {
         // we have found the image in our collection
         // return the image
-        res.json(dbImage)
+        return res.json(dbImage)
       }
     })
 }
