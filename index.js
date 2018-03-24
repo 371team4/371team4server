@@ -15,6 +15,7 @@ const app = require('./src/config/express')
 // connect to mongo db
 const mongoUri = config.mongoURI
 // allow mongoose to log to console in development and/or test
+/* istanbul ignore next: this is only accessed in dev env  */
 if (config.env === 'development') {
   mongoose.set('debug', true)
 }
@@ -33,8 +34,9 @@ mongoose
   // }
   // }
   // )
-  .catch(err => {
-    throw new Error(`Unable to connect to database: ${mongoUri}, ${err}`)
+  .catch(
+    /* istanbul ignore next: We cannot cover this since it is not exposed, but the tests use a similar syntax */
+    err => { throw new Error(`Unable to connect to database: ${mongoUri}, ${err}`)
   })
 
 // const sslOptions = {
