@@ -35,8 +35,12 @@ describe('## Auth APIs', function () {
   validUserCredentials.password = 'admin001'
 
   // deep clone the object
-  const invalidUserCredentials = JSON.parse(JSON.stringify(seed.initialUsers[1]))
-  invalidUserCredentials.password = 'invalid password'
+  const userWithBadPassword = JSON.parse(JSON.stringify(seed.initialUsers[1]))
+  userWithBadPassword.password = 'badpassword'
+
+  const userWithBadUsername = JSON.parse(JSON.stringify(seed.initialUsers[1]))
+  userWithBadUsername.username = 'badName'
+  userWithBadUsername.password = 'badpassword'
 
   describe('# POST /api/login', () => {
     it('should get valid JWT token', done => {
@@ -56,12 +60,24 @@ describe('## Auth APIs', function () {
         .catch(done)
     })
 
-    it('should return Authentication error', done => {
+    it('should return Authentication error when incorrect password is provided', done => {
       request(app)
         .post('/api/login')
-        .send(invalidUserCredentials)
+        .send(userWithBadPassword)
         .expect(httpStatus.UNAUTHORIZED)
         .then(res => {
+          expect(res.body.message).to.equal('Either username or password is incorrect')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return Authentication error when incorrect username is provided', done => {
+      request(app)
+      .post('/api/login')
+      .send(userWithBadUsername)
+      .expect(httpStatus.UNAUTHORIZED)
+      .then(res => {
           expect(res.body.message).to.equal('Either username or password is incorrect')
           done()
         })

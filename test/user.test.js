@@ -9,7 +9,22 @@ const seed = require('../src/config/seed')
 const expect = chai.expect
 chai.config.includeStack = true
 
+const nonExistingObjId = '5a98ad9a16608d51844ef439'
+
 let token
+
+function sortUsersByName (user1, user2) {
+  var nameA = user1.username.toUpperCase(); // ignore upper and lowercase
+  var nameB = user2.username.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+  // names must be equal
+  return 0;
+}
 
 describe('## User APIs', function () {
   this.timeout(15000)
@@ -54,8 +69,100 @@ describe('## User APIs', function () {
     username: 'admin'
   }
 
+  let sampleUser
+
+  describe('# GET /api/users', () => {
+    it('should return all users', done => {
+      request(app)
+        .get('/api/users')
+        .set('x-access-token', token)
+        .expect(httpStatus.OK)
+        .then(res => {
+          sampleUser = res.body[0]
+          // destructure the body object
+          const users = res.body.map((user) => {
+            return { username: user.username, password: user.password, email: user.email }
+          })
+
+          // sort both arrays to deep compare
+          users.sort(sortUsersByName)
+          seed.initialUsers.sort(sortUsersByName)
+          expect(users).to.deep.equal(seed.initialUsers)
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return subset of users when limit and skip params are present', done => {
+      request(app)
+        .get('/api/users')
+        .set('x-access-token', token)
+        .query({ limit: 1, skip: 1 })
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.have.lengthOf(1)
+          expect(res.body[0]).to.have.any.key('_id')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should limit returned users to 50 users, when limit is above 50', done => {
+      request(app)
+        .get('/api/users')
+        .set('x-access-token', token)
+        .query({ limit: 500, skip: 1 })
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.have.lengthOf(2)
+          expect(res.body[0]).to.have.any.key('_id')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should not skip any users when skip is negative', done => {
+      request(app)
+        .get('/api/users')
+        .set('x-access-token', token)
+        .query({ limit: 1, skip: -20 })
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.have.lengthOf(1)
+          expect(res.body[0]).to.have.any.key('_id')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return a single user when its id is provided', done => {
+      request(app)
+        .get(`/api/users/${sampleUser._id}`)
+        .set('x-access-token', token)
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.deep.equal(sampleUser)
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return error when user is not present in the collection', done => {
+      request(app)
+        .get(`/api/users/${nonExistingObjId}`)
+        .set('x-access-token', token)
+        .expect(httpStatus.NOT_FOUND)
+        .then(res => {
+          expect(res.body.message).to.equal('No such user exists!')
+          done()
+        })
+        .catch(done)
+    })
+
+  })
+
   describe('# POST /api/users', () => {
-    it('should create a new user', done => {
+    it('should create a new user when all parameters are present', done => {
       request(app)
         .post('/api/users')
         .set('x-access-token', token)
@@ -63,17 +170,26 @@ describe('## User APIs', function () {
         .expect(httpStatus.OK)
         .then(res => {
           expect(res.body.username).to.equal(user.username)
-          //console.log(jwt.verify(JSON.stringify(res.body.password), config.jwtSecret))
-          //expect(res.body.password).to.equal(user.password)
           user._id = res.body._id
           done()
         })
         .catch(done)
     })
-  })
 
-  describe('# POST /api/users', () => {
-    it('should create a new user', done => {
+    it('should not create a new user when username has been used before', done => {
+      request(app)
+        .post('/api/users')
+        .set('x-access-token', token)
+        .send(user)
+        .expect(httpStatus.BAD_REQUEST)
+        .then(res => {
+          expect(res.body.message).to.equal('Username is not unique')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should not create a new user when username and email are missing', done => {
       request(app)
         .post('/api/users')
         .set('x-access-token', token)
@@ -85,10 +201,8 @@ describe('## User APIs', function () {
         })
         .catch(done)
     })
-  })
 
-  describe('# POST /api/users', () => {
-    it('should create a new user', done => {
+    it('should not create a new user when email and password are missing', done => {
       request(app)
         .post('/api/users')
         .set('x-access-token', token)
@@ -112,7 +226,6 @@ describe('## User APIs', function () {
         .expect(httpStatus.OK)
         .then(res => {
           expect(res.body.username).to.equal(user.username)
-          //expect(res.body.password).to.equal('KK')
           done()
         })
         .catch(done)
@@ -127,7 +240,6 @@ describe('## User APIs', function () {
         .expect(httpStatus.OK)
         .then(res => {
           expect(res.body.username).to.equal(user.username)
-          //expect(res.body.password).to.equal('KK')
           done()
         })
         .catch(done)

@@ -114,7 +114,11 @@ let sampleUpdateSlide = {
   images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
 }
 
-describe('## Auth APIs', function () {
+const nonExistingObjId = '5a98ad9a16608d51844ef439'
+
+let sampleGetSlide
+
+describe('## Slide APIs', function () {
   this.timeout(15000)
   before(done => {
     const mongoUri = config.mongoURI
@@ -151,9 +155,71 @@ describe('## Auth APIs', function () {
         .get('/api/slides')
         .expect(httpStatus.OK)
         .then(res => {
+          sampleGetSlide = res.body[0]
           for (var i = 0; i < 3; i++) {
             expect(slideTitles).to.deep.include(res.body[i].title)
           }
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return subset of slides when limit and skip params are present', done => {
+      request(app)
+        .get('/api/slides')
+        .query({ limit: 1, skip: 1 })
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.have.lengthOf(1)
+          expect(res.body[0]).to.have.any.key('_id')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should limit returned slides to 50 slides, when limit is above 50', done => {
+      request(app)
+        .get('/api/slides')
+        .query({ limit: 500, skip: 1 })
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.have.lengthOf(2)
+          expect(res.body[0]).to.have.any.key('_id')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should not skip any slides when skip is negative', done => {
+      request(app)
+        .get('/api/slides')
+        .query({ limit: 1, skip: -20 })
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.have.lengthOf(1)
+          expect(res.body[0]).to.have.any.key('_id')
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return a single slide when its id is provided', done => {
+      request(app)
+        .get(`/api/slides/${sampleGetSlide._id}`)
+        .expect(httpStatus.OK)
+        .then(res => {
+          expect(res.body).to.deep.equal(sampleGetSlide)
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should return error when slide is not present in the collection', done => {
+      request(app)
+        .get(`/api/slides/${nonExistingObjId}`)
+        .expect(httpStatus.NOT_FOUND)
+        .then(res => {
+          expect(res.body.message).to.equal('No such slide exists!')
           done()
         })
         .catch(done)
@@ -169,19 +235,6 @@ describe('## Auth APIs', function () {
         .then(res => {
           expect(res.body.title).to.deep.equal(samplePostSlide.title)
           newId = res.body._id
-          done()
-        })
-        .catch(done)
-    })
-  })
-
-  describe('# GET /api/slides', () => {
-    it('should return all slides', done => {
-      request(app)
-        .get(`/api/slides/${newId}`)
-        .expect(httpStatus.OK)
-        .then(res => {
-          expect(res.body.title).to.deep.equal(samplePostSlide.title)
           done()
         })
         .catch(done)

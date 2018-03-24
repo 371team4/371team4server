@@ -17,6 +17,7 @@ const APIError = require('../helpers/APIError')
 
 const app = express()
 
+/* istanbul ignore if: cannot test development env while in testing env */
 if (config.env === 'development') {
   app.use(logger('dev'))
 }
@@ -38,6 +39,7 @@ app.use(helmet())
 app.use(cors())
 
 // enable detailed API logging in dev env
+/* istanbul ignore if: cannot test development env while in testing env */
 if (config.env === 'development') {
   expressWinston.requestWhitelist.push('body')
   expressWinston.responseWhitelist.push('body')
@@ -81,6 +83,7 @@ app.use((req, res, next) => {
 })
 
 // log error in winston transports except when executing test suite
+/* istanbul ignore if: cannot test development, production env while in testing env */
 if (config.env !== 'test') {
   app.use(
     expressWinston.errorLogger({

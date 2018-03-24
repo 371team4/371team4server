@@ -165,9 +165,9 @@ const initialUsers = [
 async function clearSlidesCollection () {
   // clear database
   await Slide.remove({}, err => {
+    /* istanbul ignore next: cannot test database errors */
     if (err) {
-      console.log('Failed to clear Slides collection')
-      console.log(err)
+      console.log('Failed to clear Slides collection -> ', err)
     }
   }).exec() // need .exec() to return a promise
 }
@@ -177,8 +177,8 @@ async function seedSlidesCollection () {
   try {
     await Slide.insertMany(initialSlides)
   } catch (err) {
-    console.log('Failed to initialize Slides collection')
-    console.log(err)
+    /* istanbul ignore next: cannot test database errors */
+    console.log('Failed to initialize Slides collection -> ', err)
   }
 }
 
@@ -190,9 +190,9 @@ async function initSlidesCollection () {
 async function clearImagesCollection () {
   // clear database
   await Image.remove({}, err => {
+    /* istanbul ignore next: cannot test database errors */
     if (err) {
-      console.log('Failed to clear Images collection')
-      console.log(err)
+      console.log('Failed to clear Images collection -> ', err)
     }
   }).exec() // need .exec() to return a promise
 }
@@ -202,8 +202,8 @@ async function seedImagesCollection () {
   try {
     await Image.insertMany(initialImages)
   } catch (err) {
-    console.log('Failed to initialize Images collection')
-    console.log(err)
+    /* istanbul ignore next: cannot test database errors */
+    console.log('Failed to initialize Images collection -> ', err)
   }
 }
 
@@ -215,9 +215,9 @@ async function initImagesCollection () {
 async function clearUsersCollection () {
   // clear database
   await User.remove({}, err => {
+    /* istanbul ignore next: cannot test database errors */
     if (err) {
-      console.log('Failed to clear Users collection')
-      console.log(err)
+      console.log('Failed to clear Users collection -> ', err)
     }
   }).exec() // need .exec() to return a promise
 }
@@ -227,8 +227,8 @@ async function seedUsersCollection () {
   try {
     await User.insertMany(initialUsers)
   } catch (err) {
-    console.log('Failed to initialize Users collection')
-    console.log(err)
+    /* istanbul ignore next: cannot test database errors */
+    console.log('Failed to initialize Users collection -> ', err)
   }
 }
 
