@@ -58,7 +58,7 @@ UserSchema.statics = {
         if (user) {
           return user
         }
-        const err = new APIError('No user exists!', httpStatus.NOT_FOUND)
+        const err = new APIError('No such user exists!', httpStatus.NOT_FOUND, true)
         return Promise.reject(err)
       })
   }
@@ -69,13 +69,10 @@ UserSchema.pre('save', async function (next) {
     // this --> current user object
     var SALT_FACTOR = 13 // should take about one second per hash
 
-    if (!this.isModified('password')) {
-      return next()
-    }
-
     this.password = await bcrypt.hash(this.password, SALT_FACTOR)
     return next()
   } catch (err) {
+    /* istanbul ignore next */
     return next(err)
   }
 })

@@ -31,7 +31,7 @@ function login (req, res, next) {
           )
           // populate the response object
           response.token = token
-          response.username = user.username
+          response.user = user
         } else {
           // password didn't match
           throw new APIError('Either username or password is incorrect', httpStatus.UNAUTHORIZED, true)

@@ -21,6 +21,7 @@ const envVarsSchema = Joi.object({
   .required()
 
 const { error, value: envVars } = Joi.validate(process.env, envVarsSchema)
+/* istanbul ignore next: .env file has config, cannot test it */
 if (error) {
   throw new Error(`Config validation error: ${error.message}`)
 }

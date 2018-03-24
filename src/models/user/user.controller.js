@@ -1,3 +1,5 @@
+const httpStatus = require('http-status')
+const APIError = require('../../helpers/APIError')
 const User = require('./user.model')
 
 /**
@@ -7,10 +9,17 @@ const User = require('./user.model')
 function create (req, res, next) {
   const user = new User(prepUser(req.body))
 
-  user
-    .save()
-    .then(savedUser => res.json(savedUser))
-    .catch(e => next(e))
+  User.findOne({ username: req.body.username })
+    .exec() // need to return a promise
+    .then(userInCollection => {
+      if (userInCollection) {
+        throw new APIError('Username is not unique', httpStatus.BAD_REQUEST, true)
+      }
+      user.save().then(savedUser => res.json(savedUser))
+    })
+    .catch(e => {
+      return next(e)
+    })
 }
 
 /**
@@ -27,7 +36,7 @@ function update (req, res, next) {
   user
     .save()
     .then(savedUser => res.json(savedUser))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**
@@ -39,7 +48,7 @@ function remove (req, res, next) {
   user
     .remove()
     .then(deletedUser => res.json(deletedUser))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**
@@ -78,9 +87,9 @@ function list (req, res, next) {
   const safeLimit = limit > 50 ? 50 : limit
   const safeSkip = skip < 0 ? 0 : skip
 
-  User.list({ safeLimit, safeSkip })
+  User.list({ limit: safeLimit, skip: safeSkip })
     .then(users => res.json(users))
-    .catch(e => next(e))
+    .catch(/* istanbul ignore next */ e => next(e))
 }
 
 /**

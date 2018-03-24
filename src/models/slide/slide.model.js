@@ -72,7 +72,7 @@ SlideSchema.statics = {
         if (slide) {
           return slide
         }
-        const err = new APIError('No such slide exists!', httpStatus.NOT_FOUND)
+        const err = new APIError('No such slide exists!', httpStatus.NOT_FOUND, true)
         return Promise.reject(err)
       })
   },
