@@ -1,6 +1,7 @@
 const Slide = require('../models/slide/slide.model')
 const Image = require('../models/image/image.model')
 const User = require('../models/user/user.model')
+const Week = require('../models/week/week.model')
 
 // demo Slide array
 const initialSlides = [
@@ -162,6 +163,119 @@ const initialUsers = [
   }
 ]
 
+const initialWeeks = [
+  {
+    days: [
+      {
+        meals: {
+          lunch: ['asdfasdfasdf', 'asdfsdaf'],
+          supper: ['asdfasdf']
+        },
+        name: 'Monday'
+      },
+      {
+        meals: {
+          lunch: ['asdfasdfasdf', 'asdfsdaf'],
+          supper: ['asdfasdf']
+        },
+        name: 'Tuesday'
+      },
+      {
+        meals: {
+          lunch: ['asdfasdfasdf', 'asdfsdaf'],
+          supper: ['asdfasdf']
+        },
+        name: 'Wednesday'
+      },
+      {
+        meals: {
+          lunch: ['asdfasdfasdf', 'asdfsdaf'],
+          supper: ['asdfasdf']
+        },
+        name: 'Thursday'
+      },
+      {
+        meals: {
+          lunch: ['asdfasdfasdf', 'asdfsdaf'],
+          supper: ['asdfasdf']
+        },
+        name: 'Friday'
+      },
+      {
+        meals: {
+          lunch: ['asdfasdfasdf', 'asdfsdaf'],
+          supper: ['asdfasdf']
+        },
+        name: 'Saturday'
+      },
+      {
+        meals: {
+          lunch: ['asdfasdfasdf', 'asdfsdaf'],
+          supper: ['asdfasdf']
+        },
+        name: 'Sunday'
+      }
+    ],
+    _id: '5abb0c2a45876f4d8ebc542a',
+    startDate: '2012-04-23T18:25:43.511Z'
+  },
+  {
+    days: [
+      {
+        meals: {
+          lunch: [],
+          supper: []
+        },
+        name: 'Monday'
+      },
+      {
+        meals: {
+          lunch: [],
+          supper: []
+        },
+        name: 'Tuesday'
+      },
+      {
+        meals: {
+          lunch: [],
+          supper: []
+        },
+        name: 'Wednesday'
+      },
+      {
+        meals: {
+          lunch: [],
+          supper: []
+        },
+        name: 'Thursday'
+      },
+      {
+        meals: {
+          lunch: [],
+          supper: []
+        },
+        name: 'Friday'
+      },
+      {
+        meals: {
+          lunch: [],
+          supper: []
+        },
+        name: 'Saturday'
+      },
+      {
+        meals: {
+          lunch: [],
+          supper: []
+        },
+        name: 'Sunday'
+      }
+    ],
+    _id: '5abb0c0f45876f4d8ebc5423',
+    startDate: '2012-04-23T18:25:43.511Z'
+  }
+]
+
 async function clearSlidesCollection () {
   // clear database
   await Slide.remove({}, err => {
@@ -237,6 +351,31 @@ async function initUsersCollection () {
   await seedUsersCollection()
 }
 
+async function clearWeeksCollection () {
+  // clear database
+  await Week.remove({}, err => {
+    /* istanbul ignore next: cannot test database errors */
+    if (err) {
+      console.log('Failed to clear Weeks collection -> ', err)
+    }
+  }).exec() // need .exec() to return a promise
+}
+
+async function seedWeeksCollection () {
+  // seed the database
+  try {
+    await Week.insertMany(initialWeeks)
+  } catch (err) {
+    /* istanbul ignore next: cannot test database errors */
+    console.log('Failed to initialize Weeks collection -> ', err)
+  }
+}
+
+async function initWeeksCollection () {
+  await clearWeeksCollection()
+  await seedWeeksCollection()
+}
+
 module.exports = {
   initialSlides,
   initialImages,
@@ -249,5 +388,8 @@ module.exports = {
   clearImagesCollection,
   initUsersCollection,
   seedUsersCollection,
-  clearUsersCollection
+  clearUsersCollection,
+  initWeeksCollection,
+  seedWeeksCollection,
+  clearWeeksCollection
 }
