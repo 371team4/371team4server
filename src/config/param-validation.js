@@ -115,6 +115,28 @@ const imagesValidationSchema = Joi.array()
   )
   .required()
 
+const weekValidationSchema = {
+  startDate: Joi.date().required(),
+  days: Joi.array()
+    .items(
+      Joi.object()
+        .keys({
+          name: Joi.string()
+            .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+            .required().label('day name'),
+          meals: Joi.object()
+            .keys({
+              lunch: Joi.array().items(Joi.string()),
+              supper: Joi.array().items(Joi.string())
+            })
+            .required()
+        })
+        .required()
+        .label('days ')
+    ).unique((a, b) => a.name === b.name).min(7).max(7)
+    .required()
+}
+
 module.exports = {
   // POST /api/slides
   createSlide: {
@@ -210,6 +232,22 @@ module.exports = {
       password: Joi.string()
         .min(3)
         .max(30)
+        .required()
+    }
+  },
+
+  //weeks
+  // POST /api/weeks
+  createWeek: {
+    body: weekValidationSchema
+  },
+
+  // POST /api/weeks/:weekId
+  updateWeek: {
+    body: weekValidationSchema,
+    params: {
+      weekId: Joi.string()
+        .hex()
         .required()
     }
   }
