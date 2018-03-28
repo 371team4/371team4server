@@ -3,6 +3,7 @@ const slideRoutes = require('./slide/slide.routes')
 const imageRoutes = require('./image/image.routes')
 const userRoutes = require('./user/user.routes')
 const authRoutes = require('./auth/auth.routes')
+const weekRoutes = require('./week/week.routes')
 
 const router = express.Router() // eslint-disable-line new-cap
 
@@ -20,5 +21,8 @@ router.use('/users', userRoutes)
 
 // mount login routes at /login
 router.use('/login', authRoutes)
+
+// mount week routes at /weeks
+router.use('/weeks', weekRoutes)
 
 module.exports = router
