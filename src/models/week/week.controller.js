@@ -8,7 +8,7 @@ function create (req, res, next) {
   const week = new Week(prepWeek(req.body))
 
     week.save().then(savedWeek => res.json(savedWeek))
-    .catch(e => {
+    .catch(/* istanbul ignore next */ e => {
       return next(e)
     })
 }
