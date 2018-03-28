@@ -380,6 +380,7 @@ module.exports = {
   initialSlides,
   initialImages,
   initialUsers,
+  initialWeeks,
   initSlidesCollection,
   seedSlidesCollection,
   clearSlidesCollection,
