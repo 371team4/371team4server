@@ -174,6 +174,9 @@ module.exports = {
         .required(),
       email: Joi.string()
         .email()
+        .required(),
+      // unsure how to do or condition(admin || staff)
+      role: Joi.string()
         .required()
     }
   },
@@ -191,6 +194,9 @@ module.exports = {
         .required(),
       email: Joi.string()
         .email()
+        .required(),
+      // unsure how to do or condition(admin || staff)
+      role: Joi.string()
         .required()
     },
     params: {
