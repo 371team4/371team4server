@@ -21,14 +21,14 @@ const initialSlides = [
       fontStyle: 'Oblique'
     },
     date: {
-      content: 'Wed 5 Feb 2015',
+      content: '2015-02-09',
       fontColor: 'Green',
       fontSize: 'X-Small',
       fontWeight: 'Lighter',
       fontStyle: 'Normal'
     },
     time: {
-      content: '02:05 AM',
+      content: '2015-02-09 02:05',
       fontColor: 'Yellow',
       fontSize: 'XX-Small',
       fontWeight: 'Bolder',
@@ -36,7 +36,7 @@ const initialSlides = [
     },
     meta: {
       template: 'DefaultSlideTemplate',
-      timeout: '20',
+      timeout: '1',
       repeatable: true,
       startDate: '2018-02-16',
       endDate: '2018-03-05'
@@ -59,14 +59,14 @@ const initialSlides = [
       fontStyle: 'Oblique'
     },
     date: {
-      content: 'Mon 6 Mar 2016',
+      content: '2016-03-06',
       fontColor: 'Green',
       fontSize: 'Larger',
       fontWeight: 'Lighter',
       fontStyle: 'Normal'
     },
     time: {
-      content: '01:00 AM',
+      content: '2016-03-06 01:00',
       fontColor: 'Yellow',
       fontSize: 'XX-Large',
       fontWeight: 'Bolder',
@@ -74,7 +74,7 @@ const initialSlides = [
     },
     meta: {
       template: 'DefaultSlideTemplate',
-      timeout: '20',
+      timeout: '3',
       repeatable: true,
       startDate: '2018-02-16',
       endDate: '2018-03-05'
@@ -97,14 +97,14 @@ const initialSlides = [
       fontStyle: 'Oblique'
     },
     date: {
-      content: 'Fri 8 Apr 2017',
+      content: '2017-04-02',
       fontColor: 'Green',
       fontSize: 'X-Small',
       fontWeight: 'Lighter',
       fontStyle: 'Normal'
     },
     time: {
-      content: '23:05 AM',
+      content: '2017-04-02 23:05',
       fontColor: 'Yellow',
       fontSize: 'XX-Small',
       fontWeight: 'Bolder',
@@ -112,7 +112,7 @@ const initialSlides = [
     },
     meta: {
       template: 'DefaultSlideTemplate',
-      timeout: '20',
+      timeout: '5',
       repeatable: true,
       startDate: '2018-02-16',
       endDate: '2018-03-05'
