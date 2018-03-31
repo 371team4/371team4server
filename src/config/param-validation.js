@@ -177,6 +177,7 @@ module.exports = {
         .required(),
       // unsure how to do or condition(admin || staff)
       role: Joi.string()
+        .valid('admin','staff')
         .required()
     }
   },
@@ -197,6 +198,7 @@ module.exports = {
         .required(),
       // unsure how to do or condition(admin || staff)
       role: Joi.string()
+        .valid('admin','staff')
         .required()
     },
     params: {
