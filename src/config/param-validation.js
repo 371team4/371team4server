@@ -45,7 +45,7 @@ const descriptionValidationSchema = Joi.object()
 // validation schema for date object and its contents
 const dateValidationSchema = Joi.object()
   .keys({
-    content: Joi.string()
+    content: Joi.date()
       .required()
       .label('date.content'),
     fontColor: Joi.string()
@@ -66,7 +66,7 @@ const dateValidationSchema = Joi.object()
 // validation schema for time object and its contents
 const timeValidationSchema = Joi.object()
   .keys({
-    content: Joi.string()
+    content: Joi.date()
       .required()
       .label('time.content'),
     fontColor: Joi.string()
@@ -90,7 +90,7 @@ const metaValidationSchema = Joi.object()
     template: Joi.string()
       .required()
       .label('meta.template'),
-    timeout: Joi.string()
+    timeout: Joi.number()
       .required()
       .label('meta.timeout'),
     repeatable: Joi.boolean()
@@ -112,7 +112,7 @@ const imagesValidationSchema = Joi.array()
       .hex()
       .required()
       .label('image ids')
-  )
+  ).max(6).min(1)
   .required()
 
 const weekValidationSchema = {
