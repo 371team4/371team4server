@@ -22,14 +22,14 @@ const SlideSchema = new Schema({
     fontStyle: String
   },
   date: {
-    content: String,
+    content: Date,
     fontColor: String,
     fontSize: String,
     fontWeight: String,
     fontStyle: String
   },
   time: {
-    content: String,
+    content: Date,
     fontColor: String,
     fontSize: String,
     fontWeight: String,
@@ -37,7 +37,7 @@ const SlideSchema = new Schema({
   },
   meta: {
     template: String,
-    timeout: String,
+    timeout: Number,
     repeatable: Boolean,
     startDate: String,
     endDate: String
