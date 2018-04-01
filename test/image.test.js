@@ -141,7 +141,7 @@ describe('## Image APIs', function () {
         .catch(done)
     })
 
-    it('should not create a new image when it already exists in the collection', done => {
+    it('should create a new image when it already exists in the collection', done => {
       request(app)
         .put('/api/images')
         .set('x-access-token', token)
