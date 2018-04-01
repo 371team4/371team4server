@@ -148,9 +148,10 @@ describe('## Image APIs', function () {
         .attach('image', path.join(__dirname, './Image/001.jpg'))
         .expect(httpStatus.OK)
         .then(res => {
-          expect(res.body.name).to.equal('001.jpg')
-          expect(res.body._id).to.equal(newId)
-          done()
+          expect(res.body.name).to.contain('001.jpg')
+          expect(res.body._id).to.not.equal(newId)
+          // delete the duplicate image
+          request(app).delete(`/api/images/${res.body._id}`).then(() => done())
         })
         .catch(done)
     })
