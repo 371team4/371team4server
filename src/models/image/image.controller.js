@@ -73,8 +73,22 @@ function upload (req, res, next) {
         })
       } else {
         // we have found the image in our collection
-        // return the image
-        return res.json(dbImage)
+        // prep the new image
+        const imageObj = prepImage(req.files.image)
+        imageObj.name = `${Date.now()}-${imageObj.name}`
+        imageObj.path = `/images/${imageObj.name}`
+        const dupImage = new Image(imageObj)
+
+        // duplicate the current file
+        fs
+          .createReadStream(path.join(__dirname, dbImage.path))
+          .pipe(fs.createWriteStream(path.join(__dirname, dupImage.path)))
+
+        // save the duplicate and return it
+        dupImage
+          .save()
+          .then(savedImage => res.json(savedImage))
+          .catch(/* istanbul ignore next */ e => next(e))
       }
     })
 }
