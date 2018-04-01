@@ -21,7 +21,7 @@ const initialSlides = [
       fontStyle: 'Oblique'
     },
     date: {
-      content: '2018-03-09',
+      content: ['2018-03-09'],
       fontColor: 'Green',
       fontSize: 'X-Small',
       fontWeight: 'Lighter',
@@ -37,9 +37,7 @@ const initialSlides = [
     meta: {
       template: 'DefaultSlideTemplate',
       timeout: '1',
-      repeatable: true,
-      startDate: '2018-02-16',
-      endDate: '2018-03-05'
+      datesOnDisplay: ['2016-05-03']
     },
     images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
   },
@@ -59,7 +57,7 @@ const initialSlides = [
       fontStyle: 'Oblique'
     },
     date: {
-      content: '2018-03-06',
+      content: ['2018-03-06'],
       fontColor: 'Green',
       fontSize: 'Larger',
       fontWeight: 'Lighter',
@@ -75,9 +73,7 @@ const initialSlides = [
     meta: {
       template: 'DefaultSlideTemplate',
       timeout: '3',
-      repeatable: true,
-      startDate: '2018-02-16',
-      endDate: '2018-03-05'
+      datesOnDisplay: ['2016-05-03']
     },
     images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
   },
@@ -97,7 +93,7 @@ const initialSlides = [
       fontStyle: 'Oblique'
     },
     date: {
-      content: '2018-03-02',
+      content: ['2018-03-02'],
       fontColor: 'Green',
       fontSize: 'X-Small',
       fontWeight: 'Lighter',
@@ -113,9 +109,7 @@ const initialSlides = [
     meta: {
       template: 'DefaultSlideTemplate',
       timeout: '5',
-      repeatable: true,
-      startDate: '2018-02-16',
-      endDate: '2018-03-05'
+      datesOnDisplay: ['2016-05-03']
     },
     images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
   }

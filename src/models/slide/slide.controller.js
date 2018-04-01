@@ -123,9 +123,7 @@ function prepSlide (body) {
     meta: {
       template: body.meta.template,
       timeout: body.meta.timeout,
-      repeatable: body.meta.repeatable,
-      startDate: body.meta.startDate,
-      endDate: body.meta.endDate
+      datesOnDisplay: body.meta.datesOnDisplay
     },
     images: body.images
   }

@@ -22,7 +22,7 @@ const SlideSchema = new Schema({
     fontStyle: String
   },
   date: {
-    content: Date,
+    content: [Date],
     fontColor: String,
     fontSize: String,
     fontWeight: String,
@@ -38,9 +38,7 @@ const SlideSchema = new Schema({
   meta: {
     template: String,
     timeout: Number,
-    repeatable: Boolean,
-    startDate: String,
-    endDate: String
+    datesOnDisplay: [Date]
   },
   images: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
   createdAt: {

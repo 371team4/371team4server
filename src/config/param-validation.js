@@ -45,7 +45,8 @@ const descriptionValidationSchema = Joi.object()
 // validation schema for date object and its contents
 const dateValidationSchema = Joi.object()
   .keys({
-    content: Joi.date()
+    content: Joi.array()
+      .items(Joi.date())
       .required()
       .label('date.content'),
     fontColor: Joi.string()
@@ -93,15 +94,10 @@ const metaValidationSchema = Joi.object()
     timeout: Joi.number()
       .required()
       .label('meta.timeout'),
-    repeatable: Joi.boolean()
+    datesOnDisplay: Joi.array()
+      .items(Joi.date())
       .required()
-      .label('meta.repeatable'),
-    startDate: Joi.string()
-      .required()
-      .label('meta.startDate'),
-    endDate: Joi.string()
-      .required()
-      .label('meta.endDate')
+      .label('meta.datesOnDisplay')
   })
   .required()
 
@@ -112,7 +108,9 @@ const imagesValidationSchema = Joi.array()
       .hex()
       .required()
       .label('image ids')
-  ).max(6).min(1)
+  )
+  .max(6)
+  .min(1)
   .required()
 
 const weekValidationSchema = {
@@ -123,7 +121,8 @@ const weekValidationSchema = {
         .keys({
           name: Joi.string()
             .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
-            .required().label('day name'),
+            .required()
+            .label('day name'),
           meals: Joi.object()
             .keys({
               lunch: Joi.array().items(Joi.string()),
@@ -133,7 +132,10 @@ const weekValidationSchema = {
         })
         .required()
         .label('days ')
-    ).unique((a, b) => a.name === b.name).min(7).max(7)
+    )
+    .unique((a, b) => a.name === b.name)
+    .min(7)
+    .max(7)
     .required()
 }
 
