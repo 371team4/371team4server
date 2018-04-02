@@ -7,20 +7,12 @@ const titleValidationSchema = Joi.object()
       .required()
       .label('title.content'),
     fontColor: Joi.string()
-      .allow('')
-      .required()
       .label('title.fontColor'),
     fontSize: Joi.string()
-      .allow('')
-      .required()
       .label('title.fontSize'),
     fontWeight: Joi.string()
-      .allow('')
-      .required()
       .label('title.fontWeight'),
     fontStyle: Joi.string()
-      .allow('')
-      .required()
       .label('title.fontStyle')
   })
   .required()
@@ -32,20 +24,12 @@ const descriptionValidationSchema = Joi.object()
       .required()
       .label('description.content'),
     fontColor: Joi.string()
-      .allow('')
-      .required()
       .label('description.fontColor'),
     fontSize: Joi.string()
-      .allow('')
-      .required()
       .label('description.fontSize'),
     fontWeight: Joi.string()
-      .allow('')
-      .required()
       .label('description.fontWeight'),
     fontStyle: Joi.string()
-      .allow('')
-      .required()
       .label('description.fontStyle')
   })
   .required()
@@ -58,20 +42,12 @@ const dateValidationSchema = Joi.object()
       .required()
       .label('date.content'),
     fontColor: Joi.string()
-      .allow('')
-      .required()
       .label('date.fontColor'),
     fontSize: Joi.string()
-      .allow('')
-      .required()
       .label('date.fontSize'),
     fontWeight: Joi.string()
-      .allow('')
-      .required()
       .label('date.fontWeight'),
     fontStyle: Joi.string()
-      .allow('')
-      .required()
       .label('date.fontStyle')
   })
   .required()
@@ -83,20 +59,12 @@ const timeValidationSchema = Joi.object()
       .required()
       .label('time.content'),
     fontColor: Joi.string()
-      .allow('')
-      .required()
       .label('time.fontColor'),
     fontSize: Joi.string()
-      .allow('')
-      .required()
       .label('time.fontSize'),
     fontWeight: Joi.string()
-      .allow('')
-      .required()
       .label('time.fontWeight'),
     fontStyle: Joi.string()
-      .allow('')
-      .required()
       .label('time.fontStyle')
   })
   .required()
