@@ -32,6 +32,7 @@ function update (req, res, next) {
 
   user.password = updates.password
   user.email = updates.email
+  user.role = updates.role
 
   user
     .save()
@@ -100,7 +101,8 @@ function prepUser (body) {
   return {
     username: body.username,
     password: body.password,
-    email: body.email
+    email: body.email,
+    role: body.role
   }
 }
 

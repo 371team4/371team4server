@@ -13,6 +13,8 @@ const nonExistingObjId = '5a98ad9a16608d51844ef439'
 
 let token
 
+let tokenStaff
+
 function sortUsersByName (user1, user2) {
   var nameA = user1.username.toUpperCase(); // ignore upper and lowercase
   var nameB = user2.username.toUpperCase(); // ignore upper and lowercase
@@ -27,7 +29,7 @@ function sortUsersByName (user1, user2) {
 }
 
 describe('## User APIs', function () {
-  this.timeout(15000)
+  this.timeout(17000)
   before(done => {
     const mongoUri = config.mongoURI
     mongoose
@@ -37,10 +39,21 @@ describe('## User APIs', function () {
         try {
           const res = await request(app)
             .post('/api/login')
-            .send({ username: 'test', password: 'admin001' })
+            .send({ username: 'admin', password: 'admin001' })
           if (res) {
             token = res.body.token
-            done()
+            try {
+              const res = await request(app)
+                .post('/api/login')
+                .send({ username: 'test', password: 'admin001' })
+              if (res) {
+                tokenStaff = res.body.token
+                done()
+              }
+            } catch (e) {
+              console.log(e)
+              done()
+            }
           }
         } catch (e) {
           console.log(e)
@@ -58,7 +71,8 @@ describe('## User APIs', function () {
   const user = {
     username: 'KK123',
     password: '1234567890',
-    email: 'email@email.com'
+    email: 'email@email.com',
+    role:'staff'
   }
 
   const noNameUser = {
@@ -81,7 +95,7 @@ describe('## User APIs', function () {
           sampleUser = res.body[0]
           // destructure the body object
           const users = res.body.map((user) => {
-            return { username: user.username, password: user.password, email: user.email }
+            return { username: user.username, password: user.password, email: user.email, role: user.role }
           })
 
           // sort both arrays to deep compare
@@ -159,6 +173,18 @@ describe('## User APIs', function () {
         .catch(done)
     })
 
+    it('should return error when staff token is not allowed in user route', done => {
+      request(app)
+        .get(`/api/users`)
+        .set('x-access-token', tokenStaff)
+        .expect(httpStatus.UNAUTHORIZED)
+        .then(res => {
+          expect(res.body.message).to.equal('Staff is not allowed to change user data')
+          done()
+        })
+        .catch(done)
+    })
+
   })
 
   describe('# POST /api/users', () => {
@@ -196,7 +222,7 @@ describe('## User APIs', function () {
         .send(noNameUser)
         .expect(httpStatus.BAD_REQUEST)
         .then(res => {
-          expect(res.body.message).to.equal("'username' is required and 'email' is required")
+          expect(res.body.message).to.equal("'username' is required and 'email' is required and 'role' is required")
           done()
         })
         .catch(done)
@@ -209,11 +235,25 @@ describe('## User APIs', function () {
         .send(noPasswordUser)
         .expect(httpStatus.BAD_REQUEST)
         .then(res => {
-          expect(res.body.message).to.equal("'password' is required and 'email' is required")
+          expect(res.body.message).to.equal("'password' is required and 'email' is required and 'role' is required")
           done()
         })
         .catch(done)
     })
+
+    it('should return error when staff token is not allowed in user route', done => {
+      request(app)
+        .post('/api/users')
+        .set('x-access-token', tokenStaff)
+        .send(user)
+        .expect(httpStatus.UNAUTHORIZED)
+        .then(res => {
+          expect(res.body.message).to.equal('Staff is not allowed to change user data')
+          done()
+        })
+        .catch(done)
+    })
+
   })
 
   describe('# PUT /api/users/:userId', () => {
@@ -230,9 +270,38 @@ describe('## User APIs', function () {
         })
         .catch(done)
     })
+
+    it('should return error when staff token is not allowed in user route', done => {
+      user.password = 'KK123453'
+      request(app)
+        .put(`/api/users/${user._id}`)
+        .set('x-access-token', tokenStaff)
+        .send(user)
+        .expect(httpStatus.UNAUTHORIZED)
+        .then(res => {
+          expect(res.body.message).to.equal('Staff is not allowed to change user data')
+          done()
+        })
+        .catch(done)
+    })
+
   })
 
   describe('# DELETE /api/users/:userId', () => {
+
+    it('should return error when staff token is not allowed in user route', done => {
+      user.password = 'KK123453'
+      request(app)
+        .delete(`/api/users/${user._id}`)
+        .set('x-access-token', tokenStaff)
+        .expect(httpStatus.UNAUTHORIZED)
+        .then(res => {
+          expect(res.body.message).to.equal('Staff is not allowed to change user data')
+          done()
+        })
+        .catch(done)
+    })
+
     it('should delete user', done => {
       request(app)
         .delete(`/api/users/${user._id}`)
@@ -244,5 +313,6 @@ describe('## User APIs', function () {
         })
         .catch(done)
     })
+
   })
 })

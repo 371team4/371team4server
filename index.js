@@ -10,7 +10,7 @@ const app = require('./src/config/express')
 // require('./src/config/http-redirection-server')
 
 // Slides collection seeds
-//const seed = require('./src/config/seed')
+const seed = require('./src/config/seed')
 
 // connect to mongo db
 const mongoUri = config.mongoURI
@@ -24,15 +24,15 @@ if (config.env === 'development') {
 mongoose
   .connect(mongoUri, { keepAlive: 1 })
   // .then(
-  // async () => {
-  // seed the database if we are in test environment
-  // if (config.env === 'test' || config.env === 'development') {
-  // await seed.initImagesCollection()
-  // await seed.initSlidesCollection()
-  // await seed.initUsersCollection()
-  // console.log('Clean up and Init was completed!')
-  // }
-  // }
+  //   async () => {
+  //     // seed the database if we are in test environment
+  //     if (config.env === 'test' || config.env === 'development') {
+  //       await seed.initImagesCollection()
+  //       await seed.initSlidesCollection()
+  //       await seed.initUsersCollection()
+  //       console.log('Clean up and Init was completed!')
+  //     }
+  //   }
   // )
   .catch(
     /* istanbul ignore next: We cannot cover this since it is not exposed, but the tests use a similar syntax */
