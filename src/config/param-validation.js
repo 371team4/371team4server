@@ -7,15 +7,19 @@ const titleValidationSchema = Joi.object()
       .required()
       .label('title.content'),
     fontColor: Joi.string()
+      .allow('', null)
       .required()
       .label('title.fontColor'),
     fontSize: Joi.string()
+      .allow('', null)
       .required()
       .label('title.fontSize'),
     fontWeight: Joi.string()
+      .allow('', null)
       .required()
       .label('title.fontWeight'),
     fontStyle: Joi.string()
+      .allow('', null)
       .required()
       .label('title.fontStyle')
   })
@@ -28,15 +32,19 @@ const descriptionValidationSchema = Joi.object()
       .required()
       .label('description.content'),
     fontColor: Joi.string()
+      .allow('', null)
       .required()
       .label('description.fontColor'),
     fontSize: Joi.string()
+      .allow('', null)
       .required()
       .label('description.fontSize'),
     fontWeight: Joi.string()
+      .allow('', null)
       .required()
       .label('description.fontWeight'),
     fontStyle: Joi.string()
+      .allow('', null)
       .required()
       .label('description.fontStyle')
   })
@@ -45,19 +53,24 @@ const descriptionValidationSchema = Joi.object()
 // validation schema for date object and its contents
 const dateValidationSchema = Joi.object()
   .keys({
-    content: Joi.string()
+    content: Joi.array()
+      .items(Joi.date())
       .required()
       .label('date.content'),
     fontColor: Joi.string()
+      .allow('', null)
       .required()
       .label('date.fontColor'),
     fontSize: Joi.string()
+      .allow('', null)
       .required()
       .label('date.fontSize'),
     fontWeight: Joi.string()
+      .allow('', null)
       .required()
       .label('date.fontWeight'),
     fontStyle: Joi.string()
+      .allow('', null)
       .required()
       .label('date.fontStyle')
   })
@@ -66,19 +79,23 @@ const dateValidationSchema = Joi.object()
 // validation schema for time object and its contents
 const timeValidationSchema = Joi.object()
   .keys({
-    content: Joi.string()
+    content: Joi.date()
       .required()
       .label('time.content'),
     fontColor: Joi.string()
+      .allow('', null)
       .required()
       .label('time.fontColor'),
     fontSize: Joi.string()
+      .allow('', null)
       .required()
       .label('time.fontSize'),
     fontWeight: Joi.string()
+      .allow('', null)
       .required()
       .label('time.fontWeight'),
     fontStyle: Joi.string()
+      .allow('', null)
       .required()
       .label('time.fontStyle')
   })
@@ -90,18 +107,14 @@ const metaValidationSchema = Joi.object()
     template: Joi.string()
       .required()
       .label('meta.template'),
-    timeout: Joi.string()
+    timeout: Joi.number()
       .required()
       .label('meta.timeout'),
-    repeatable: Joi.boolean()
+    datesOnDisplay: Joi.array()
+      .items(Joi.date())
+      .allow([])
       .required()
-      .label('meta.repeatable'),
-    startDate: Joi.string()
-      .required()
-      .label('meta.startDate'),
-    endDate: Joi.string()
-      .required()
-      .label('meta.endDate')
+      .label('meta.datesOnDisplay')
   })
   .required()
 
@@ -113,7 +126,35 @@ const imagesValidationSchema = Joi.array()
       .required()
       .label('image ids')
   )
+  .max(6)
+  .min(1)
   .required()
+
+const weekValidationSchema = {
+  startDate: Joi.date().required(),
+  days: Joi.array()
+    .items(
+      Joi.object()
+        .keys({
+          name: Joi.string()
+            .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+            .required()
+            .label('day name'),
+          meals: Joi.object()
+            .keys({
+              lunch: Joi.array().items(Joi.string()),
+              supper: Joi.array().items(Joi.string())
+            })
+            .required()
+        })
+        .required()
+        .label('days ')
+    )
+    .unique((a, b) => a.name === b.name)
+    .min(7)
+    .max(7)
+    .required()
+}
 
 module.exports = {
   // POST /api/slides
@@ -210,6 +251,22 @@ module.exports = {
       password: Joi.string()
         .min(3)
         .max(30)
+        .required()
+    }
+  },
+
+  //weeks
+  // POST /api/weeks
+  createWeek: {
+    body: weekValidationSchema
+  },
+
+  // POST /api/weeks/:weekId
+  updateWeek: {
+    body: weekValidationSchema,
+    params: {
+      weekId: Joi.string()
+        .hex()
         .required()
     }
   }

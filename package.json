@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon index.js",
+    "production": "cross-env NODE_ENV=production node index.js",
     "start:debug": "cross-env NODE_ENV=development nodemon --inspect index.js",
     "tdd": "cross-env NODE_ENV=test nodemon --exec nyc --cache --reporter=text-summary --temp-directory=./test/coverage/.nyc_output mocha test/*.js --exit",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov --cache --reporter=text-summary --report-dir=./test/coverage --temp-directory=./test/coverage/.nyc_output mocha test/*.js --reporter mochawesome --reporter-options reportDir=./test/test-reports,reportFilename=report --exit",

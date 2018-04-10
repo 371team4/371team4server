@@ -141,16 +141,17 @@ describe('## Image APIs', function () {
         .catch(done)
     })
 
-    it('should not create a new image when it already exists in the collection', done => {
+    it('should create a new image when it already exists in the collection', done => {
       request(app)
         .put('/api/images')
         .set('x-access-token', token)
         .attach('image', path.join(__dirname, './Image/001.jpg'))
         .expect(httpStatus.OK)
         .then(res => {
-          expect(res.body.name).to.equal('001.jpg')
-          expect(res.body._id).to.equal(newId)
-          done()
+          expect(res.body.name).to.contain('001.jpg')
+          expect(res.body._id).to.not.equal(newId)
+          // delete the duplicate image
+          request(app).delete(`/api/images/${res.body._id}`).then(() => done())
         })
         .catch(done)
     })

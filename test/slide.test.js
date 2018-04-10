@@ -52,14 +52,14 @@ let samplePostSlide = {
     fontStyle: 'Oblique'
   },
   date: {
-    content: 'Fri 6 Apr 2016',
+    content: ['2016-04-06'],
     fontColor: 'Green',
     fontSize: 'X-Small',
     fontWeight: 'Lighter',
     fontStyle: 'Normal'
   },
   time: {
-    content: '01:01 AM',
+    content: '2016-04-06 01:01',
     fontColor: 'Yellow',
     fontSize: 'XX-Small',
     fontWeight: 'Bolder',
@@ -68,9 +68,7 @@ let samplePostSlide = {
   meta: {
     template: 'DefaultSlideTemplate',
     timeout: '20',
-    repeatable: true,
-    startDate: '2017-02-16',
-    endDate: '2018-03-05'
+    datesOnDisplay: ['2016-05-03']
   },
   images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
 }
@@ -91,14 +89,14 @@ let sampleUpdateSlide = {
     fontStyle: 'Oblique'
   },
   date: {
-    content: 'Fri 6 Apr 2016',
+    content: ['2016-04-06'],
     fontColor: 'Green',
     fontSize: 'X-Small',
     fontWeight: 'Lighter',
     fontStyle: 'Normal'
   },
   time: {
-    content: '01:01 AM',
+    content: '2016-04-06 01:01',
     fontColor: 'Yellow',
     fontSize: 'XX-Small',
     fontWeight: 'Bolder',
@@ -107,9 +105,7 @@ let sampleUpdateSlide = {
   meta: {
     template: 'DefaultSlideTemplate',
     timeout: '20',
-    repeatable: true,
-    startDate: '2017-02-16',
-    endDate: '2018-03-05'
+    datesOnDisplay: ['2016-05-03']
   },
   images: ['5a98ada216608d51864ef43c', '5a98ad9a16608d51864ef439', '5a98ad9a16608d51864ef43b']
 }
