@@ -143,17 +143,20 @@ const initialUsers = [
   {
     username: 'admin',
     password: '$2a$13$LfUzP5HUbmWIqVXHcEH5L.h6bfmW7nW8aLpk0IL809ee907UpIlqq', //admin001
-    email: 'email@email.com'
+    email: 'email@email.com',
+    role: 'admin'
   },
   {
     username: 'first',
     password: '$2a$13$KZlokgIgetcX6LT8DDTvDuZ/aJVS0KmguXZruntXaJmYH5.GE3Fre', //admin001
-    email: 'email@email.com'
+    email: 'email@email.com',
+    role: 'staff'
   },
   {
     username: 'test',
     password: '$2a$13$DGSRoyvSy1QgT6q5BwmL1.9omsExIoDowsMkSP3PVIbfppuS0ux1C', //admin001
-    email: 'email@email.com'
+    email: 'email@email.com',
+    role: 'staff'
   }
 ]
 
