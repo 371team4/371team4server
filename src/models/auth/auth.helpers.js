@@ -18,7 +18,7 @@ function JwtVerify (req, res, next) {
     jwt.verify(token, config.jwtSecret, function (e) {
       // handle error, or otherwise continue to the next middleware
       if (e) {
-        return next(err)
+        return next(new APIError(e.name, httpStatus.UNAUTHORIZED, true))
       } else {
         return next()
       }

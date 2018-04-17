@@ -1,7 +1,6 @@
 const httpStatus = require('http-status')
 const mongoose = require('mongoose')
 const APIError = require('../../helpers/APIError')
-const Slide = require('../slide/slide.model')
 const Schema = mongoose.Schema
 
 /**
@@ -16,22 +15,6 @@ const ImageSchema = new Schema({
     type: Date,
     default: Date.now
   }
-})
-
-// remove the references from the slides collection n..n relation
-ImageSchema.pre('remove', function (next) {
-  Slide.update(
-    { images: this._id },
-    { $pull: { images: this._id } },
-    { multi: true },
-    function (err) {
-      /* istanbul ignore next: Cannot test error from cascade delete */
-      if(err){
-        throw new Error(err)
-      }
-    }
-  ).exec()
-  return next()
 })
 
 /**

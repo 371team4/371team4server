@@ -62,7 +62,7 @@ describe('## Misc', () => {
         .set('x-access-token', 'something is not right here')
         .expect(httpStatus.UNAUTHORIZED)
         .then(res => {
-          expect(res.body.message).to.equal('No token is present')
+          expect(res.body.message).to.equal('JsonWebTokenError')
           done()
         })
         .catch(done)
